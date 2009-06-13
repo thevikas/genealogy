@@ -1,0 +1,148 @@
+IMG {
+	border: 0px;
+}
+.clsnum {
+        text-align: right;
+}
+SELECT,BODY,A,INPUT,TEXTAREA,TABLE,TD,TR
+{
+	font-size: 10px;
+	font-family: verdana;
+}
+SELECT,INPUT
+{
+	border-width: 1px;
+}
+.head
+{
+	font-weight: bold;
+}
+.site
+{
+	margin-bottom: 10px;
+	display:block;
+}
+.box {
+	position: relative;
+	margin-bottom: 10px;
+}
+.inp {
+	left: 100px;
+	position: absolute;
+}
+.imgbox {
+	margin: 2px;
+	float: left;
+	padding: 4px;
+	border: 1px solid black;
+}
+.searchbox
+{
+	border: 1px solid blue;
+	width: 350px;
+}
+.fieldname {
+	color: #6f6f6f;
+	text-align:right;
+        background-color: #cfefef;
+}
+.fieldvalue {
+	color: black;
+}
+
+.dimm {
+	color: #9f9f9f;
+}
+.head2 {
+	border: 1px solid #0066FF;
+}
+.fieldnamem {
+        color:black;
+        font-weight: bold;
+        background-color: #cfefef;
+}
+.mruoption {
+	color: black;
+}
+.mrubooked {
+	color: green;
+}
+.mrupaid {
+	color: black;
+	background-color: lightgreen;
+}
+.mrutariff {
+	color: red;
+}
+.editinput {
+	width: 300px;
+}
+.clscosttitle {
+	font-weight: bold;font-size: 18px;color:red;
+	text-align:center;
+	border: double black 3px;
+	padding: 2px;
+	margin: 2px;
+}
+.clsdynbox {
+	background-color: #afefef;
+	border: none;
+	height: 100%;
+	width: 100%;
+}
+.clstdlike {
+	background-color: #FFD2D2;
+	border: inset black 1px;
+	text-align:center;
+}
+
+.picbox
+{
+float:right;
+width: 150px;
+}
+.picinbox {
+	float:left;
+	margin: 2px;
+}
+FORM
+{
+margin:0px;
+padding:0px;
+display:inline;
+}
+
+sup
+{
+background-color:white;	
+font-weight:bold;
+color:green;
+}
+
+sup a,sup a:visited
+{
+font-size: .8em;
+padding: 2px;
+color:red;
+font-weight:bold;
+background-color:white;
+}
+
+div#box
+{
+wid1th: 4000px;
+}
+
+img.left
+{
+	float:left;
+}
+img.right
+{
+	float:right;
+}
+div.left_spouse
+{
+	margin-bottom: 4px;
+	padding: 2px;
+}

@@ -1,0 +1,78 @@
+BODY,A,TD
+{
+font-size: 14px;
+}
+
+TABLE
+{
+display:inline;
+margin: 4px;
+text-align: center;
+}
+
+TD TABLE
+{
+padding-top: 8px;
+padding-bottom: 8px;
+}
+
+TD
+{
+border1: solid 1px black;
+}
+.left_spouse, .right_spouse
+{
+border: 0px;
+}
+
+.level2 TD
+{
+page-break-before: always;
+background-color:#FF7777;
+font-size: 14px;
+}
+
+.level3 TD
+{
+background-color: #FF6600;
+}
+
+.level4 TD
+{
+background-color:#FF9900;
+}
+.level5 TD
+{
+background-color:#FFCC00;
+}
+.level6 TD
+{
+background-color:#FF9966;
+}
+.level7 TD
+{
+background-color:#FF6666;
+}
+.level8 TD
+{
+background-color:#FF9999;
+}
+.level9 TD
+{
+background-color:#FFCC99;
+}
+
+/*
+@media print {
+  #topbox
+  {
+  	disp1lay: none;
+  }
+  A
+  {
+  	co1lor:black;
+	te1xt-decoration: none;
+  }
+}
+
+*/
