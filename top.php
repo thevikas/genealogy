@@ -15,7 +15,7 @@
 [<a href="editperson.php?cid=-1">New Person</a>]
 [<a href="events.php">Events</a>]
 [<a href="analyse.php">Analyse</a>]
-[<a href="http://gene.local:222/tree-report.php?cid=33">Tota Ram</a>]
+[<a href="./tree-report.php?cid=33">Tota Ram</a>]
 
 <?
 $rm = doquery("select * " .
@@ -36,18 +36,9 @@ while($rsm = mysql_fetch_object($rm))
 	$name = $rsm->firstname . " " . $rsm->lastname;
 	$cls = "class=\"mruoption\"";
 	
-	if($rsm->bookings > 0)
-	{
-		$cls = "class=\"mrubooked\"";
-		if($rsm->book_paid>0)
-			$cls = "class=\"mrupaid\"";
-	}
-	else if($rsm->tariff > 0)
-	{
-		$cls = "class=\"mrutariff\"";
-	}
+	
 	$cidT = $rsm->cid;
-	echo "<option $cls value=\"$cidT\">$name</option>";
+	echo "<option $cls value=\"$cidT\">$name</option>\n";
 }
 if($f2)	echo "</select></td></tr></form></table>";
 

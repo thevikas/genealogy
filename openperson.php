@@ -20,6 +20,7 @@ include("./top.php");
 [<a href="upload.php?cid=<?=$cid?>">Upload Pics</a>]
 [<a href="report.php?cid=<?=$cid?>">Report</a>]
 [<a href="tree-report.php?cid=<?=$cid?>">Tree Report</a>]
+[<a href="circlechart.php?cid=<?=$cid?>">Circular Chart</a>]
 <p></p>
 
 <? if($rs->bPics)

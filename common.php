@@ -1,5 +1,6 @@
 <?
 require_once("./constants.php");
+require_once("clsPerson.php");
 #ob_start("ob_gzhandler");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 $safe=true;
@@ -144,15 +145,17 @@ function mon2str($i)
 }
 
 
-function doInit()
+function doInit($full = 0)
 {
-	$r1 = doquery("select * from persons");
+	//return; //201011291222:vikas:doinit is now off
+	$r1 = doquery("select * from persons order by updated desc limit 0,10");
 	while($rs1 = mysql_fetch_object($r1))
 	{
 		$cid = $rs1->cid;
 		doInit_cid($cid,$rs1);
 	}
-	doInit_Dates();
+	if($full)
+		doInit_Dates();
 }
 
 #200507251210:vikas:working out the closest posible event in current time
@@ -190,8 +193,8 @@ function doInit_Dates()
 		$cid = $rs->cid;
 		#echo "CID: $cid: ($rs->d) ";
 		#$d = getdate(strtotime($rs->d));
-		list($year,$mon,$day1) = split("-",$rs->d);
-		list($day,$time1) = split(" ",$day1);
+		list($year,$mon,$day1) = explode("-",$rs->d);
+		list($day,$time1) = explode(" ",$day1);
 		do
 		{
 			#echo "\n<!--- mktime(0, 0, 0, $mon, $day,$thisyear); -->";
@@ -446,7 +449,7 @@ function addPerson($name,$gender,$father,$mother)
 	$father = $father==0 ? "null" : $father;
 	$mother = $mother==0 ? "null" : $mother;
 	$name = rtrim(ltrim($name));
-	$a = split(" ",$name);
+	$a = explode(" ",$name);
 	$fn="";
 	for($i=0; $i<count($a)-1;$i++)
 		$fn .= $a[$i] . " ";
@@ -537,12 +540,12 @@ function getYearsCount($dt1,$dt2)
 	#echo "[$dt1]";
 	#exit;
 	
-	list($year,$mon,$day) = split("-",$dt1);
+	list($year,$mon,$day) = explode("-",$dt1);
 	#echo  $dt1 . ";" . $s2t . ";" . $year2 . "-" . $year . "yrs";
 	#exit;
 	if($year<=1970 && floor($year)>0)
 	{
-		list($year2,$mon2,$day2) = split("-",date(s_strftime,$dt2));
+		list($year2,$mon2,$day2) = explode("-",date(s_strftime,$dt2));
 		return $year2-$year . $yrs_string;
 	}
 	$diff = time() - $s2t;

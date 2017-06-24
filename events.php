@@ -48,16 +48,16 @@ while($rs = mysql_fetch_object($r1))
 	?></div>
 	<div class="col2"><?=$rs->dated?></div>
 	<div class="col3"><?
-	 switch(1)
+	 switch($rs->etype)
 	 {
 	 	case 1:
 			echo "Birthday";
 			break;
 		case 2:
-			echo "Marriage Anniversary";
+			echo "Death Anniversary";
 			break;
 		case 3:
-			echo "Death Anniversary";
+			echo "Marriage Anniversary";
 			break;
 	 }
 	 ?></div><br/>

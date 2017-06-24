@@ -12,6 +12,7 @@ include("./common.php");
 import_request_variables("pg","");
 if($post==1)
 {
+	$debugprinting=1;
 	if($cid==-1)
 	{
 		doquery("insert into persons(firstname) values('newr')");
@@ -20,8 +21,15 @@ if($post==1)
 	}
 	else
 		logThis(EDITPERSON,"$cid");
+
 	doquery("update persons set gender='$gender',firstname='$firstname',lastname='$lastname' where cid=$cid");
+	if(is_numeric($age) and $age>0)
+	{
+		$dt = strtotime("-$age years");
+		$dob = date(s_strftime,$dt);
+	}
 	doquery("update persons set dob='$dob',dod='$dod',address='$address' where cid=$cid");
+
 	doInit();
 	if($rush==1)
 	{
@@ -103,7 +111,9 @@ $textbox_dims = " rows=5 cols=100 ";
 <tr bgcolor="#afefef">
 <td class="fieldname">Date Of Birth (YYYY-MM-DD):</td>
 <td class="fieldvalue"><input maxlength="250" class="editinput"
- type="text" value="<?=$dob?>" name="dob"></td>
+ type="text" value="<?=$dob?>" name="dob">
+or <input size="3" type="text" name="age"/> years old
+</td>
 </tr>
 <tr bgcolor="#afefef">
 <td class="fieldname">Date Of Death (YYYY-MM-DD):</td>

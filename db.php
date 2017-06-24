@@ -1,6 +1,6 @@
 <?php
 $dbh=mysql_connect("localhost", "root", "tj18");
-mysql_select_db ("genealogy",$dbh);
+mysql_select_db ("gene",$dbh);
 $uploaddir = 'C:\\www\\Apache\\htdocs\\genealogy\\pics\\';
 
 /*

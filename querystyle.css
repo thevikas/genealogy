@@ -146,3 +146,10 @@ div.left_spouse
 	margin-bottom: 4px;
 	padding: 2px;
 }
+
+/* 20101212 */
+input.tree-add-child
+{
+	width: 150px;	
+	display:block;
+}

@@ -10,7 +10,7 @@ include("./top.php");
 
 
 $level = 0;
-function showMarriages($cid,$gender,$name,$level,$isDead,$bpic)
+function showMarriages($cid,$gender,$name,$level,$isDead,$bpic,$opt = '')
 {
 	global $high;
 	$married=false;
@@ -82,7 +82,15 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic)
 				<?
 				showChildren($rs1->husband_cid,$rs1->wife_cid,$level);
 				?>
+				<!-- after childred -->
 				</td>
+		<? if(isset($opt['bLastChild'])) { 
+		#WARNING: IF YOU CHANGE BELOW, CHANGE THE UNMARRIED BLOCK TOO
+		?>
+			<td>
+				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a> 
+			</td>
+		<? } ?>
 		</tr>
 		<?
 	}
@@ -93,7 +101,22 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic)
 		$age = getAge($cid,time());
 		if($age!="")
 			echo " ($age)";
-		?></td></tr><?
+		if($gender)
+			$spouse_gender = 0;
+		else
+			$spouse_gender = 1;
+		?>
+		&nbsp;<a href="#" onclick="addspouse(this,<?=$spouse_gender?>,<?=$cid?>)">*</a>
+		</td>
+
+		<? if(isset($opt['bLastChild'])) {
+		#WARNING: IF YOU CHANGE BELOW, CHANGE THE MARRIED BLOCK TOO
+		 ?>
+			<td>
+				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a> 
+			</td>
+		<? } ?>
+		</tr><?
 	}
 	?>
 	</table>
@@ -104,12 +127,15 @@ function showChildren($fcid,$mcid,$level)
 {
 	$child_count=0;
 	$r1 = doquery("select * from persons where father_cid=$fcid and mother_cid=$mcid order by treepos");
+	$children_count = mysql_num_rows($r1);
+	$opt = array('fcid' => $fcid,'mcid' => $mcid);
 	while($rs1=mysql_fetch_object($r1))
 	{
 		#echo "cid=" . $rs1->cid;
 		#exit;
 		$child_count++;
-		showMarriages($rs1->cid,$rs1->gender,$rs1->name,$level+1,$rs1->isDead,$rs1->bPics);
+		$opt['bLastChild'] = $children_count == $child_count;
+		showMarriages($rs1->cid,$rs1->gender,$rs1->name,$level+1,$rs1->isDead,$rs1->bPics,$opt);
 		
 	}	
 }
@@ -196,6 +222,7 @@ function handleperson(e,t)
 		ip.style.width = t.offsetWidth + "px";
 		ip.style.borderWidth = "0px";
 		ip.cid = t.getAttribute("cid");
+		ip.name = "change-name";
 		ip.sibling = t;
 		ip.setAttribute("onkeyup","dokeyup(event,this)");
 		t.style.display="none";
@@ -206,17 +233,112 @@ function handleperson(e,t)
 	}
 }
 
+function addspouse(t,gender,cid)
+{
+	if(document.edit_now)
+	{
+		hideEdit();			
+	}
+	//alert(t.getAttribute("cid"));
+	t.href="#";
+
+	ip1 = document.createElement("input");
+	if(gender)
+		ip1.value = 'Husband';
+	else
+		ip1.value = 'Wife';
+
+	////visibility="hidden";
+	ip1.className = 'tree-add-spouse';
+	ip1.cid = cid;
+	ip1.gender = gender;
+	ip1.sibling = t;
+	ip1.setAttribute("onkeyup","dokeyup(event,this)");
+
+	if(gender)
+		ip1.name = "add-husband";
+	else
+		ip1.name = "add-wife";
+
+	t.style.display="none";
+	t.parentNode.insertBefore(ip1,t);
+
+	document.edit_now = new array(ip,ip2);
+	//.appendChild(ip);
+	return true;
+}
+
+function addchild(t,fcid,mcid)
+{
+	if(document.edit_now)
+	{
+		hideEdit();			
+	}
+	//alert(t.getAttribute("cid"));
+	t.href="#";
+
+	ip1 = document.createElement("input");
+	ip1.value = 'Son';
+	////visibility="hidden";
+	ip1.className = 'tree-add-child';
+	ip1.fcid = fcid;
+	ip1.mcid = mcid;
+	ip1.sibling = t;
+	ip1.setAttribute("onkeyup","dokeyup(event,this)");
+	ip1.name = "male-child";
+	t.style.display="none";
+	t.parentNode.insertBefore(ip1,t);
+
+	ip2 = document.createElement("input");
+	ip2.value = 'Daughter';
+	////visibility="hidden";
+	ip2.className = 'tree-add-child';
+	ip2.fcid = fcid;
+	ip2.mcid = mcid;
+	ip2.sibling = t;
+	ip2.setAttribute("onkeyup","dokeyup(event,this)");
+	ip2.name = "female-child";
+	t.style.display="none";
+	t.parentNode.insertBefore(ip2,t);
+
+	document.edit_now = new array(ip,ip2);
+	//.appendChild(ip);
+	return true;
+}
+
 function dokeyup(e,t)
 {
 	if(e.keyCode == 13)
 	{
-		changeName(t.cid,t.value);
+		if(t.name == 'change-name')
+			changeName(t.cid,t.value);
+		else if(t.name == 'female-child')
+			sendnewChild(0,t.value,t.fcid,t.mcid);
+		else if(t.name == 'male-child')
+			sendnewChild(1,t.value,t.fcid,t.mcid);
+		else if(t.name == 'add-husband')
+			sendnewSpouse(1,t.value,t.cid);
+		else if(t.name == 'add-wife')
+			sendnewSpouse(0,t.value,t.cid);
 		hideEdit();	
 	}
+
 	else if(e.keyCode == 27)
 	{
 		hideEdit();	
 	}
+}
+
+function sendnewChild(gender,childname,fcid,mcid)
+{		
+	var url = "ajax.php?job=2&name=" + childname + "&fcid=" + fcid + "&mcid=" + mcid + "&gender=" + gender + "&r=" + Math.random();
+	sendJob(url);
+}
+
+function sendnewSpouse(gender,name,cid)
+{		
+	var url = "ajax.php?job=3&name=" + name + "&cid=" + cid + "&gender=" + gender + "&r=" + Math.random();
+	sendJob(url);
 }
 
 function changeName(cid,new_name)
@@ -225,9 +347,11 @@ function changeName(cid,new_name)
 	//debugprinting=yes shows lots of debug data
 	//for any purpose, this ajax won't need it.
 	var url = "ajax.php?job=1&cid=" + cid + "&name=" + new_name + "&r=" + Math.random();
-	
-	//alert("url=" + url);
-    // branch for native XMLHttpRequest object
+	sendJob(url);
+}
+
+function sendJob(url)
+{		
     if (window.XMLHttpRequest) {
         xmlobj = new XMLHttpRequest();
         xmlobj.onreadystatechange = processReq;
@@ -250,7 +374,7 @@ function processReq() {
 
 		if (xmlobj.status == 200) {
 			queue_clear=true;
-			alert("done");
+			//alert("done");
 		}
 	}
 }
