@@ -1,4 +1,4 @@
-<?
+<?php
 include("./common.php");
 
 #import_request_variables("pg","");

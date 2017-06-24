@@ -1,4 +1,4 @@
-<?
+<?php
 #genealogy
 #200508030744:vikas:some log now added
 define("NEWPERSON",48); #200706291212

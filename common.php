@@ -1,4 +1,7 @@
-<?
+<?php
+ini_set('short_open_tag','On');
+error_reporting(E_ALL|E_STRICT);
+ini_set('display_errors', 'on');
 require_once("./constants.php");
 require_once("clsPerson.php");
 #ob_start("ob_gzhandler");
@@ -8,7 +11,6 @@ session_start();
 include("db.php");
 $onLoad=false;
 $showsearch=true;
-error_reporting(E_ALL);
 
 if(isset($_SESSION["oid"]))
 	$oid=$_SESSION["oid"];
@@ -40,7 +42,7 @@ if(!isset($yrs_suffix) || $yrs_suffix=="")
  * After these changes new entry will fit in correctly in the existing
  * framework of log viewer with filter support.
  */
- 
+
 /* 200503270629:
  * template support; by default submit_tariff will write
  * moreF and moreG fields in the form it generates.
@@ -54,7 +56,7 @@ $submit_tariff_moreF = 0;
 define("CLEARLOG",0);
 define("NEXT_LOG",70);
 
-define("s_strftime", "Y-m-d"); 
+define("s_strftime", "Y-m-d");
 
 function doquery($sql,$ln=0,$die_on_error=1)
 {
@@ -64,23 +66,24 @@ function doquery($sql,$ln=0,$die_on_error=1)
 	global $last_mysql_errno;
 	if($debugprinting)
 		echo "<!-- doquery($sql) -->\n";
-	
+
 	#causes memory failure. halted for now
 	#200711161226
-	#$debug_dump .= "<font class=query>doquery($sql) /* line $ln */</font>\n";		
-	
-	$result = mysql_query($sql);
-	
-	if($last_mysql_errno = mysql_errno())
+	#$debug_dump .= "<font class=query>doquery($sql) /* line $ln */</font>\n";
+
+	global $dbh;
+	$result = $dbh->query($sql);
+
+	if($last_mysql_errno = $dbh->errno)
 	{
-		$errstr = $last_mysql_error = mysql_error();
+		$errstr = $last_mysql_error = $dbh->error;
 		global $debug_dump;
 		$e_out = "<font color=red>$errstr</font> at line $ln (" . session_id() . ")<br/>";
-		
+
 		//200707311800
 		#$e_out = "\n<hr/>\n" . var_export(debug_backtrace(),true);
 		$debug_dump .= $e_out;
-		
+
 		if($debugprinting || 1)
 		{
 			echo "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/v2.css\" />";
@@ -97,7 +100,7 @@ function doquery($sql,$ln=0,$die_on_error=1)
 		else
 			return false;
 	}
-	
+
 	return $result;
 }
 
@@ -149,7 +152,7 @@ function doInit($full = 0)
 {
 	//return; //201011291222:vikas:doinit is now off
 	$r1 = doquery("select * from persons order by updated desc limit 0,10");
-	while($rs1 = mysql_fetch_object($r1))
+	while($rs1 = mysqli_fetch_object($r1))
 	{
 		$cid = $rs1->cid;
 		doInit_cid($cid,$rs1);
@@ -157,6 +160,7 @@ function doInit($full = 0)
 	if($full)
 		doInit_Dates();
 }
+
 
 #200507251210:vikas:working out the closest posible event in current time
 function doInit_Dates()
@@ -172,7 +176,7 @@ function doInit_Dates()
 	$r1 = doquery($sql);
 	doquery("truncate table eventdates");
 	echo "<p>";
-	while($rs = mysql_fetch_object($r1))
+	while($rs = mysqli_fetch_object($r1))
 	{
     /*
 	* [seconds] => 40
@@ -201,12 +205,12 @@ function doInit_Dates()
 			$dated=mktime(0, 0, 0, $mon, $day,$thisyear);
 			$thisyear++;
 		} while($dated <time());
-		
+
 		$d = getdate($dated);
 		$year = $d["year"];
 		$mon = $d["mon"];
 		$day=$d["mday"];
-		
+
 		$sql = "insert into eventdates(cid,dated,etype) values($cid,'$year-$mon-$day',$etype)";
 		#echo $sql;
 		doquery($sql);
@@ -215,7 +219,7 @@ function doInit_Dates()
 		#exit;
 		#getdate();
 	}
-	
+
 }
 
 
@@ -272,14 +276,15 @@ case ADDPARENT:
 	break;
 default:
     return "U:$t";
-    } 
-} 
+    }
+}
+
 
 function getPersonName($cid)
 {
 	if(strlen($cid)<1 || $cid==0)
 		return "N/A";
-		
+
 	$sql = "select * from persons where cid=$cid";
 
 	$rt = doquery($sql);
@@ -336,6 +341,7 @@ function resetTemplates() {
 	doquery($sql);
 }
 
+
 function showParent($cid,$gender,$child_cid)
 {
 	if($gender)
@@ -354,7 +360,7 @@ function showParent($cid,$gender,$child_cid)
 		<input type="text" name="name">
 		<input type="submit" value="Add">
 		</form>
-		<?
+		<?php
 	}
 	else
 	{
@@ -366,21 +372,21 @@ function showParent($cid,$gender,$child_cid)
 function listFamily($cid,$gender,$father,$mother)
 {
 	global $addchild_sel;
-	
+
 	#200804130940:vikas:php5 change to code to support old function
 	$addchild_sel = cleanvarg("addchild_sel",2);
 
 	#list father and mother
 	showParent($father,1,$cid);
 	showParent($mother,0,$cid);
-	
-	if($father>0 && $mother>0) 
+
+	if($father>0 && $mother>0)
 	{
 	#list siblings
 	$r4 = doquery("select name,gender,cid from persons where father_cid=$father and mother_cid=$mother and cid<>$cid");
 	while($rs4=mysql_fetch_object($r4))
 	{
-		?><li><?=$rs4->gender ? "Brother" : "Sister"?>:<?
+		?><li><?=$rs4->gender ? "Brother" : "Sister"?>:<?php
 		showPersonLink($rs4->cid,$rs4->name,$rs4->gender);
 	}
 	?>
@@ -394,7 +400,7 @@ function listFamily($cid,$gender,$father,$mother)
 			<option value="0">Sister</option></select>
 			<input type="submit" value="Add">
 			</form>
-	<?
+	<?php
 	}
 	if(strlen($addchild_sel)==0) $addchild_sel = 2;
 	$r1 = doquery("select h.name as `husband`,w.name as `wife`,m.* from marriages m,persons h,persons w where w.cid=m.wife_cid and h.cid=m.husband_cid and $cid in (wife_cid,husband_cid)");
@@ -402,12 +408,12 @@ function listFamily($cid,$gender,$father,$mother)
 	while($rs1=mysql_fetch_object($r1))
 	{
 		#list spouse name
-		?><br/><br/>Spouse: <?
+		?><br/><br/>Spouse: <?php
 		if($gender==1)
 			showPersonLink3($rs1->wife_cid,$rs1->wife,0,$cid);
 		else
 			showPersonLink3($rs1->husband_cid,$rs1->husband,1,$cid);
-	
+
 		?>
 		<form action="dom.php" method="post">
 		Date of Marriage (yyyy-mm-dd): <input size="12" type="text" name="dom" value="<?=$rs1->dom?>">
@@ -416,8 +422,8 @@ function listFamily($cid,$gender,$father,$mother)
 		<input type="submit" value="Save">
 		</form>
 		<dir>
-		<?
-			
+		<?php
+
 		$r2=doquery(
 			"select * from persons where father_cid=" . $rs1->husband_cid .
 			" and mother_cid=" . $rs1->wife_cid);
@@ -439,7 +445,7 @@ function listFamily($cid,$gender,$father,$mother)
 			<option value="0" <?=floor($addchild_sel)==0 ? "selected" : ""?>>Daughter</option></select>
 			<input type="submit" value="Add">
 			</form>
-		<?
+		<?php
 	}
 }
 
@@ -472,9 +478,9 @@ function addSpouseForm($cid,$def,$child_cid)
 	Add Spouse: <input type="text" value="<?=$def?>" name="spouse"><input value="Add" type="submit"><br/>
 	<input name="cid" value="<?=$cid?>" type="hidden">
 	<input name="child_cid" value="<?=$child_cid?>" type="hidden">
-	
+
 	</form>
-	<?
+	<?php
 }
 
 function redirect($url)
@@ -483,15 +489,15 @@ function redirect($url)
 	<script type="text/javascript">
 	window.location = "<?=$url?>";
 	</script>
-	<?
+	<?php
 }
 
 function showPersonLink($cid,$name,$gender)
 {
-	
+
 	?>
 	<img src="imgs/<?=$gender==1 ? "man" : "woman" ?>_icon.gif" width="<?=$gender==1 ? "8" : "10" ?>" height="15">
-	<?
+	<?php
 	$yrs=0;
 	$spouse = isMarried($cid,$gender,$yrs);
 	if($spouse>0)
@@ -500,20 +506,20 @@ function showPersonLink($cid,$name,$gender)
 		<img src="imgs/marriage.gif" width="15" height="15">
 		<?
 		if($yrs>0)
-			echo "(" . $yrs . ")";		
+			echo "(" . $yrs . ")";
 		?>
 		<a href="openperson.php?cid=<?=$spouse?>"><img
 		 src="imgs/<?=$gender==0 ? "man" : "woman" ?>_icon.gif" border="0" width="<?=$gender==0 ? "8" : "10" ?>" height="15"></a>
-		<?
+		<?php
 	}
 	?>
-	<a name="cid<?=$cid?>" href="openperson.php?cid=<?=$cid?>"><?=$name?></a> <?
+	<a name="cid<?=$cid?>" href="openperson.php?cid=<?=$cid?>"><?=$name?></a> <?php
 	echo getAge($cid);
 	if(isset($noedit) && $noedit=="1")
 	{
-		?><A href="editperson.php?cid=<?=$cid?>">[Edit]</a><?
+		?><A href="editperson.php?cid=<?=$cid?>">[Edit]</a><?php
 	}
-	
+
 }
 
 function strtotime2($tm)
@@ -539,7 +545,7 @@ function getYearsCount($dt1,$dt2)
 	$s2t = strtotime($dt1 . " ");
 	#echo "[$dt1]";
 	#exit;
-	
+
 	list($year,$mon,$day) = explode("-",$dt1);
 	#echo  $dt1 . ";" . $s2t . ";" . $year2 . "-" . $year . "yrs";
 	#exit;
@@ -558,7 +564,7 @@ function getYearsCount($dt1,$dt2)
 function showPersonLink3($cid,$name,$gender,$spouse_cid)
 {
 	showPersonLink($cid,$name,$gender);
-	?> <A href="deletemarriage.php?cid=<?=$cid?>&spouse_cid=<?=$spouse_cid?>">[Delete Spouse]</a><?
+	?> <A href="deletemarriage.php?cid=<?=$cid?>&spouse_cid=<?=$spouse_cid?>">[Delete Spouse]</a><?php
 }
 
 function showPersonLink2($cid,$name,$gender,$dead,$hroot,$pic)
@@ -569,18 +575,18 @@ function showPersonLink2($cid,$name,$gender,$dead,$hroot,$pic)
 	if($showlink2_detail)
 		return showPersonLink($cid,$name,$gender);
 	$name = str_replace("Yadav","",$name);
-	
+
 	?>
 	<img src="imgs/<?=$dead ? "dead_" : "" ?><?=$gender==1 ? "man" : "woman" ?>_icon.gif" width="<?=$gender==1 ? "8" : "10" ?>" height="15">
-	<a name="p<?=$cid?>" cid="<?=$cid?>" href="openperson.php?cid=<?=$cid?>"><?=$name?></a><?
+	<a name="p<?=$cid?>" cid="<?=$cid?>" href="openperson.php?cid=<?=$cid?>"><?=$name?></a><?php
 	#if father_root is different from father_cid then show the pointer
 	if($pic>0)
 	{
-		?><sup>p</sup><?
+		?><sup>p</sup><?php
 	}
 	if($hroot>0)
 	{
-		?><sup><a href="tree-report.php?cid=<?=$hroot?>#p<?=$cid?>">(!)</a></sup><?
+		?><sup><a href="tree-report.php?cid=<?=$hroot?>#p<?=$cid?>">(!)</a></sup><?php
 	}
 }
 
@@ -588,7 +594,7 @@ function showPersonLink2($cid,$name,$gender,$dead,$hroot,$pic)
 function showPersonLink_export($cid,$name,$gender,$spouse_id,$father_id,$mother_id)
 {
 	global $showlink2_detail;
-	?><?=$cid?>:<?=$gender==1 ? 0 : 1 ?>:<?=$name?>:<?=$spouse_id?>:<?=$father_id?>:<?=$mother_id?><?
+	?><?=$cid?>:<?=$gender==1 ? 0 : 1 ?>:<?=$name?>:<?=$spouse_id?>:<?=$father_id?>:<?=$mother_id?><?php
 	echo "\n";
 }
 
@@ -636,8 +642,8 @@ function getPic($cid,$width,$height)
 		$pid = $rs->pid;
 		$s .= "<img class=\"picinbox\" width=\"50\" src=\"pics/$pid.jpg\">";
 	}
-	
-	
+
+
 	#if no addional pics, we close the tag
 	$s .= "</div>";
 	return $s;

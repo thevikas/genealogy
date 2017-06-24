@@ -1,8 +1,8 @@
-<?
+<?php
  include("./common.php");
  $title = "View Activity Logs";
  include("./top.php");
- 
+
  $ctr1 = $_GET["ctr1"] + 0;
  $filters = $_SESSION["log_filters"];
  #echo "[$filters]";
@@ -21,15 +21,15 @@
 	$r = mysql_query("select count(*) as `c` from logs l where 1=1 $sql2",$dbh);
 	$row=mysql_fetch_object($r);
 	$count = $row->c;
-	
+
 	$sql="select l.* from `logs` l where 1=1 $sql2 order by id desc limit $ctr1,$per_page";
-	
+
 	#echo $sql;
 	$r = doquery($sql,$dbh);
 	?>
-	
+
 	<a href="clearlog.php">Clear Logs</a>
-	
+
 
 	<table border=0 width="100%">
 	<tr class="head">
@@ -38,10 +38,10 @@
 		<td class="thead">Timestamp</td>
 		<td class="thead">Params</td>
 	</tr>
-	<?
+	<?php
 	if(mysql_num_rows($r) == 0)
 	{
-		?><tr><td>No log entried for this request.</td></tr><?
+		?><tr><td>No log entried for this request.</td></tr><?php
 	}
 	while($row = mysql_fetch_object($r))
 	{
@@ -51,25 +51,25 @@
 			<td><a href="?uid=<?=$row->uid;?>"><?=$row->name?></a></td>
 			<td><?=date(s_strftime,$row->dated);?></td>
 			<td><?=$row->param;?>;
-			<font color="blue"><?
+			<font color="blue"><?php
 			echo showLogEntryDetails($row->ltype,$row->param);
 			?></font>
 			</td>
-			</tr><?;
+        </tr><?php
 	}
 ?></table>
 </td></tr>
 <tr><td>
 
 <table width="100%" border=0><tr><td>
-<? if($ctr1>0) { 
-?><a href="<? echo "?fuid=$fuid&ctr1=" . max(0,($ctr1 - $per_page)) ?>&uid=<?=$uid?>	">Prev</a><?
+<?php if($ctr1>0) {
+?><a href="<?php echo "?fuid=$fuid&ctr1=" . max(0,($ctr1 - $per_page)) ?>&uid=<?=$uid?>	">Prev</a><?php
 }
 $ctr1+=$per_page;
-?></td><td align=right><?
+?></td><td align=right><?php
 	if($ctr1<$count) { ?>
-	<a href="<? echo "?fuid=$fuid&ctr1=$ctr1&uid=$uid" ?>">Next</a>
- <?
+	<a href="<?php echo "?fuid=$fuid&ctr1=$ctr1&uid=$uid" ?>">Next</a>
+ <?php
  }
  ?>
 </td></tr></table>
@@ -82,14 +82,14 @@ $ctr1+=$per_page;
 <table border=0>
 <tr>
 <form action="filter2.php" method=post>
-<?
+<?php
 for($ctr=50; $ctr <NEXT_LOG; $ctr++)
 {
 	if($ctr % 7 == 0) echo "</tr><tr>";
 	$checked="";
 	if(strpos(",$filters",",$ctr,")==true) $checked="checked";
 	?><td><input <?=$checked?> type="checkbox" name="types[]" value="<?=$ctr?>" id="type<?=$ctr?>">
-	<label for="type<?=$ctr?>"><?echo logType2String($ctr) ?></label></td><?
+	<label for="type<?=$ctr?>"><?echo logType2String($ctr) ?></label></td><?php
 }
 ?></tr>
 <tr>
@@ -102,7 +102,6 @@ for($ctr=50; $ctr <NEXT_LOG; $ctr++)
 </td></tr>
 </table>
 
-<?
+<?php
 include("./search_form.php");
  include("./bottom.php") ?>
-
