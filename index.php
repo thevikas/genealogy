@@ -1,12 +1,13 @@
 <?php
-include("./common.php");
 
-#import_request_variables("pg","");
-$title = "Search Persons";
-include("./top.php");
-doInit_Dates();
+// change the following paths if necessary
+$yii=dirname(__FILE__).'/../yii/framework/yii.php';
+$config=dirname(__FILE__).'/protected/config/main.php';
 
-include("./search_form.php");
+// remove the following lines when in production mode
+defined('YII_DEBUG') or define('YII_DEBUG',true);
+// specify how many levels of call stack should be shown in each log message
+defined('YII_TRACE_LEVEL') or define('YII_TRACE_LEVEL',3);
 
-include("./bottom.php");
-?>
+require_once($yii);
+Yii::createWebApplication($config)->run();
