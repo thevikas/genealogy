@@ -236,7 +236,8 @@ function addMRU($cid)
 	$sql="update mru set dated=now() where cid=$cid";
 	#echo $sql;
 	doquery($sql);
-	if(mysql_affected_rows()==0)
+	global $dbh;
+	if($dbh->affected_rows==0)
 		doquery("insert into mru(cid,dated) values($cid,now())");
 }
 
@@ -288,7 +289,7 @@ function getPersonName($cid)
 	$sql = "select * from persons where cid=$cid";
 
 	$rt = doquery($sql);
-	$rs = mysql_fetch_object($rt);
+	$rs = $rt->fetch_object();
 	if($rs)
 		return $rs->firstname . " " . $rs->lastname;
 	else
@@ -299,7 +300,7 @@ function getPerson($cid)
 {
 	$sql = "select * from persons where cid=$cid";
 	$rt = doquery($sql);
-	$rs = mysql_fetch_object($rt);
+	$rs = $rt->fetch_object();
 	return $rs;
 }
 
@@ -384,7 +385,7 @@ function listFamily($cid,$gender,$father,$mother)
 	{
 	#list siblings
 	$r4 = doquery("select name,gender,cid from persons where father_cid=$father and mother_cid=$mother and cid<>$cid");
-	while($rs4=mysql_fetch_object($r4))
+	while($rs4=$r4->fetch_object())
 	{
 		?><li><?=$rs4->gender ? "Brother" : "Sister"?>:<?php
 		showPersonLink($rs4->cid,$rs4->name,$rs4->gender);
@@ -405,7 +406,7 @@ function listFamily($cid,$gender,$father,$mother)
 	if(strlen($addchild_sel)==0) $addchild_sel = 2;
 	$r1 = doquery("select h.name as `husband`,w.name as `wife`,m.* from marriages m,persons h,persons w where w.cid=m.wife_cid and h.cid=m.husband_cid and $cid in (wife_cid,husband_cid)");
 	#go through all marriages
-	while($rs1=mysql_fetch_object($r1))
+	while($rs1=$r1->fetch_object())
 	{
 		#list spouse name
 		?><br/><br/>Spouse: <?php
@@ -427,7 +428,7 @@ function listFamily($cid,$gender,$father,$mother)
 		$r2=doquery(
 			"select * from persons where father_cid=" . $rs1->husband_cid .
 			" and mother_cid=" . $rs1->wife_cid);
-		while($rs2=mysql_fetch_object($r2))
+		while($rs2=$r2->fetch_object())
 		{
 			echo "<li>";
 			showPersonLink($rs2->cid,$rs2->name,$rs2->gender);
@@ -603,7 +604,7 @@ function isMarried($cid,$gender,&$yrs)
 	$sql = "select * from marriages where $cid in (husband_cid,wife_cid)";
 	#echo $sql;
 	$r1=doquery($sql);
-	$rs1 = mysql_fetch_object($r1);
+	$rs1 = $r1->fetch_object();
 	if(!$rs1)
 		return 0;
 	$yrs = getYearsCount($rs1->dom,time());
@@ -624,7 +625,7 @@ function isMarried($cid,$gender,&$yrs)
 function getPic($cid,$width,$height)
 {
 	$rs1 = doquery("select * from pics where cid=$cid and name='main'");
-	$rs = mysql_fetch_object($rs1);
+	$rs = $rs1->fetch_object();
 	$name = "c" . $cid . ".jpg";
 	if($width==0)
 	{
@@ -637,7 +638,7 @@ function getPic($cid,$width,$height)
 	}
 	$s = "<div class=\"picbox\"><A href=\"pics/$name\"><img src=\"pics/$name\" width=\"$width\" height=\"$height\"></a>";
 	$rs1 = doquery("select * from pics where cid=$cid and name<>'main'");
-	while($rs = mysql_fetch_object($rs1))
+	while($rs = $rs1->fetch_object())
 	{
 		$pid = $rs->pid;
 		$s .= "<img class=\"picinbox\" width=\"50\" src=\"pics/$pid.jpg\">";

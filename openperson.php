@@ -7,7 +7,7 @@ include("./common.php");
 $cid = cleanvarg("cid",0);
 $sql="select * from persons where cid=$cid";
 $r = doquery($sql);
-$rs=mysql_fetch_object($r);
+$rs=$r->fetch_object();
 $title = "Summary - " . $rs->firstname . " " . $rs->lastname;
 addMRU($cid);
 logThis(SUMMARY,$cid);
@@ -25,12 +25,12 @@ include("./top.php");
 
 <? if($rs->bPics)
 	echo getPic($cid,150,0); ?>
-	
+
 <table bgcolor="#00afaf" width="80%" cellspacing=1 cellpadding=2 border="1">
 <tr bgcolor="#afefef">
 <td class="fieldname">Name:</td><td colspan="3" class="fieldvalue"><?=$rs->firstname?>
 &nbsp;<?=$rs->lastname?><?
-if($rs->isDead) echo " (expired)"; 
+if($rs->isDead) echo " (expired)";
 ?></td>
 <td class="fieldname">Gender:</td>
 <td class="fieldvalue"><?=$rs->gender == 1 ? "Male" : "Female"?>

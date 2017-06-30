@@ -1,6 +1,7 @@
 <?
 include("./common.php");
-import_request_variables("pg","");
+extract($_GET);
+extract($_POST);
 $rs1=getPerson($cid);
 
 #200508260743:vikas:linking spouses added. complicated procecudre still

@@ -17,15 +17,15 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic,$opt = '')
 
 	?>
 	<div class="dtable">
-	<table border="0" class="level<?=$level?>"><?	
+	<table border="0" class="level<?=$level?>"><?
 	#20060708
 	#1) first list the wife and husband
-	
+
 	#$sql = "select w.name as `wife`,h.name as `husband`,m.*,h.treepos as htp,w.treepos as wtp, w.dob as `w_dob`, h.dob as `h_dob`,  w.isDead as `w_dead`, h.isDead as `h_dead`,w.father_cid as `w_father`,h.father_cid as `h_father`,ws.father_root as `w_father_root`,hs.father_root as `h_father_root` from marriages m,persons h,persons w,stats hs,stats ws where hs.cid = h.cid and ws.cid=w.cid and w.cid=wife_cid and h.cid=husband_cid and $cid in (husband_cid,wife_cid) order by w.name";
 	$sql = "select w.name as `wife`,h.name as `husband`,m.*,h.treepos as `htp`,w.treepos as `wtp`, w.dob as `w_dob`, h.dob as `h_dob`,  w.isDead as `w_dead`, h.isDead as `h_dead`,h.father_root as `h_root`,w.father_root as `w_root`,h.father_cid as `h_father_cid`,h.bPics as `h_pic`,w.bPics as `w_pic` from marriages m,persons h,persons w where w.cid=wife_cid and h.cid=husband_cid and $cid in (husband_cid,wife_cid) order by w.name";
 	$r1 = doquery($sql);
-	
-	while($rs1=mysql_fetch_object($r1))
+
+	while($rs1=$r1->fetch_object())
 	{
 		$married=true;
 		if(intval($cid) == intval($high))
@@ -41,21 +41,21 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic,$opt = '')
 			global $wx;
 			?>
 			<a href="?cid=<?=$rs1->h_father_cid?>&wx=<?=$wx?>#p<?=$cid?>">Up</a>
-			<?	
+			<?
 		}
 
 		if($cid == $rs1->husband_cid)
 		{
 			?><div class="left_spouse"><?
-			
+
 			echo $rs1->htp;
-			
+
 			showPersonLink2($cid,$rs1->husband,1,$rs1->h_dead,0,$rs1->h_pic);
 			$age = getYearsCount($rs1->h_dob,time());
 			if($age!="")
 				echo " ($age)";
 			?> + <?
-			
+
 			showPersonLink2($rs1->wife_cid,$rs1->wife,0,$rs1->w_dead,$rs1->w_root,$rs1->w_pic);
 			$age = getYearsCount($rs1->w_dob,time());
 			if($age!="")
@@ -84,11 +84,11 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic,$opt = '')
 				?>
 				<!-- after childred -->
 				</td>
-		<? if(isset($opt['bLastChild'])) { 
+		<? if(isset($opt['bLastChild'])) {
 		#WARNING: IF YOU CHANGE BELOW, CHANGE THE UNMARRIED BLOCK TOO
 		?>
 			<td>
-				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a> 
+				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a>
 			</td>
 		<? } ?>
 		</tr>
@@ -113,7 +113,7 @@ function showMarriages($cid,$gender,$name,$level,$isDead,$bpic,$opt = '')
 		#WARNING: IF YOU CHANGE BELOW, CHANGE THE MARRIED BLOCK TOO
 		 ?>
 			<td>
-				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a> 
+				<a href="javascript:void(0)" onclick="addchild(this,<?=$opt['fcid'] . "," . $opt['mcid'] ?>)">+</a>
 			</td>
 		<? } ?>
 		</tr><?
@@ -127,17 +127,17 @@ function showChildren($fcid,$mcid,$level)
 {
 	$child_count=0;
 	$r1 = doquery("select * from persons where father_cid=$fcid and mother_cid=$mcid order by treepos");
-	$children_count = mysql_num_rows($r1);
+	$children_count = $r1->num_rows;
 	$opt = array('fcid' => $fcid,'mcid' => $mcid);
-	while($rs1=mysql_fetch_object($r1))
+	while($rs1=$r1->fetch_object())
 	{
 		#echo "cid=" . $rs1->cid;
 		#exit;
 		$child_count++;
 		$opt['bLastChild'] = $children_count == $child_count;
 		showMarriages($rs1->cid,$rs1->gender,$rs1->name,$level+1,$rs1->isDead,$rs1->bPics,$opt);
-		
-	}	
+
+	}
 }
 function showFamily($cid)
 {
@@ -161,7 +161,7 @@ if($wx>0)
 
 	</style>
 	<?
-	
+
 }
 ?>
 wx=<?=$wx?>;<a href="?cid=<?=$cid?>&wx=1500">1500px</a>
@@ -212,7 +212,7 @@ function handleperson(e,t)
 	{
 		if(document.edit_now)
 		{
-			hideEdit();			
+			hideEdit();
 		}
 		//alert(t.getAttribute("cid"));
 		t.href="#";
@@ -237,7 +237,7 @@ function addspouse(t,gender,cid)
 {
 	if(document.edit_now)
 	{
-		hideEdit();			
+		hideEdit();
 	}
 	//alert(t.getAttribute("cid"));
 	t.href="#";
@@ -272,7 +272,7 @@ function addchild(t,fcid,mcid)
 {
 	if(document.edit_now)
 	{
-		hideEdit();			
+		hideEdit();
 	}
 	//alert(t.getAttribute("cid"));
 	t.href="#";
@@ -320,29 +320,29 @@ function dokeyup(e,t)
 			sendnewSpouse(1,t.value,t.cid);
 		else if(t.name == 'add-wife')
 			sendnewSpouse(0,t.value,t.cid);
-		hideEdit();	
+		hideEdit();
 	}
 
 	else if(e.keyCode == 27)
 	{
-		hideEdit();	
+		hideEdit();
 	}
 }
 
 function sendnewChild(gender,childname,fcid,mcid)
-{		
+{
 	var url = "ajax.php?job=2&name=" + childname + "&fcid=" + fcid + "&mcid=" + mcid + "&gender=" + gender + "&r=" + Math.random();
 	sendJob(url);
 }
 
 function sendnewSpouse(gender,name,cid)
-{		
+{
 	var url = "ajax.php?job=3&name=" + name + "&cid=" + cid + "&gender=" + gender + "&r=" + Math.random();
 	sendJob(url);
 }
 
 function changeName(cid,new_name)
-{		
+{
 	//clearTimeout(cdown_timer);
 	//debugprinting=yes shows lots of debug data
 	//for any purpose, this ajax won't need it.
@@ -351,7 +351,7 @@ function changeName(cid,new_name)
 }
 
 function sendJob(url)
-{		
+{
     if (window.XMLHttpRequest) {
         xmlobj = new XMLHttpRequest();
         xmlobj.onreadystatechange = processReq;
