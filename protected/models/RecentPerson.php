@@ -14,7 +14,7 @@ class RecentPerson extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.mru';
+		return 'mru';
 	}
 
 	/**

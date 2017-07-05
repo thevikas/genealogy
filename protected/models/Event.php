@@ -18,7 +18,7 @@ class Event extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.eventdates';
+		return 'eventdates';
 	}
 
 	/**

@@ -17,7 +17,7 @@ class Stats extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.stats';
+		return 'stats';
 	}
 
 	/**

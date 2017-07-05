@@ -22,7 +22,7 @@ class Picture extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.pics';
+		return 'pics';
 	}
 
 	/**

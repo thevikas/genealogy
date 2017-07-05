@@ -37,12 +37,28 @@
  */
 class Person extends CActiveRecord
 {
+    
+    public function behaviors()
+    {
+        return array (
+                'NameLinkBehavior' => array (
+                        'class' => 'application.behaviours.NameLinkBehavior',
+                        'controller' => 'person',
+                ),                
+        );
+    }
+    
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'gene.persons';
+		return 'persons';
+	}
+	
+	public function getname()
+	{
+	    return $this->firstname . " " . $this->lastname;
 	}
 
 	/**
@@ -75,12 +91,22 @@ class Person extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'eventdates' => array(self::HAS_MANY, 'Eventdates', 'cid'),
-			'marriages' => array(self::HAS_MANY, 'Marriages', 'husband_cid'),
-			'marriages1' => array(self::HAS_MANY, 'Marriages', 'wife_cid'),
-			'fatherC' => array(self::BELONGS_TO, 'Person', 'father_cid'),
-			'persons' => array(self::HAS_MANY, 'Person', 'father_cid'),
-			'motherC' => array(self::BELONGS_TO, 'Person', 'mother_cid'),
-			'persons1' => array(self::HAS_MANY, 'Person', 'mother_cid'),
+			'marriages1' => array(self::HAS_MANY, 'Marriages', 'husband_cid'),
+			'marriages2' => array(self::HAS_MANY, 'Marriages', 'wife_cid'),
+	        'husbands' => array (
+	                self::MANY_MANY,
+	                'Person',
+	                'marriages(wife_cid,husband_cid)',		                
+	        ),
+	        'wives' => array (
+	                self::MANY_MANY,
+	                'Person',
+	                'marriages(husband_cid,wife_cid)',
+	        ),		        
+			'father' => array(self::BELONGS_TO, 'Person', 'father_cid'),
+			'children1' => array(self::HAS_MANY, 'Person', 'father_cid'),
+			'mother' => array(self::BELONGS_TO, 'Person', 'mother_cid'),
+			'children2' => array(self::HAS_MANY, 'Person', 'mother_cid'),
 			'pics' => array(self::HAS_MANY, 'Pics', 'cid'),
 		);
 	}
@@ -93,8 +119,8 @@ class Person extends CActiveRecord
 		return array(
 			'cid' => 'Cid',
 			'firstname' => 'Firstname',
-			'father_cid' => 'Father Cid',
-			'mother_cid' => 'Mother Cid',
+			'father_cid' => 'Father',
+			'mother_cid' => 'Mother',
 			'dated' => 'Dated',
 			'deleted' => 'Deleted',
 			'lastname' => 'Lastname',

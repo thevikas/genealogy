@@ -17,7 +17,7 @@ class Logs extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.logs';
+		return 'logs';
 	}
 
 	/**

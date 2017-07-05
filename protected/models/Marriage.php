@@ -22,7 +22,7 @@ class Marriage extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'gene.marriages';
+		return 'marriages';
 	}
 
 	/**
