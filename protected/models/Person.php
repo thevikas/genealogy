@@ -27,8 +27,8 @@
  *
  * The followings are the available model relations:
  * @property Eventdates[] $eventdates
- * @property Marriages[] $marriages
  * @property Marriages[] $marriages1
+ * @property Marriages[] $marriages2
  * @property Person $fatherC
  * @property Person[] $persons
  * @property Person $motherC
@@ -54,12 +54,7 @@ class Person extends CActiveRecord
 	public function tableName()
 	{
 		return 'persons';
-	}
-	
-	public function getname()
-	{
-	    return $this->firstname . " " . $this->lastname;
-	}
+	}	
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -91,8 +86,8 @@ class Person extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'eventdates' => array(self::HAS_MANY, 'Eventdates', 'cid'),
-			'marriages1' => array(self::HAS_MANY, 'Marriages', 'husband_cid'),
-			'marriages2' => array(self::HAS_MANY, 'Marriages', 'wife_cid'),
+			'marriages1' => array(self::HAS_MANY, 'Marriage', 'husband_cid'),
+			'marriages2' => array(self::HAS_MANY, 'Marriage', 'wife_cid'),
 	        'husbands' => array (
 	                self::MANY_MANY,
 	                'Person',
@@ -109,6 +104,13 @@ class Person extends CActiveRecord
 			'children2' => array(self::HAS_MANY, 'Person', 'mother_cid'),
 			'pics' => array(self::HAS_MANY, 'Pics', 'cid'),
 		);
+	}
+	
+	public function getchildren()
+	{
+	    if(count($this->children1) == 0)
+	        return $this->children2;
+        return $this->children1;
 	}
 
 	/**

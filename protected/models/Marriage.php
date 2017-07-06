@@ -17,6 +17,17 @@
  */
 class Marriage extends CActiveRecord
 {
+    
+    public function behaviors()
+    {
+        return array (
+                'NameLinkBehavior' => array (
+                        'class' => 'application.behaviours.NameLinkBehavior',
+                        'controller' => 'marriage',
+                ),
+        );
+    }
+    
 	/**
 	 * @return string the associated database table name
 	 */
