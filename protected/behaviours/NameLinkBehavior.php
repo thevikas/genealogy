@@ -10,6 +10,7 @@ class NameLinkBehavior extends CActiveRecordBehavior
     var $namefield;
     var $cacheprefix;
     var $template = "";
+    var $callback = false;
     
     private $SALT = 'NameLinkBehavior';
     
@@ -57,6 +58,9 @@ class NameLinkBehavior extends CActiveRecordBehavior
             
             $output = str_replace("{" . $prop . "}", $v, $output);
         }
+        if($this->callback && empty($params['nocallback']))
+            $output = $this->callback($output,$this->owner);
+        
         return $output;
     }
 

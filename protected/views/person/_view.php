@@ -36,11 +36,11 @@ foreach ( $child as $data->children2 )
 }
 ?>
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo $data->namelink; ?>
+	<?php echo $data->getnamelink(['nocallback' => 1]); ?>
 	<br /> <b><?php echo CHtml::encode($data->getAttributeLabel('father_cid')); ?>:</b>
-	<?php echo $data->father->namelink; ?>
+	<?php echo $data->father->getnamelink(['nocallback' => 1]);?>
 	<br /> <b><?php echo CHtml::encode($data->getAttributeLabel('mother_cid')); ?>:</b>
-	<?php echo $data->mother->namelink; ?>
+	<?php echo $data->mother->getnamelink(['nocallback' => 1]);?>
 	<br />
 	
 	<?php
@@ -48,7 +48,8 @@ foreach ( $child as $data->children2 )
 	if(count($spouses)==1)
 	{
 	    ?><b><?php echo CHtml::encode($data->getAttributeLabel('spouse')); ?>:</b>
-		<?php echo $spouses[0]->namelink; ?>
+		<?php echo $spouses[0]->getnamelink(['nocallback' => 1]);?>
+		 <?php echo ' ' . CHtml::link(__('+child'),['person/create','mother_cid' => $spouses[0]->gender ? $data->cid : $spouses[0]->cid ,'father_cid' => $spouses[0]->gender ? $spouses[0]->cid : $data->cid]); ?>
 		<br />
 		<?php 
 	}
@@ -151,7 +152,7 @@ if (count ( $data->husbands )>1 || count ( $data->wives )>1)
 <?php
 foreach ( array_merge( $data->wives, $data->husbands) as $spouse )
     {
-        echo CHtml::tag ( 'li', [ ], $spouse->namelink . ' ' . CHtml::link(__('create child'),['person/create','mother_cid' => $spouse->gender ? $data->cid : $spouse->cid ,'father_cid' => $spouse->gender ? $spouse->cid : $data->cid]));
+        echo CHtml::tag ( 'li', [ ], $spouse->namelink . ' ' . CHtml::link(__('+child'),['person/create','mother_cid' => $spouse->gender ? $data->cid : $spouse->cid ,'father_cid' => $spouse->gender ? $spouse->cid : $data->cid]));
     }
     ?>
 </ol>

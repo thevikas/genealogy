@@ -32,7 +32,7 @@ class Controller extends CController
 	
 	public static function recentpersons()
 	{
-	    $rps = RecentPerson::model()->findAll(['order' =>'dated desc','limit' => 10]);
+	    $rps = RecentPerson::model()->findAll(['order' =>'dated desc','limit' => '10','offset' => 1]);
 	    $menu=[];
 	    foreach($rps as $rp)
 	        $menu[] = ['label' => $rp->person->name,'url' => ['person/view','id'=> $rp->cid]];
