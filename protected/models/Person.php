@@ -50,6 +50,7 @@ class Person extends CActiveRecord
                             $spouses = array_merge($model->husbands,$model->wives );
                             if(count($spouses)==1)
                                 return $str . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nocallback'=>1]);
+                            return $str;
                         }
                 ),                
         );

@@ -79,7 +79,23 @@ class PersonController extends Controller
 		    if($model->save())
 		    {
 		        RecentPerson::add($model->cid);
-				$this->redirect(array('view','id'=>$model->cid));
+		        if($spouse_id)
+		        {
+		            $m = new Marriage();
+		            $m->husband_cid = $model->gender ? $model->cid : $spouse_id;
+		            $m->wife_cid = $model->gender ? $spouse_id : $model->cid;
+		            if($m->save())
+		              $this->redirect(array('view','id'=>$spouse_id));
+		            else
+		            {
+		                print_r($m->getErrors());
+		                die;
+		            }
+		        }
+		        else if($mother_cid)
+		          $this->redirect(array('view','id'=>$mother_cid));
+				else 
+				    $this->redirect(array('view','id'=>$model->cid));
 		    }
 		}
         else if($spouse)
