@@ -122,13 +122,9 @@ if (count ( $data->husbands ) || count ( $data->wives ))
 	<h2>Spouse</h2>
 	<ol>
 <?php
-    foreach ( $data->husbands as $spouse )
+foreach ( array_merge( $data->wives, $data->husbands) as $spouse )
     {
-        echo CHtml::tag ( 'li', [ ], $spouse->namelink );
-    }
-    foreach ( $data->wives as $spouse )
-    {
-        echo CHtml::tag ( 'li', [ ], $spouse->namelink );
+        echo CHtml::tag ( 'li', [ ], $spouse->namelink . ' ' . CHtml::link(__('create child'),['person/create','mother_cid' => $spouse->gender ? $data->cid : $spouse->cid ,'father_cid' => $spouse->gender ? $spouse->cid : $data->cid]));
     }
     ?>
 </ol>

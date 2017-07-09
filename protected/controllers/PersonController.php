@@ -63,7 +63,7 @@ class PersonController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate($spouse_id = 0)
+	public function actionCreate($spouse_id = 0,$mother_cid=0,$father_cid=0)
 	{
 		$model=new Person;
 		$spouse = null;
@@ -85,6 +85,13 @@ class PersonController extends Controller
         else if($spouse)
         {
             $model->gender = intval(!$spouse->gender);
+        }
+        else 
+        {
+            if($mother_cid)
+                $model->mother_cid = $mother_cid;
+            if($father_cid)
+                $model->father_cid = $father_cid;
         }
 		$this->render('create',array(
 			'model'=>$model,
