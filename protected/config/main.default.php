@@ -18,7 +18,8 @@ return array (
         'import' => array (
                 'application.models.*',
                 'application.components.*',
-                'application.behaviours.*'
+                'application.behaviours.*',
+                'application.controllers.*',
         ),
         
         'modules' => array (

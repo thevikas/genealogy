@@ -239,5 +239,39 @@ class Person extends CActiveRecord
 	    if($age > 200)
 	        $age = 0;
 	    return $age;
-	}
+    }
+
+    /**
+     * Moved from clsPerson
+     * 201707092128:vikas:Gurgaon
+     */
+    function getArray()
+    {
+        $arr = array();
+        $carr = array();
+
+        $name1 = trim($this->firstname . " " . $this->lastname) . " ";
+        $sc = strpos($name1," ");
+        //print "sc=$sc, [$name1] ";
+        $name1 = substr($name1,0,$sc);
+        //print ", result=[$name1]\n";
+        if($name1 == "NoName")
+            $name1 = "?";
+        $arr['name'] = $name1;
+
+        $md = 0;
+
+        $children = Person::model()->findAll(['condition' => ':cid in (father_cid,mother_cid)','params' => [':cid' => $this->cid],'select' => 'firstname,lastname,cid']);
+        #$sql = "select cid from persons where {$this->id} in (father_cid,mother_cid)";
+        #$r = doquery($sql);
+        foreach($children as $child)
+        {
+            $carr[] = $child->getArray();
+            $md = $md < $child_array['depth'] ? $child_array['depth'] : $md;
+        }
+        $arr['children'] = $carr;
+        $arr['depth'] = 1 + $md;
+        return $arr;
+    }
+
 }

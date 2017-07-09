@@ -25,7 +25,10 @@ class PersonController extends Controller
 	            // captcha action renders the CAPTCHA image displayed on the contact page
 	            'tree'=>array(
 	                    'class'=>'TreeAction',
-	            ),	 
+                ),
+                'circlechart'=>array(
+	                    'class'=>'CircleChartAction',
+	            ),	     
             );
 	}
 	
@@ -38,7 +41,7 @@ class PersonController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','tree'),
+				'actions'=>array('index','view','tree','circlechart'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions

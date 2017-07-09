@@ -14,6 +14,7 @@ $this->menu=array(
         array('label'=>__('Create Spouse'), 'url'=>array('create', 'spouse_id'=>$model->cid)),
         array('label'=>__('Add Spouse'), 'url'=>array('marriage/create', 'spouse_id'=>$model->cid,'sg' => $model->gender)),
         array('label'=>__('Tree Report'), 'url'=>array('person/tree', 'id'=>$model->cid)),
+        array('label'=>__('Circle Chart'), 'url'=>array('person/circlechart', 'id'=>$model->cid)),
         array('label'=>__('Delete Person'), 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->cid),'confirm'=>'Are you sure you want to delete this item?')),
         array('label'=>__('Manage Person'), 'url'=>array('admin')),
 );
