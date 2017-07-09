@@ -21,9 +21,17 @@ $this->menu=array(
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'husband_cid',
-		'wife_cid',
-		'dated',
+        array(               // related city displayed as a link
+                'label'=>__('Husband'),
+                'type'=>'raw',
+                'value'=>$model->husband->namelink,
+        ),
+        array(               // related city displayed as a link
+            'label'=>__('Wife'),
+            'type'=>'raw',
+            'value'=>$model->wife->namelink,
+        ),
+		'created',
 		'mid',
 		'comments',
 		'dom',

@@ -62,10 +62,13 @@ class PersonController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($spouse_id = 0)
 	{
 		$model=new Person;
-
+		$spouse = null;
+		if($spouse_id)
+            $spouse = Person::model()->findByPk($spouse_id);
+		
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
@@ -75,9 +78,13 @@ class PersonController extends Controller
 		    if($model->save())
 				$this->redirect(array('view','id'=>$model->cid));
 		}
-
+        else if($spouse)
+        {
+            $model->gender = intval(!$spouse->gender);
+        }
 		$this->render('create',array(
 			'model'=>$model,
+	        'spouse' => $spouse,
 		));
 	}
 

@@ -1,6 +1,7 @@
 <?php
 /* @var $this PersonController */
 /* @var $model Person */
+/* @var $spouse Person */
 /* @var $form CActiveForm */
 Yii::app()->clientScript->registerCoreScript('autocomplete');
 ?>
@@ -112,6 +113,9 @@ Yii::app()->clientScript->registerCoreScript('autocomplete');
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>
 
-<?php $this->endWidget(); ?>
+<?php
+if($spouse)
+    echo CHtml::hiddenField('spouse_id',$spouse->cid); 
+$this->endWidget(); ?>
 
 </div><!-- form -->

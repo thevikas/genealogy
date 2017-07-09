@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'gene.marriages':
  * @property integer $husband_cid
  * @property integer $wife_cid
- * @property string $dated
+ * @property string $created
  * @property integer $mid
  * @property string $comments
  * @property string $dom
@@ -16,11 +16,16 @@
  * @property Persons $wifeC
  */
 class Marriage extends CActiveRecord
-{
-    
+{                  
+                
     public function behaviors()
     {
         return array (
+                'CTimestampBehavior' => array (
+                        'class' => 'zii.behaviors.CTimestampBehavior',
+                        'createAttribute' => 'created',
+                        'updateAttribute' => null,
+                ), 
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
                         'controller' => 'marriage',
@@ -44,14 +49,20 @@ class Marriage extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dated', 'required'),
+			array('husband_cid, wife_cid', 'required'),
 			array('husband_cid, wife_cid', 'numerical', 'integerOnly'=>true),
 			array('comments', 'length', 'max'=>255),
 			array('dom', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('husband_cid, wife_cid, dated, mid, comments, dom', 'safe', 'on'=>'search'),
+			array('husband_cid, wife_cid, created, mid, comments, dom', 'safe', 'on'=>'search'),
 		);
+	}
+	
+	public function beforeSave()
+	{
+	    $this->dom = empty($this->dom) ? null : $this->dom;
+	    return parent::beforeSave();
 	}
 
 	/**
@@ -62,8 +73,8 @@ class Marriage extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'husbandC' => array(self::BELONGS_TO, 'Persons', 'husband_cid'),
-			'wifeC' => array(self::BELONGS_TO, 'Persons', 'wife_cid'),
+			'husband' => array(self::BELONGS_TO, 'Person', 'husband_cid'),
+			'wife' => array(self::BELONGS_TO, 'Person', 'wife_cid'),
 		);
 	}
 
@@ -71,16 +82,16 @@ class Marriage extends CActiveRecord
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
-	{
-		return array(
-			'husband_cid' => 'Husband Cid',
-			'wife_cid' => 'Wife Cid',
-			'dated' => 'Dated',
-			'mid' => 'Mid',
-			'comments' => 'Comments',
-			'dom' => 'Dom',
-		);
-	}
+    {
+        return array (
+                'husband_cid' => __ ( 'Husband Cid' ),
+                'wife_cid' => __ ( 'Wife Cid' ),
+                'created' => __ ( 'created' ),
+                'mid' => __ ( 'Mid' ),
+                'comments' => __ ( 'Comments' ),
+                'dom' => __ ( 'Date of Marriage' ) 
+        );
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -102,7 +113,7 @@ class Marriage extends CActiveRecord
 
 		$criteria->compare('husband_cid',$this->husband_cid);
 		$criteria->compare('wife_cid',$this->wife_cid);
-		$criteria->compare('dated',$this->dated,true);
+		$criteria->compare('created',$this->created,true);
 		$criteria->compare('mid',$this->mid);
 		$criteria->compare('comments',$this->comments,true);
 		$criteria->compare('dom',$this->dom,true);

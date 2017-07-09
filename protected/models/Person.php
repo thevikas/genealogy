@@ -127,30 +127,30 @@ class Person extends CActiveRecord
 	 * @return array customized attribute labels (name=>label)
 	 */
 	public function attributeLabels()
-	{
-		return array(
-			'cid' => 'Cid',
-			'firstname' => 'Firstname',
-			'father_cid' => 'Father',
-			'mother_cid' => 'Mother',
-			'created' => 'Created',
-			'deleted' => 'Deleted',
-			'lastname' => 'Lastname',
-			'gender' => 'Gender',
-			'name' => 'Name',
-			'dob' => 'Dob',
-			'dod' => 'Dod',
-			'bPics' => 'B Pics',
-			'treepos' => 'Treepos',
-			'isDead' => 'Is Dead',
-			'address' => 'Address',
-			'phone_mobile' => 'Phone Mobile',
-			'phone_res' => 'Phone Res',
-			'phone_off' => 'Phone Off',
-			'father_root' => 'Father Root',
-			'updated' => 'Updated',
-		);
-	}
+    {
+        return array (
+                'cid' => 'Cid',
+                'firstname' => __ ( 'Firstname' ),
+                'father_cid' => __ ( 'Father' ),
+                'mother_cid' => __ ( 'Mother' ),
+                'created' => __ ( 'Created' ),
+                'deleted' => __ ( 'Deleted' ),
+                'lastname' => __ ( 'Lastname' ),
+                'gender' => __ ( 'Gender' ),
+                'name' => __ ( 'Name' ),
+                'dob' => __ ( 'Dob' ),
+                'dod' => __ ( 'Dod' ),
+                'bPics' => __ ( 'B Pics' ),
+                'treepos' => __ ( 'Treepos' ),
+                'isDead' => __ ( 'Is Dead' ),
+                'address' => __ ( 'Address' ),
+                'phone_mobile' => __ ( 'Phone Mobile' ),
+                'phone_res' => __ ( 'Phone Res' ),
+                'phone_off' => __ ( 'Phone Off' ),
+                'father_root' => __ ( 'Father Root' ),
+                'updated' => __ ( 'Updated' ) 
+        );
+    }
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
