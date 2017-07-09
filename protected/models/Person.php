@@ -8,7 +8,7 @@
  * @property string $firstname
  * @property integer $father_cid
  * @property integer $mother_cid
- * @property string $dated
+ * @property string $created
  * @property integer $deleted
  * @property string $lastname
  * @property integer $gender
@@ -44,8 +44,19 @@ class Person extends CActiveRecord
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
                         'controller' => 'person',
+                        'template' => '{link} {age}yrs'
                 ),                
         );
+    }
+    
+    public function beforeSave()
+    {
+        $this->name = $this->firstname . ' ' . $this->lastname;
+        
+        $this->dob = empty($this->dob) ? null : $this->dob;
+        $this->dod = empty($this->dod) ? null : $this->dod;
+        
+        return parent::beforeSave();
     }
     
 	/**
@@ -64,16 +75,15 @@ class Person extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('updated', 'required'),
 			array('father_cid, mother_cid, deleted, gender, bPics, isDead', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname, name', 'length', 'max'=>255),
 			array('treepos, father_root', 'length', 'max'=>10),
 			array('address', 'length', 'max'=>250),
 			array('phone_mobile, phone_res, phone_off', 'length', 'max'=>20),
-			array('dated, dob, dod', 'safe'),
+			array('created, dob, dod', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cid, firstname, father_cid, mother_cid, dated, deleted, lastname, gender, name, dob, dod, bPics, treepos, isDead, address, phone_mobile, phone_res, phone_off, father_root, updated', 'safe', 'on'=>'search'),
+			array('cid, firstname, father_cid, mother_cid, created, deleted, lastname, gender, name, dob, dod, bPics, treepos, isDead, address, phone_mobile, phone_res, phone_off, father_root, updated', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -123,7 +133,7 @@ class Person extends CActiveRecord
 			'firstname' => 'Firstname',
 			'father_cid' => 'Father',
 			'mother_cid' => 'Mother',
-			'dated' => 'Dated',
+			'created' => 'Created',
 			'deleted' => 'Deleted',
 			'lastname' => 'Lastname',
 			'gender' => 'Gender',
@@ -195,5 +205,16 @@ class Person extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+	
+	public function getage()
+	{
+	    $datetime1 = new DateTime($this->dob);
+	    $datetime2 = new DateTime();
+	    $interval = $datetime1->diff($datetime2);
+	    $age = $interval->format('%Y');
+	    if($age > 200)
+	        $age = 0;
+	    return $age;
 	}
 }

@@ -9,6 +9,8 @@ class NameLinkBehavior extends CActiveRecordBehavior
     var $controller;
     var $namefield;
     var $cacheprefix;
+    var $template = "";
+    
     private $SALT = 'NameLinkBehavior';
     
     public function attach($owner)
@@ -32,8 +34,30 @@ class NameLinkBehavior extends CActiveRecordBehavior
             $linkprops ['class'] = '';
         
         $linkprops ['class'] .= ' nl ' . get_class ( $model );
+        $linkhtml = CHtml::link ( $name, $linkparams, $linkprops );
+        if(empty($this->template))
+            return $linkhtml;
         
-        return CHtml::link ( $name, $linkparams, $linkprops );
+        $mats = [];
+        if(!preg_match_all("/{(?<prop>\w+)}/", $this->template,$mats))
+            return $linkhtml;
+        if(empty($mats['prop']))
+            return $linkhtml;
+        
+        $output = $this->template;
+        
+        foreach($mats['prop'] as $prop)
+        {
+            $v = "";
+            $propname = strtolower($prop);
+            if($propname == 'link')
+                $v = $linkhtml;
+            elseif(!empty($this->owner->$propname))
+                $v = $this->owner->$propname;
+            
+            $output = str_replace("{" . $prop . "}", $v, $output);
+        }
+        return $output;
     }
 
     public function namelinkprops()

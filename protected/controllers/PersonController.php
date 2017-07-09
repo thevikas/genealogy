@@ -51,8 +51,10 @@ class PersonController extends Controller
 	 */
 	public function actionView($id)
 	{
+	    $model = $this->loadModel($id);
+	    $this->pageTitle= $model->name;
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$model,
 		));
 	}
 
@@ -70,7 +72,7 @@ class PersonController extends Controller
 		if(isset($_POST['Person']))
 		{
 			$model->attributes=$_POST['Person'];
-			if($model->save())
+		    if($model->save())
 				$this->redirect(array('view','id'=>$model->cid));
 		}
 

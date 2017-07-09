@@ -1,5 +1,4 @@
 <?php
-
 class SiteController extends Controller
 {
 	/**
@@ -9,7 +8,10 @@ class SiteController extends Controller
 	{
 		return array(
 			// captcha action renders the CAPTCHA image displayed on the contact page
-			'captcha'=>array(
+	        'jsobjects'=>array(
+	                'class'=>'JsObjectsAction',
+	        ),	        
+	        'captcha'=>array(
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
 			),
