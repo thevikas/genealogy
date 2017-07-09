@@ -58,8 +58,7 @@ class NameLinkBehavior extends CActiveRecordBehavior
             
             $output = str_replace("{" . $prop . "}", $v, $output);
         }
-        if($this->callback && empty($params['nocallback']))
-            $output = $this->callback($output,$this->owner);
+        $output = $this->callback($output,$this->owner,$params);
         
         return $output;
     }

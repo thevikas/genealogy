@@ -36,19 +36,26 @@ foreach ( $child as $data->children2 )
 }
 ?>
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
-	<?php echo $data->getnamelink(['nocallback' => 1]); ?>
-	<br /> <b><?php echo CHtml::encode($data->getAttributeLabel('father_cid')); ?>:</b>
-	<?php echo $data->father->getnamelink(['nocallback' => 1]);?>
-	<br /> <b><?php echo CHtml::encode($data->getAttributeLabel('mother_cid')); ?>:</b>
-	<?php echo $data->mother->getnamelink(['nocallback' => 1]);?>
+	<?php echo $data->getnamelink(['nospouse' => 1]); ?>
 	<br />
 	
-	<?php
+	<?php if($data->father_cid) {?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('father_cid')); ?>:</b>
+	<?php echo $data->father->getnamelink(['nospouse' => 1]);?>
+	<br /> 
+	<?php }
+	
+	if($data->mother_cid) {?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('mother_cid')); ?>:</b>
+	<?php echo $data->mother->getnamelink(['nospouse' => 1]);?>
+	<br />
+	<?php }
+	
 	$spouses = array_merge($data->husbands,$data->wives );
 	if(count($spouses)==1)
 	{
 	    ?><b><?php echo CHtml::encode($data->getAttributeLabel('spouse')); ?>:</b>
-		<?php echo $spouses[0]->getnamelink(['nocallback' => 1]);?>
+		<?php echo $spouses[0]->getnamelink(['nospouse' => 1]);?>
 		 <?php echo ' ' . CHtml::link(__('+child'),['person/create','mother_cid' => $spouses[0]->gender ? $data->cid : $spouses[0]->cid ,'father_cid' => $spouses[0]->gender ? $spouses[0]->cid : $data->cid]); ?>
 		<br />
 		<?php 

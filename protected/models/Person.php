@@ -46,11 +46,15 @@ class Person extends CActiveRecord
                         'class' => 'application.behaviours.NameLinkBehavior',
                         'controller' => 'person',
                         'template' => '{link} {age}yrs',
-                        'callback' => function($str,$model)
+                        'callback' => function($str,$model,$params)
                         {
-                            $spouses = array_merge($model->husbands,$model->wives );
-                            if(count($spouses)==1)
-                                return $str . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nocallback'=>1]);
+                            if(empty($params['nospouse']))
+                            {
+                                $spouses = array_merge($model->husbands,$model->wives );
+                                if(count($spouses)==1)
+                                    $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
+                            }
+                            $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;                            
                             return $str;
                         }
                 ),                

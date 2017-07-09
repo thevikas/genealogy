@@ -158,7 +158,7 @@ if (isset ( $opt ['bLastChild'] ))
         global $counter;
         $counter ++;
         echo $img = CHtml::image( "/imgs/" . ($dead ? "dead_" : "") . ($gender==1 ? "man" : "woman") . "_icon.gif",['height' => 15]);
-        echo $person->getnamelink(['nocallback' => 1]);
+        echo $person->getnamelink(['nospouse' => 1]);
         
         // if father_root is different from father_cid then show the pointer
         if ($pic > 0)
