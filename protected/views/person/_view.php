@@ -2,39 +2,7 @@
 /* @var $this PersonController */
 /* @var $data Person */
 ?>
-
 <div class="view">
-<?php
-foreach ( $spouse as $data->marriages1 )
-{
-    echo $spouse->namelink;
-}
-
-foreach ( $spouse as $data->marriages2 )
-{
-    echo $spouse->namelink;
-}
-
-foreach ( $spouse as $data->wives )
-{
-    echo $spouse->namelink;
-}
-
-foreach ( $spouse as $data->husbands )
-{
-    echo $spouse->namelink;
-}
-
-foreach ( $child as $data->children1 )
-{
-    echo $child->namelink;
-}
-
-foreach ( $child as $data->children2 )
-{
-    echo $child->namelink;
-}
-?>
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
 	<?php echo $data->getnamelink(['nospouse' => 1]); ?>
 	<br />
