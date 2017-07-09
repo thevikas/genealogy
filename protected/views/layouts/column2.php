@@ -16,6 +16,19 @@
 			'htmlOptions'=>array('class'=>'operations'),
 		));
 		$this->endWidget();
+		
+		
+		$this->beginWidget('zii.widgets.CPortlet', array(
+		        'title'=>__('Recent People'),
+		));
+		
+		$this->widget('zii.widgets.CMenu', array(
+		        'items'=>Controller::recentpersons(),
+		        //'title'=>'Recent Persons',
+		));
+		
+		
+		$this->endWidget();
 	?>
 	</div><!-- sidebar -->
 </div>

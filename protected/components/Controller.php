@@ -30,6 +30,15 @@ class Controller extends CController
 	    return move_uploaded_file($from, $to);
 	}
 	
+	public static function recentpersons()
+	{
+	    $rps = RecentPerson::model()->findAll(['order' =>'dated desc','limit' => 10]);
+	    $menu=[];
+	    foreach($rps as $rp)
+	        $menu[] = ['label' => $rp->person->name,'url' => ['person/view','id'=> $rp->cid]];
+	    return $menu;
+	}
+	
 	function render($view, $data = null, $return = false)
 	{
 	    $out = parent::render ( $view, $data, true );

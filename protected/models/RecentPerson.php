@@ -9,6 +9,22 @@
  */
 class RecentPerson extends CActiveRecord
 {
+    
+    public function behaviors()
+    {
+        return array (
+                'CTimestampBehavior' => array (
+                        'class' => 'zii.behaviors.CTimestampBehavior',
+                        'createAttribute' => 'dated',
+                        'updateAttribute' => null,
+                ),
+                'NameLinkBehavior' => array (
+                        'class' => 'application.behaviours.NameLinkBehavior',
+                        'controller' => 'person',
+                ),
+        );
+    }
+    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -25,12 +41,20 @@ class RecentPerson extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('dated', 'required'),
+			array('cid', 'required'),
 			array('cid', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('cid, dated', 'safe', 'on'=>'search'),
 		);
+	}
+	
+	public static function add($id)
+	{
+	    RecentPerson::model()->deleteAllByAttributes(['cid' => $id]);
+	    $rp = new RecentPerson();
+	    $rp->cid = $id;
+	    $rp->save();
 	}
 
 	/**
@@ -41,6 +65,7 @@ class RecentPerson extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+	        'person' => array(self::BELONGS_TO, 'Person', 'cid'),
 		);
 	}
 

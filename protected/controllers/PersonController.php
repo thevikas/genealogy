@@ -53,6 +53,7 @@ class PersonController extends Controller
 	{
 	    $model = $this->loadModel($id);
 	    $this->pageTitle= $model->name;
+	    RecentPerson::add($id);
 		$this->render('view',array(
 			'model'=>$model,
 		));
@@ -76,7 +77,10 @@ class PersonController extends Controller
 		{
 			$model->attributes=$_POST['Person'];
 		    if($model->save())
+		    {
+		        RecentPerson::add($model->cid);
 				$this->redirect(array('view','id'=>$model->cid));
+		    }
 		}
         else if($spouse)
         {
