@@ -42,8 +42,16 @@ foreach ( $child as $data->children2 )
 	<br /> <b><?php echo CHtml::encode($data->getAttributeLabel('mother_cid')); ?>:</b>
 	<?php echo $data->mother->namelink; ?>
 	<br />
-
+	
 	<?php
+	$spouses = array_merge($data->husbands,$data->wives );
+	if(count($spouses)==1)
+	{
+	    ?><b><?php echo CHtml::encode($data->getAttributeLabel('spouse')); ?>:</b>
+		<?php echo $spouses[0]->namelink; ?>
+		<br />
+		<?php 
+	}
 /*
  * <b><?php echo CHtml::encode($data->getAttributeLabel('gender'));
  * ?>:</b>
@@ -114,12 +122,31 @@ foreach ( $child as $data->children2 )
 <?php
 if (! $detailed)
     return;
-
-if (count ( $data->husbands ) || count ( $data->wives ))
+if (count ( $data->father->children1 ))
 {
     ?>
 <div class="view">
-	<h2>Spouse</h2>
+	<h2><?php echo __('Siblings')?></h2>
+	<ol>
+<?php
+foreach ( $data->father->children1 as $per )
+    {
+        if($per->cid == $data->cid)
+            continue;
+        
+        echo CHtml::tag ( 'li', [ ], $per->namelink );
+    }
+    ?>
+</ol>
+</div>
+<?php
+}
+
+if (count ( $data->husbands )>1 || count ( $data->wives )>1)
+{
+    ?>
+<div class="view">
+	<h2><?php echo __('Spouse') ?></h2>
 	<ol>
 <?php
 foreach ( array_merge( $data->wives, $data->husbands) as $spouse )

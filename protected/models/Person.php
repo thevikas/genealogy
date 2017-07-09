@@ -148,7 +148,8 @@ class Person extends CActiveRecord
                 'phone_res' => __ ( 'Phone Res' ),
                 'phone_off' => __ ( 'Phone Off' ),
                 'father_root' => __ ( 'Father Root' ),
-                'updated' => __ ( 'Updated' ) 
+                'updated' => __ ( 'Updated' ) ,
+                'spouse' => __('Spouse'),
         );
     }
 
