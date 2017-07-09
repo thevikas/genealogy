@@ -64,7 +64,7 @@ class TreeAction extends CAction
             //{
                 ?><div class="left_spouse"><?                
                 echo $spouse->treepos;                
-                echo $spouse->namelink;
+                echo $spouse->getnamelink(['flip' => 1]);
                 ?></div><?
             //}
             /*else

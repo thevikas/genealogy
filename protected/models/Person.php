@@ -52,7 +52,12 @@ class Person extends CActiveRecord
                             {
                                 $spouses = array_merge($model->husbands,$model->wives );
                                 if(count($spouses)==1)
-                                    $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
+                                {
+                                    if(!empty($params['flip']))        
+                                        $str = $spouses[0]->getnamelink(['nospouse'=>1]) . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $str;
+                                    else
+                                        $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
+                                }                                
                             }
                             $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;                            
                             return $str;
