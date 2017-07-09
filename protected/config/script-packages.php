@@ -29,20 +29,7 @@ return array (
                 'depends' => [
                         'jquery'
                 ]
-        ],
-        'matquickform' => [
-                'baseCssUrl' => '/css',
-                'css' => [ 
-                        'matquickform.css' 
-                ],
-                'js' => [
-                        'matquickform.js'
-                ],
-                'depends' => [
-                        'jquery',
-                        'jquery-ui'
-                ]
-        ],
+        ],        
         'datepicker' => [
                 'baseCssUrl' => '/css',
                 'css' => [ 
@@ -56,27 +43,20 @@ return array (
                         'jquery',
                         'jquery-ui'
                 ]
-        ],
-        'daychart' => [
+        ],  
+        'tree' => [
                 'baseCssUrl' => '/css',
                 'css' => [
-                        'bigscreen.css'
+                        'grayreport2.css'
                 ],
-                'depends' => [
-                        'jquery',
-                ]
-        ],
-        'gnattchart' => [
-                'baseCssUrl' => '/css',
-                'css' => [
-                        'bigscreen.css',
-                        'gnatt.css'
+                'js' => [
+                        'tree.js'
                 ],
                 'depends' => [
                         'jquery',
                         'jquery-ui'
-                ],
-            ],
+                ]
+        ],  
         'autocomplete' => [
                 'baseCssUrl' => '/css',
                 'js' => [

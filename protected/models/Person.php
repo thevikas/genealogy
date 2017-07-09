@@ -34,6 +34,7 @@
  * @property Person $motherC
  * @property Person[] $persons1
  * @property Pics[] $pics
+ * @property Person[] $spouses
  */
 class Person extends CActiveRecord
 {
@@ -64,6 +65,11 @@ class Person extends CActiveRecord
         $this->dod = empty($this->dod) ? null : $this->dod;
         
         return parent::beforeSave();
+    }
+    
+    public function getspouses()
+    {
+        return array_merge($this->husbands,$this->wives);
     }
     
 	/**

@@ -227,3 +227,8 @@ div.search-form
 {
 	background: #80CFFF;
 }
+
+body.fullwidth .container
+{
+	width: 100%;
+}

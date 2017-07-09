@@ -18,7 +18,7 @@
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>
 
-<body>
+<body <?php if(!empty($bodyclass)) echo 'class="' . $bodyclass . '"';?>>
 
 <div class="container" id="page">
 
