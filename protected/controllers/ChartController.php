@@ -48,6 +48,7 @@ class ChartController extends Controller
 	    $chartname[] = "dendogram";
 	    $chartname[] = "radial";
 	    $chartname[] = "dndtree";
+	    $chartname[] = "wheel";
 	    //Yii::app ()->clientScript->registerCoreScript ( 'd3dtree' );
 	    $this->pageTitle = __ ( 'D3 Family Circle Chart' );
 	    $this->layout = false;//'//layouts/fullwidth';

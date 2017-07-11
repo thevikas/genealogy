@@ -96,7 +96,7 @@
 </div>
 
 <?php
-if (! $detailed)
+if (empty($detailed))
     return;
 if (count ( $data->father->children1 ))
 {
