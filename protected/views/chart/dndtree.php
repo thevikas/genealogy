@@ -47,7 +47,7 @@ var jsonurl = '<?=$jsonurl?>';
 </script>
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://d3js.org/d3.v3.js"></script>
-<script src="/js/dndTree.js"></script>
+<script src="/js/dndtree.js"></script>
 <body>
 <p>
 <?php
