@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 /**
  * Just ads a method to all models to dump a html link to view action of their controllers
