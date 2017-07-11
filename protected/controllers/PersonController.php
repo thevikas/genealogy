@@ -26,7 +26,10 @@ class PersonController extends Controller
 	            'tree'=>array(
 	                    'class'=>'TreeAction',
                 ),
-                'circlechart'=>array(
+	            'd3chart'=>array(
+	                    'class'=>'D3Action',
+	            ),
+	            'circlechart'=>array(
 	                    'class'=>'CircleChartAction',
 	            ),	     
             );
@@ -41,7 +44,7 @@ class PersonController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','tree','circlechart'),
+				'actions'=>array('index','view','tree','circlechart','d3chart'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions

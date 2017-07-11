@@ -1,4 +1,5 @@
 <?php
+die(__FILE__);
 require_once(Yii::app()->basePath . "/../circlechartlib.php");
 #print_r($person->getArray());
 /*

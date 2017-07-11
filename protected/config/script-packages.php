@@ -57,6 +57,30 @@ return array (
                         'jquery-ui'
                 ]
         ],  
+        'd3' => [
+                'baseCssUrl' => '/css',
+                'css' => [
+                ],
+                'js' => [
+                        'lodash.min.js',
+                        'd3.v4.min.js',
+                ],
+                'depends' => [
+                ]
+        ],
+        'd3dtree' => [
+                'baseCssUrl' => '/css',
+                'css' => [
+                ],
+                'js' => [
+                        'builder.js',
+                        'dtree.js',
+                        'dtree_init.js',
+                ],
+                'depends' => [
+                        'd3',
+                ]
+        ],
         'autocomplete' => [
                 'baseCssUrl' => '/css',
                 'js' => [

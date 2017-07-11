@@ -9,6 +9,7 @@ class CircleChartAction extends CAction
         $this->root_id = $id;
         $this->controller->layout = false;//'//layouts/fullwidth';
         $this->controller->render('circlechart',['person' => Person::model()->findByPk($id)]);
+        die(__FILE__);
     }
 }
     

@@ -255,5 +255,3 @@ function drawLevels($maxlevel,$arr)
    <?
 
 }
-
-?>

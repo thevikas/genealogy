@@ -35,6 +35,7 @@
  * @property Person[] $persons1
  * @property Pics[] $pics
  * @property Person[] $spouses
+ * @property array $D3
  */
 class Person extends CActiveRecord
 {
@@ -42,27 +43,27 @@ class Person extends CActiveRecord
     public function behaviors()
     {
         return array (
-                'NameLinkBehavior' => array (
-                        'class' => 'application.behaviours.NameLinkBehavior',
-                        'controller' => 'person',
-                        'template' => '{link} {age}yrs',
-                        'callback' => function($str,$model,$params)
+            'NameLinkBehavior' => array (
+                'class' => 'application.behaviours.NameLinkBehavior',
+                'controller' => 'person',
+                'template' => '{link} {age}yrs',
+                'callback' => function($str,$model,$params)
+                {
+                    if(empty($params['nospouse']))
+                    {
+                        $spouses = array_merge($model->husbands,$model->wives );
+                        if(count($spouses)==1)
                         {
-                            if(empty($params['nospouse']))
-                            {
-                                $spouses = array_merge($model->husbands,$model->wives );
-                                if(count($spouses)==1)
-                                {
-                                    if(!empty($params['flip']))        
-                                        $str = $spouses[0]->getnamelink(['nospouse'=>1]) . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $str;
-                                    else
-                                        $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
-                                }                                
-                            }
-                            $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;                            
-                            return $str;
-                        }
-                ),                
+                            if(!empty($params['flip']))        
+                                $str = $spouses[0]->getnamelink(['nospouse'=>1]) . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $str;
+                            else
+                                $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
+                        }                                
+                    }
+                    $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;                            
+                    return $str;
+                }
+            ),                
         );
     }
     
@@ -118,7 +119,7 @@ class Person extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'eventdates' => array(self::HAS_MANY, 'Eventdates', 'cid'),
-			'marriages1' => array(self::HAS_MANY, 'Marriage', 'husband_cid'),
+	        'marriages1' => array(self::HAS_MANY, 'Marriage', 'husband_cid'),
 			'marriages2' => array(self::HAS_MANY, 'Marriage', 'wife_cid'),
 	        'husbands' => array (
 	                self::MANY_MANY,
@@ -272,6 +273,63 @@ class Person extends CActiveRecord
         $arr['children'] = $carr;
         $arr['depth'] = 1 + $md;
         return $arr;
+    }
+    
+    public function getD3marriages($depth=1)
+    {
+        $data = [];
+        $data['name'] = $this->name;
+        $data["class"] = $this->gender ? 'man' : 'woman';
+        $data["textClass"] = "nodeText";
+        $data["depthOffset"] = $depth;
+        if(count($this->spouses))
+        {
+            foreach($this->spouses as $spouse)
+            {
+                $marriage = [];
+                $marriage['spouse'] = ['name' => $spouse->name,'class' => $spouse->gender ? 'man' : 'woman'];
+                $children = Person::model ()->findAll ( 
+                    [ 
+                        'condition' => 'father_cid in (:id1,:id2) and mother_cid in (:id1,:id2)',
+                        'params' => [ 
+                            'id1' => $this->cid,
+                            'id2' => $spouse->cid 
+                        ] 
+                    ] );
+                foreach($children as $child)
+                {
+                    $marriage['children'][] = $child->getD3($depth+1);
+                }
+            }
+            $data['marriages'][] = $marriage;
+        }
+        $data['extra'] = "";
+        return $data;
+        /*
+            $data['marriages'] = $marriages;
+                marriages: [{                           // Marriages is a list of nodes
+                    spouse: {                             // Each marriage has one spouse
+                        name: "Mother",
+                    },
+                    children: [{                          // List of children nodes
+                        name: "Child",
+                    }]
+            }],
+            extra: {}*/          
+    }
+    
+    public function getD3hierarchy()
+    {
+        $data = [];
+        $data['name'] = $this->name;
+        if(count($this->children))
+        {
+            foreach($this->children as $child)
+            {
+                $data['children'][] = $child->D3hierarchy;
+            }
+        }
+        return $data;
     }
 
 }
