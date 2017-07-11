@@ -32,20 +32,18 @@ echo $mother . " " . $father;
 ?>
 </p>
 
-<svg width="960" height="2000"></svg>
-<script type="text/javascript" src="http://d3js.org/d3.v4.js"></script>
+<svg width="<?=$sizes['width']?>" height="<?=$sizes['height']?>"></svg>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://d3js.org/d3.v4.min.js"></script>
 <script type="text/javascript">
 
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height"),
-    g = svg.append("g").attr("transform", "translate(40,0)");
+    g = svg.append("g").attr("transform", "translate(<?=$sizes['translate_x'] ?>,<?=$sizes['translate_y'] ?>)");
 
 var tree = d3.cluster()
     .size([height, width - 160]);
-
-var stratify = d3.stratify()
-    .parentId(function(d) { return d.id.substring(0, d.id.lastIndexOf(".")); });
 
 d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
   if (error) throw error;
@@ -83,4 +81,54 @@ d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
     	  });
 });
 
+function submit_download_form(output_format)
+{
+	// Get the d3js SVG element
+	var svg = document.getElementsByTagName("svg")[0];
+	// Extract the data as SVG text string
+	var svg_xml = (new XMLSerializer).serializeToString(svg);
+
+	// Submit the <FORM> to the server.
+	// The result will be an attachment file to download.
+	var form = document.getElementById("svgform");
+	form['output_format'].value = output_format;
+	form['data'].value = svg_xml ;
+	form.submit();
+}
+
+
+$(document).ready(function() {
+
+	$("#save_as_svg").click(function() { submit_download_form("svg"); });
+
+	$("#save_as_pdf").click(function() { submit_download_form("pdf"); });
+
+	$("#save_as_png").click(function() { submit_download_form("png"); });
+});
+
 </script>
+
+<form id="svgform" method="post" action="/chart/download">
+ <input type="hidden" id="output_format" name="output_format" value="">
+ <input type="hidden" id="data" name="data" value="">
+</form>
+
+<!-- ########### The Export Section ####### -->
+<div class="row">
+	<div class="span12">
+		<h2>Export Drawing</h2>
+
+		<br/>
+		<button class="btn btn-success" id="save_as_svg" value="">
+			Save as SVG</button>
+		<button class="btn btn-success" id="save_as_pdf" value="">
+			Save as PDF</button>
+		<button class="btn btn-success" id="save_as_png" value="">
+			Save as High-Res PNG</button>
+		<br>
+		<br>
+		SVG Code:<br>
+		<pre class="prettyprint lang-xml" id="svg_code">
+		</pre>
+	</div>
+</div>
