@@ -1,39 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+<title>Matrix Admin2</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="/css/fullcalendar.css" />
+<link rel="stylesheet" href="/css/matrix-style.css" />
+<link rel="stylesheet" href="/css/matrix-media.css" />
+<link href="/font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/jquery.gritter.css" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+</head>
+<body>
 
-    <title>Gentelella Alela! | </title>
+<div id="container_body"></div>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/css/nprogress.css" rel="stylesheet">
-    <link href="/css/green.css" rel="stylesheet">
+<div class="row-fluid">
+  <div id="footer" class="span12"> 2013 &copy; Matrix Admin. Brought to you by <a href="http://themedesigner.in">Themedesigner.in</a> </div>
+</div>
 
-    <link href="/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <link href="/css/jqvmap.min.css" rel="stylesheet"/>
-    <link href="/css/daterangepicker.css" rel="stylesheet">
-    <link href="/css/custom.css" rel="stylesheet">
-    <link href="/css/custom2.css" rel="stylesheet">
-    <link href="/css/main.css" rel="stylesheet">
-  </head>
+<!--end-Footer-part-->
 
-  <body class="nav-md">
-    <div class="container body"  id="container_body"></div>
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/fastclick.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/icheck.min.js"></script>
-    <script src="/js/skycons.js"></script>
-    <script src="/js/Chart.min.js"></script>
-    <script src="/js/gauge.min.js"></script>
-    <script src="/js/bootstrap-progressbar.min.js"></script>
-    <script src="/js/jquery.smartWizard.js"></script>
-    <script src="/js/bundle.js"></script>
-    <!-- <script src="/js/daterangepicker.js"></script> -->
-  </body>
+<script src="/js/excanvas.min.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/jquery.ui.custom.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.flot.min.js"></script>
+<script src="/js/jquery.flot.resize.min.js"></script>
+<script src="/js/jquery.peity.min.js"></script>
+<script src="/js/fullcalendar.min.js"></script>
+<script src="/js/matrix.js"></script>
+<script src="/js/matrix.dashboard.js"></script>
+<script src="/js/jquery.gritter.min.js"></script>
+<script src="/js/matrix.interface.js"></script>
+<script src="/js/matrix.chat.js"></script>
+<script src="/js/jquery.validate.js"></script>
+<script src="/js/matrix.form_validation.js"></script>
+<script src="/js/jquery.wizard.js"></script>
+<script src="/js/jquery.uniform.js"></script>
+<script src="/js/select2.min.js"></script>
+<script src="/js/matrix.popover.js"></script>
+<script src="/js/jquery.dataTables.min.js"></script>
+<script src="/js/matrix.tables.js"></script>
+<script src="/js/bundle.js"></script>
+
+<script type="text/javascript">
+  // This function is called from the pop-up menus to transfer to
+  // a different page. Ignore if the value returned is a null string:
+  function goPage (newURL) {
+
+      // if url is empty, skip the menu dividers and reset the menu selection to default
+      if (newURL != "") {
+
+          // if url is "-", it is this page -- reset the menu:
+          if (newURL == "-" ) {
+              resetMenu();
+          }
+          // else, send page to designated URL
+          else {
+            document.location.href = newURL;
+          }
+      }
+  }
+
+// resets the menu selection upon entry to this page:
+function resetMenu() {
+   document.gomenu.selector.selectedIndex = 2;
+}
+</script>
+</body>
 </html>
