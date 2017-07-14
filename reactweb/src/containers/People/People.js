@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import * as PActions from 'store/actions';
 
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
@@ -33,7 +34,7 @@ export class People extends Component {
                         </tr>
                       </thead>
                       <tbody>
-                        <PersonRowItem/>
+                        {this.props.people.map((personp, index) => <PersonRowItem key={personp.person.id_person} personp={personp}/>)}
                       </tbody>
                     </table>
                   </div>

@@ -63,7 +63,7 @@ var config = {
         modules: [__dirname, 'node_modules'],
         alias: {
             root: __dirname,
-            APIConfig: path.resolve(__dirname,'config.class.apiphp.jsx'),
+            APIConfig: path.resolve(__dirname,'config.class.apiary.jsx'),
             RouteURLMaker: path.resolve(__dirname,'route.url.maker.jsx'),
             pubjs: path.resolve(__dirname, 'public/js'),
             pubcss: path.resolve(__dirname, 'public/css'),

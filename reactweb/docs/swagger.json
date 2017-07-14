@@ -1,0 +1,462 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1",
+        "title": "Genealogy",
+        "description": "Genealogy"
+    },
+    "host": "private-13165-genealogy1.apiary-mock.com",
+    "basePath": "/api",
+    "schemes": ["https"],
+    "paths": {
+        "/user": {
+            "get": {
+                "tags": ["person"],
+                "summary": "Info about current logged in User",
+                "description": "Returns a single pet",
+                "operationId": "getCurrentUser",
+                "produces": ["application/json", "application/xml"],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/Person"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "id_user": "1",
+                                "id_person": "1",
+                                "imageUrl": "",
+                                "email": "vikas@pronity.in",
+                                "name": "Vikas Yadav"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/people": {
+            "get": {
+                "tags": ["person"],
+                "summary": "Returns list of people in the company",
+                "responses": {
+                    "200": {
+                        "description": "All good",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/PersonSpouseParents"
+                            }
+                        },
+                        "examples": {
+                            "application/json": [{
+                                    "person": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Vikas Yadav"
+                                    },
+                                    "spouse": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Chhaya Yadav"
+                                    }
+                                },
+                                {
+                                    "person": {
+                                        "id_user": "2",
+                                        "id_person": "2",
+                                        "mobile": "9844699423",
+                                        "imageUrl": "",
+                                        "location": "Neemrana, Rajasthan",
+                                        "email": "vikas@pronity.in",
+                                        "name": "Neemrana Person 2"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/person": {
+            "post": {
+                "tags": ["person"],
+                "summary": "Adds a new person record with form data",
+                "operationId": "createNewPerson",
+                "consumes": ["application/x-www-form-urlencoded"],
+                "produces": ["application/json", "application/xml"],
+                "parameters": [{
+                        "name": "first_name",
+                        "in": "formData",
+                        "description": "First Name of the person",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "formData",
+                        "description": "Last name of the project",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "location",
+                        "in": "formData",
+                        "description": "Current Location of the person",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Email address",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mobile",
+                        "in": "formData",
+                        "description": "Mobile Numbert",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Person was added",
+                        "schema": {
+                            "$ref": "#/definitions/PersonSpouseParents"
+                        }
+                    }
+                }
+            }
+        },
+        "/person/{id_person}": {
+            "post": {
+                "tags": ["person"],
+                "summary": "Updates a already existing person with form data",
+                "operationId": "createNewPerson",
+                "consumes": ["application/x-www-form-urlencoded"],
+                "produces": ["application/json", "application/xml"],
+                "parameters": [{
+                        "name": "id_person",
+                        "in": "path",
+                        "description": "ID of person to update",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64",
+                        "x-example": 1
+                    },
+                    {
+                        "name": "first_name",
+                        "in": "formData",
+                        "description": "Updated name of the pet",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "last_name",
+                        "in": "formData",
+                        "description": "Updated name of the pet",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "location",
+                        "in": "formData",
+                        "description": "Updated name of the pet",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Updated name of the pet",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mobile",
+                        "in": "formData",
+                        "description": "Updated name of the pet",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Person was added",
+                        "schema": {
+                            "$ref": "#/definitions/PersonSpouseParents"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["person"],
+                "summary": "Find person by ID",
+                "description": "Returns a single person record with managing projects and recent updates",
+                "operationId": "getPersonById",
+                "produces": ["application/json", "application/xml"],
+                "parameters": [{
+                    "name": "id_person",
+                    "in": "path",
+                    "description": "ID of person record to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64",
+                    "x-example": 1
+                }],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "schema": {
+                            "$ref": "#/definitions/PersonSpouseParents"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "person": {
+                                    "id_user": "1",
+                                    "id_person": "1",
+                                    "imageUrl": "",
+                                    "mobile": "8847529942",
+                                    "location": "Sikar, Rajasthan",
+                                    "email": "vikas@pronity.in",
+                                    "name": "Vikas Yadav",
+                                    "first_name": "Vikas",
+                                    "last_name": "Yadav"
+                                },
+                                "projects": [{
+                                    "id_project": "1",
+                                    "createdAt": "2017-04-01T00:00:00Z",
+                                    "name": "name 1",
+                                    "city": "city 1",
+                                    "state": "state 1",
+                                    "dueAt": "2017-06-15T23:20:50.52Z",
+                                    "completed_pc": 52,
+                                    "weather_code": 905,
+                                    "manager": [{
+                                        "id_person": 1,
+                                        "name": "manager 1",
+                                        "email": "vikas@pronity.in"
+                                    }]
+                                }, {
+                                    "id_project": "2",
+                                    "createdAt": "2017-04-01T00:00:00Z",
+                                    "name": "name 2",
+                                    "city": "city 2",
+                                    "state": "state 2",
+                                    "dueAt": "2017-05-15T23:20:50.52Z",
+                                    "completed_pc": 67,
+                                    "weather_code": 72,
+                                    "manager": [{
+                                        "id_person": 2,
+                                        "name": "manager 2",
+                                        "email": "vikas@pronity.in"
+                                    }]
+                                }],
+                                "updates": [{
+                                        "id_update": "1",
+                                        "id_project": "1",
+                                        "filedAt": "2017-04-01T00:00:00Z",
+                                        "des": "Description of activity 1",
+                                        "imageUrls": [],
+                                        "filedBy": {
+                                            "name": "Filed By Name 1",
+                                            "id_person": 1,
+                                            "email": "vikas@pronity.in"
+                                        },
+                                        "project": {
+                                            "name": "Project of Update 1",
+                                            "id_project": 1,
+                                            "dueAt": "2017-04-01T00:00:00Z"
+                                        }
+                                    },
+                                    {
+                                        "id_update": "2",
+                                        "id_project": "2",
+                                        "imageUrls": [],
+                                        "filedAt": "2017-04-01T00:00:00Z",
+                                        "des": "Update number two",
+                                        "project": {
+                                            "name": "Project of Update 2",
+                                            "id_project": 2,
+                                            "dueAt": "2017-04-01T00:00:00Z"
+                                        },
+                                        "filedBy": {
+                                            "name": "Filed By Name 2",
+                                            "id_person": 1,
+                                            "email": "vikas@pronity.in"
+                                        }
+                                    },
+                                    {
+                                        "id_update": "3",
+                                        "id_project": "3",
+                                        "imageUrls": [],
+                                        "filedAt": "2017-04-01T00:00:00Z",
+                                        "des": "Update number three",
+                                        "project": {
+                                            "name": "Project of Update 3",
+                                            "id_project": 3,
+                                            "dueAt": "2017-04-01T00:00:00Z"
+                                        },
+                                        "filedBy": {
+                                            "name": "Filed By Name 3",
+                                            "id_person": 1,
+                                            "email": "vikas@pronity.in"
+                                        }
+                                    }
+                                ]
+                            }
+
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid ID supplied"
+                    },
+                    "404": {
+                        "description": "Project not found"
+                    }
+                }
+            }
+        },
+        "/person/{id_person}/manage": {
+            "post": {
+                "tags": ["person", "project"],
+                "summary": "Assign projects to person",
+                "operationId": "assignProjectManagers",
+                "consumes": ["application/x-www-form-urlencoded"],
+                "produces": ["application/json", "application/xml"],
+                "parameters": [{
+                        "name": "id_person",
+                        "in": "path",
+                        "description": "ID of person to manage",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int64",
+                        "x-example": 1
+                    },
+                    {
+                        "name": "id_project",
+                        "in": "formData",
+                        "description": "Project IDs to be assigned to Person",
+                        "required": true,
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "x-example": 1
+                    }
+                ],
+                "responses": {
+                    "405": {
+                        "description": "Invalid input"
+                    },
+                    "200": {
+                        "description": "Person was assigned to the projects",
+                        "schema": {
+                            "$ref": "#/definitions/PersonSpouseParents"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {        
+        "PersonSpouseParents": {
+            "type": "object",
+            "required": ["person"],
+            "properties": {
+                "person": {
+                    "$ref": "#/definitions/Person"
+                },
+                "spouse": {
+                    "$ref": "#/definitions/Person"
+                },
+                "father": {
+                    "$ref": "#/definitions/Person"
+                },
+                "mother": {
+                    "$ref": "#/definitions/Person"
+                }
+            }
+        },        
+        "Person": {
+            "type": "object",
+            "required": ["id_person", "mobile", "email", "name", "first_name", "last_name"],
+            "properties": {
+                "id_user": {
+                    "type": "integer"
+                },
+                "imageUrl": {
+                    "type": "string"
+                },
+                "id_person": {
+                    "type": "integer"
+                },
+                "location": {
+                    "type": "string",
+                    "description": "Location where this person is right now"
+                },
+                "mobile": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "dob": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "dod": {
+                    "type": "string",
+                    "format": "date-time"
+                },
+                "gender": {
+                    "type": "boolean"
+                },
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "id_user": 1,
+                "id_person": 1,
+                "imageUrl": "",
+                "mobile": "8847529942",
+                "location": "Sikar, Rajasthan",
+                "email": "vikas@pronity.in",
+                "name": "Vikas Yadav",
+                "first_name": "Vikas",
+                "last_name": "Yadav"
+            }
+        }               
+    }
+}

@@ -9,12 +9,11 @@ export default class PersonRowItem extends Component {
   render() {
     return (
         <tr className="odd gradeX">
-          <td>Trident</td>
-          <td>Internet
-            Explorer 4.0</td>
-          <td>Win 95+111</td>
-          <td className="center"> 4</td>
-          <td className="center">X</td>
+          <td>{this.props.personp.person.name}</td>
+          <td>{this.props.personp.person.age}</td>
+          <td>{this.props.personp.spouse && this.props.personp.spouse.name}</td>
+          <td>{this.props.personp.father && this.props.personp.father.name}</td>
+          <td>{this.props.personp.mother && this.props.personp.mother.name}</td>
         </tr>
     );
   }

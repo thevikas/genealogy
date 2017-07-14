@@ -17,6 +17,9 @@ import Dashboard from 'containers/Dashboard/'
 import People from 'containers/People/'
 
 import Footer from 'components/Footer'
+
+import DevTools from 'libs/DevTools';
+
 /*
 import People from 'containers/People/'
 import NewPerson from 'containers/People/NewPerson/'
@@ -61,6 +64,7 @@ export default class App extends Component {
         	<Route exact path="/people" component={People}/>
             </div>
             <Footer/>
+            {1 && <DevTools />}
             </xyz>
         </BrowserRouter>
     );

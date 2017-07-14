@@ -16,6 +16,7 @@ import people from './people';
  * More info: http://rackt.org/redux/docs/api/combineReducers.html
  */
 const rootReducer = combineReducers({
+  people,
   person
 });
 
