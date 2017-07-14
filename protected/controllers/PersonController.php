@@ -142,6 +142,8 @@ class PersonController extends Controller
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+		
+		$this->pageTitle= __('Update {name}',['{name}' => $model->name]);
 
 		if(isset($_POST['Person']))
 		{
