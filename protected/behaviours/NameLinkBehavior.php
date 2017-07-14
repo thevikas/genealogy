@@ -38,6 +38,14 @@ class NameLinkBehavior extends CActiveRecordBehavior
 
         $linkprops ['class'] .= ' nl ' . get_class ( $model );
         
+        $p = [];
+        if(isset($model->father))
+            $p[] = $model->father->name;
+        if(isset($model->mother))
+            $p[] = $model->mother->name;
+                
+        $linkprops ['title'] = implode(' + ',$p);
+        
         if(empty($name))
             $name = "(noname)";
         $linkhtml = $name;
