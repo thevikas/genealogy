@@ -38,9 +38,13 @@ class NameLinkBehavior extends CActiveRecordBehavior
 
         $linkprops ['class'] .= ' nl ' . get_class ( $model );
         
+        if(empty($name))
+            $name = "(noname)";
         $linkhtml = $name;
         if(!isset($params['nolink']))
+        {
             $linkhtml = CHtml::link ( $name, $linkparams, $linkprops );
+        }
         
         if(empty($this->template))
             return $linkhtml;
@@ -61,10 +65,11 @@ class NameLinkBehavior extends CActiveRecordBehavior
                 $v = $linkhtml;
             elseif(!empty($this->owner->$propname))
                 $v = $this->owner->$propname;
-
+                
             $output = str_replace("{" . $prop . "}", $v, $output);
         }
-        if(!$this->callback) $output = $this->callback($output,$this->owner,$params);
+        if(is_callable($this->callback)) 
+            $output = $this->callback($output,$this->owner,$params);
 
         return $output;
     }

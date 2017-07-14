@@ -35,6 +35,9 @@
  * @property Person[] $persons1
  * @property Pics[] $pics
  * @property Person[] $spouses
+ * @property Person[] $children
+ * @property Person[] $grandchildren
+ * @property Person[] $greatgrandchildren
  * @property array $D3
  */
 class Person extends CActiveRecord
@@ -49,7 +52,7 @@ class Person extends CActiveRecord
                 'template' => '{link} {age}yrs',
                 'callback' => function($str,$model,$params)
                 {
-                    if(empty($params['nospouse']))
+                    if(!isset($params['nospouse']))
                     {
                         $spouses = array_merge($model->husbands,$model->wives );
                         if(count($spouses)==1)
@@ -357,6 +360,18 @@ class Person extends CActiveRecord
         }
        
         uasort($gchild, [$this,'cmp']);        
+        return $gchild;
+    }
+    
+    public function getgreatgrandchildren()
+    {
+        $gchild = [];
+        foreach($this->grandchildren as $child)
+        {
+            $gchild = array_merge($gchild, $child->children);
+        }
+        
+        uasort($gchild, [$this,'cmp']);
         return $gchild;
     }
 

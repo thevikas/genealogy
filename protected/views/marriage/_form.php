@@ -35,7 +35,7 @@ Yii::app()->clientScript->registerCoreScript('autocomplete');
 	<div class="row">
 		<?php echo $form->labelEx($model,'wife_cid'); ?>
 		<?php echo $form->hiddenField($model,'wife_cid'); ?>
-		<?php echo CHtml::textField('wife_quick',$model->wife_cid? $model->husband->name : '',array(
+		<?php if(isset($model->husband->name)) echo CHtml::textField('wife_quick',$model->wife_cid ? $model->husband->name : '',array(
 	                'placeholder' => $model->getAttributeLabel('wife_cid'),
 		            'class' => 'person_quick',
 		            'size' => 50,

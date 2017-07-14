@@ -28,3 +28,4 @@ $this->menu=array(
 
 <?php echo $this->renderPartial('_view',['data' => $model,'detailed'=>true]); ?>
 <?php echo $this->renderPartial('_grandchildren',['data' => $model,'detailed'=>true]); ?>
+<?php echo $this->renderPartial('_greatgrandchildren',['data' => $model,'detailed'=>true]); ?>
