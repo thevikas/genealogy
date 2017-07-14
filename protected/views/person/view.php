@@ -24,6 +24,7 @@ $this->menu=array(
 );
 ?>
 
-<h1><?php echo $model->name; ?></h1>
+<h1><?php echo $model->getnamelink(['nospouse'=>1,'nolink']); ?></h1>
 
 <?php echo $this->renderPartial('_view',['data' => $model,'detailed'=>true]); ?>
+<?php echo $this->renderPartial('_grandchildren',['data' => $model,'detailed'=>true]); ?>
