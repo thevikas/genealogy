@@ -114,7 +114,7 @@ Yii::app()->clientScript->registerCoreScript('autocomplete');
 	</div>
 
 <?php
-if($spouse)
+if(!empty($spouse))
     echo CHtml::hiddenField('spouse_id',$spouse->cid); 
 $this->endWidget(); ?>
 

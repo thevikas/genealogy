@@ -36,6 +36,7 @@ p#intro {
 </style>
 <p>
 <?php
+echo $person->namelink . "<br/>";
 echo $mother . " " . $father;
 ?>
 </p>
@@ -105,7 +106,7 @@ d3.json("<?=$jsonurl?>", function(error, json) {
   textEnter.append("tspan")
       .attr("x", 0)
       .attr("dy", "1em")
-      .text(function(d) { return d.depth ? d.name.split(" ")[1] || "" : ""; });
+      .text(function(d) { return d.depth ? (d.name.split(" ")[1] || "") + " " + (d.name.split(" ")[2] || "") : ""; });
 
   function click(d) {
     path.transition()

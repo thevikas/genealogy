@@ -48,7 +48,6 @@ export default class App extends Component {
         <BrowserRouter>
             <xyz>
             <Progress.Component/>
-            <Header/>
             <TopNav/>
             <SearchNav/>
             <SideBar/>

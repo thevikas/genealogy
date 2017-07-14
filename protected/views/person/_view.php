@@ -98,7 +98,7 @@
 <?php
 if (empty($detailed))
     return;
-if (count ( $data->father->children1 ))
+    if (!empty($data->father->children) && count ( $data->father->children ))
 {
     ?>
 <div class="view">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style type="text/css">
-  
+
 	.node {
     cursor: pointer;
   }
@@ -9,18 +9,18 @@
   .overlay{
       background-color:#EEE;
   }
-   
+
   .node circle {
     fill: #fff;
     stroke: steelblue;
     stroke-width: 1.5px;
   }
-   
+
   .node text {
-    font-size:10px; 
+    font-size:10px;
     font-family:sans-serif;
   }
-   
+
   .link {
     fill: none;
     stroke: #ccc;
@@ -49,11 +49,12 @@ var jsonurl = '<?=$jsonurl?>';
 <script src="http://d3js.org/d3.v3.js"></script>
 <script src="/js/dndtree.js"></script>
 <body>
-<p>
-<?php
-echo $mother . " " . $father;
-?>
-</p>
+    <p>
+    <?php
+    echo $person->namelink . "<br/>";
+    echo $mother . " " . $father;
+    ?>
+    </p>
 
     <div id="tree-container"></div>
 </body>

@@ -28,6 +28,7 @@
 </style>
 <p>
 <?php
+echo $person->namelink . "<br/>";
 echo $mother . " " . $father;
 ?>
 </p>
@@ -50,7 +51,7 @@ var tree = d3.tree()
 
 d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
   if (error) throw error;
-	  
+
   var root = tree(d3.hierarchy(data));
 
   var link = g.selectAll(".link")

@@ -28,6 +28,7 @@
 </style>
 <p>
 <?php
+echo $person->namelink . "<br/>";
 echo $mother . " " . $father;
 ?>
 </p>
@@ -47,9 +48,9 @@ var tree = d3.cluster()
 
 d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
   if (error) throw error;
-  
+
   var root = d3.hierarchy(data);
-  
+
   tree(root);
 
   var link = g.selectAll(".link")
@@ -76,8 +77,8 @@ d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
       .attr("dy", 3)
       .attr("x", function(d) { return d.children ? -8 : 8; })
       .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
-      .text(function(d) { 
-    	  return d.data.name; 
+      .text(function(d) {
+    	  return d.data.name;
     	  });
 });
 

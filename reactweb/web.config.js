@@ -12,6 +12,7 @@ var config = {
         filename: 'js/bundle.js'
     },
     devServer: {
+        disableHostCheck: true,
         inline: true,
         publicPath: "/",
         contentBase: "./public",

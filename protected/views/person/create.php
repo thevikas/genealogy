@@ -15,7 +15,7 @@ $this->menu=array(
 ?>
 
 <h1><?php
-if(spouse)
+if(!empty($spouse))
     echo __('Create Spouse of {name}',['{name}' => $spouse->namelink]);
 else
     echo __('Create Person');
