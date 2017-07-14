@@ -39,7 +39,7 @@
  */
 class Person extends CActiveRecord
 {
-    
+
     public function behaviors()
     {
         return array (
@@ -54,41 +54,41 @@ class Person extends CActiveRecord
                         $spouses = array_merge($model->husbands,$model->wives );
                         if(count($spouses)==1)
                         {
-                            if(!empty($params['flip']))        
+                            if(!empty($params['flip']))
                                 $str = $spouses[0]->getnamelink(['nospouse'=>1]) . ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $str;
                             else
                                 $str .= ' ' . CHtml::image('/imgs/marriage.gif') . ' ' . $spouses[0]->getnamelink(['nospouse'=>1]);
-                        }                                
+                        }
                     }
-                    $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;                            
+                    $str = CHtml::image( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif') . $str;
                     return $str;
                 }
-            ),                
+            ),
         );
     }
-    
+
     public function beforeSave()
     {
         $this->name = $this->firstname . ' ' . $this->lastname;
-        
+
         $this->dob = empty($this->dob) ? null : $this->dob;
         $this->dod = empty($this->dod) ? null : $this->dod;
-        
+
         return parent::beforeSave();
     }
-    
+
     public function getspouses()
     {
         return array_merge($this->husbands,$this->wives);
     }
-    
+
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
 		return 'persons';
-	}	
+	}
 
 	/**
 	 * @return array validation rules for model attributes.
@@ -124,13 +124,13 @@ class Person extends CActiveRecord
 	        'husbands' => array (
 	                self::MANY_MANY,
 	                'Person',
-	                'marriages(wife_cid,husband_cid)',		                
+	                'marriages(wife_cid,husband_cid)',
 	        ),
 	        'wives' => array (
 	                self::MANY_MANY,
 	                'Person',
 	                'marriages(husband_cid,wife_cid)',
-	        ),		        
+	        ),
 			'father' => array(self::BELONGS_TO, 'Person', 'father_cid'),
 			'children1' => array(self::HAS_MANY, 'Person', 'father_cid'),
 			'mother' => array(self::BELONGS_TO, 'Person', 'mother_cid'),
@@ -139,11 +139,27 @@ class Person extends CActiveRecord
 		);
 	}
 	
+	function cmp($a, $b) {
+	    if ($a->age == $b->age) {
+	        return 0;
+	    }
+	    return ($a->age < $b->age) ? 1 : -1;
+	}
+
 	public function getchildren()
 	{
 	    if(count($this->children1) == 0)
-	        return $this->children2;
-        return $this->children1;
+	        $childs= $this->children2;
+        else
+            $childs= $this->children1;
+            
+        
+        
+        
+        uasort($childs, [$this,'cmp']);
+        
+        return $childs;
+	        
 	}
 
 	/**
@@ -230,7 +246,7 @@ class Person extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-	
+
 	public function getage()
 	{
 	    $datetime1 = new DateTime($this->dob);
@@ -274,11 +290,11 @@ class Person extends CActiveRecord
         $arr['depth'] = 1 + $md;
         return $arr;
     }
-    
+
     public function getD3marriages($depth=1)
     {
         $data = [];
-        $data['name'] = $this->name;
+        $data['name'] = $this->name . " " . $this->age . "y";
         $data["class"] = $this->gender ? 'man' : 'woman';
         $data["textClass"] = "nodeText";
         $data["depthOffset"] = $depth;
@@ -288,13 +304,13 @@ class Person extends CActiveRecord
             {
                 $marriage = [];
                 $marriage['spouse'] = ['name' => $spouse->name,'class' => $spouse->gender ? 'man' : 'woman'];
-                $children = Person::model ()->findAll ( 
-                    [ 
+                $children = Person::model ()->findAll (
+                    [
                         'condition' => 'father_cid in (:id1,:id2) and mother_cid in (:id1,:id2)',
-                        'params' => [ 
+                        'params' => [
                             'id1' => $this->cid,
-                            'id2' => $spouse->cid 
-                        ] 
+                            'id2' => $spouse->cid
+                        ]
                     ] );
                 foreach($children as $child)
                 {
@@ -315,13 +331,13 @@ class Person extends CActiveRecord
                         name: "Child",
                     }]
             }],
-            extra: {}*/          
+            extra: {}*/
     }
-    
+
     public function getD3hierarchy()
     {
         $data = [];
-        $data['name'] = $this->name;
+        $data['name'] = trim($this->name . " " . $this->age . "y");
         if(count($this->children))
         {
             foreach($this->children as $child)
@@ -330,6 +346,18 @@ class Person extends CActiveRecord
             }
         }
         return $data;
+    }
+    
+    public function getgrandchildren()
+    {
+        $gchild = [];
+        foreach($this->children as $child)
+        {
+            $gchild = array_merge($gchild, $child->children);
+        }
+       
+        uasort($gchild, [$this,'cmp']);        
+        return $gchild;
     }
 
 }
