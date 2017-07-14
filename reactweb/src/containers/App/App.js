@@ -11,8 +11,12 @@ import TopNav from 'components/TopNav'
 import SearchNav from 'components/TopNav/SearchNav'
 
 import SideBar from 'components/SideBar'
+import Breadcrumb from 'components/Breadcrumb'
 
 import Dashboard from 'containers/Dashboard/'
+import Person from 'containers/Person/'
+
+import Footer from 'components/Footer'
 /*
 import People from 'containers/People/'
 import NewPerson from 'containers/People/NewPerson/'
@@ -51,7 +55,12 @@ export default class App extends Component {
             <TopNav/>
             <SearchNav/>
             <SideBar/>
+            <div id="content">
+            <Breadcrumb/>
             <Route exact path="/" component={Dashboard}/>
+        	<Route exact path="/person" component={Person}/>
+            </div>
+            <Footer/>
             </xyz>
         </BrowserRouter>
     );

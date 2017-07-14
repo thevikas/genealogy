@@ -17,37 +17,11 @@ export default class SideBar extends Component {
     return (
         <div id="sidebar"><a href="#" className="visible-phone"><i className="icon icon-home"></i> Dashboard</a>
           <ul>
-            <li className="active"><a href="index.html"><i className="icon icon-home"></i> <span>Dashboard</span></a> </li>
+            <li className="active"><a href="/"><i className="icon icon-home"></i> <span>Dashboard</span></a> </li>
+            <li><a href="/person"><i className="icon icon-pencil"></i> <span>Person</span></a></li>
             <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
-            <li> <a href="widgets.html"><i className="icon icon-inbox"></i> <span>Widgets</span></a> </li>
-            <li><a href="tables.html"><i className="icon icon-th"></i> <span>Tables</span></a></li>
-            <li><a href="grid.html"><i className="icon icon-fullscreen"></i> <span>Full width</span></a></li>
-            <li className="submenu"> <a href="#"><i className="icon icon-th-list"></i> <span>Forms</span> <span className="label label-important">3</span></a>
-              <ul>
-                <li><a href="form-common.html">Basic Form</a></li>
-                <li><a href="form-validation.html">Form with Validation</a></li>
-                <li><a href="form-wizard.html">Form with Wizard</a></li>
-              </ul>
-            </li>
-            <li><a href="buttons.html"><i className="icon icon-tint"></i> <span>Buttons &amp; icons</span></a></li>
-            <li><a href="interface.html"><i className="icon icon-pencil"></i> <span>Eelements</span></a></li>
-            <li className="submenu"> <a href="#"><i className="icon icon-file"></i> <span>Addons</span> <span className="label label-important">5</span></a>
-              <ul>
-                <li><a href="index2.html">Dashboard2</a></li>
-                <li><a href="gallery.html">Gallery</a></li>
-                <li><a href="calendar.html">Calendar</a></li>
-                <li><a href="invoice.html">Invoice</a></li>
-                <li><a href="chat.html">Chat option</a></li>
-              </ul>
-            </li>
-            <li className="submenu"> <a href="#"><i className="icon icon-info-sign"></i> <span>Error</span> <span className="label label-important">4</span></a>
-              <ul>
-                <li><a href="error403.html">Error 403</a></li>
-                <li><a href="error404.html">Error 404</a></li>
-                <li><a href="error405.html">Error 405</a></li>
-                <li><a href="error500.html">Error 500</a></li>
-              </ul>
-            </li>
+            <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Events</span></a> </li>
+            <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Recent Updates</span></a> </li>            
             <li className="content"> <span>Monthly Bandwidth Transfer</span>
               <div className="progress progress-mini progress-danger active progress-striped">
                 <div style={{width: 77 + "%"}} className="bar"></div>
