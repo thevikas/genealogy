@@ -41,20 +41,20 @@ class TreeAction extends CAction
         foreach ( $person->spouses as $spouse )
         {
             $married = true;
-            if (intval ( $cid ) == intval ( $high ))
+            /*if (intval ( $cid ) == intval ( $high ))
             {
                 // echo " style=\"font-weight:bold;\" ";
-            }
+            }*/
             ?>
 		<tr>
 			<td valign="top">
 		<?
             
-            if ($person->cid == $this->root_id && $rs1->h_father_cid > 0)
+		if ($person->cid == $this->root_id && $person->father_cid > 0)
             {
                 global $wx;
                 ?>
-			<a href="?cid=<?=$rs1->h_father_cid?>&wx=<?=$wx?>#p<?=$cid?>">Up</a>
+			<a href="?cid=<?=$person->father_cid?>&wx=<?=$wx?>#p<?=$person->cid?>">Up</a>
 			<?
             }
             
@@ -115,7 +115,7 @@ if (isset ( $opt ['bLastChild'] ))
             echo $person->namelink;
             ?>
 		&nbsp;<a href="#"
-				onclick="addspouse(this,<?=$spouse_gender?>,<?=$cid?>)">*</a></td>
+				onclick="addspouse(this,<?=$person->gender?>,<?=$person->cid?>)">*</a></td>
 
 		<?
             
@@ -149,7 +149,7 @@ if (isset ( $opt ['bLastChild'] ))
         {
             $child_count ++;
             $opt ['bLastChild'] = $children_count == $child_count;
-            $this->showMarriages ( $child, $level + 1, $rs1->isDead, $rs1->bPics, $opt );
+            $this->showMarriages ( $child, $level + 1, $child->isDead, $child->bPics, $opt );
         }
     }
     
