@@ -14,7 +14,7 @@ import SideBar from 'components/SideBar'
 import Breadcrumb from 'components/Breadcrumb'
 
 import Dashboard from 'containers/Dashboard/'
-import Person from 'containers/Person/'
+import People from 'containers/People/'
 
 import Footer from 'components/Footer'
 /*
@@ -58,7 +58,7 @@ export default class App extends Component {
             <div id="content">
             <Breadcrumb/>
             <Route exact path="/" component={Dashboard}/>
-        	<Route exact path="/person" component={Person}/>
+        	<Route exact path="/people" component={People}/>
             </div>
             <Footer/>
             </xyz>

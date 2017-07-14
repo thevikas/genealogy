@@ -12,9 +12,9 @@ export default class Dashboard extends Component {
           <div className="container-fluid">
             <div className="quick-actions_homepage">
               <ul className="quick-actions">
-                <li className="bg_lb"> <a href="index.html"> <i className="icon-dashboard"></i> <span className="label label-important">20</span> Person </a> </li>
+                <li className="bg_lb"> <a href="/people"> <i className="icon-dashboard"></i> <span className="label label-important">20</span> People </a> </li>
                 <li className="bg_lg span3"> <a href="charts.html"> <i className="icon-signal"></i> Charts </a> </li>
-                <li className="bg_ly"> <a href="widgets.html"> <i className="icon-inbox"></i><span className="label label-success">101</span> Events </a> </li>
+                <li className="bg_ly"> <a href="/events"> <i className="icon-inbox"></i><span className="label label-success">101</span> Events </a> </li>
                 <li className="bg_lo"> <a href="tables.html"> <i className="icon-th"></i> Totaram </a> </li>                
               </ul>
             </div>
@@ -33,7 +33,7 @@ export default class Dashboard extends Component {
                         <div className="article-post"> <span className="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                           <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                         </div>
-                      </li>                      
+                      </li>
                       <li>
                         <button className="btn btn-warning btn-mini">View All</button>
                       </li>
@@ -58,8 +58,8 @@ export default class Dashboard extends Component {
                       </ul>
                     </div>
                   </div>
-                </div>                               
-              </div>              
+                </div>
+              </div>
             </div>
           </div>
     );

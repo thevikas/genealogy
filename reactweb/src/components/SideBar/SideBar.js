@@ -18,10 +18,10 @@ export default class SideBar extends Component {
         <div id="sidebar"><a href="#" className="visible-phone"><i className="icon icon-home"></i> Dashboard</a>
           <ul>
             <li className="active"><a href="/"><i className="icon icon-home"></i> <span>Dashboard</span></a> </li>
-            <li><a href="/person"><i className="icon icon-pencil"></i> <span>Person</span></a></li>
+            <li><a href="/people"><i className="icon icon-pencil"></i> <span>People</span></a></li>
             <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
-            <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Events</span></a> </li>
-            <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Recent Updates</span></a> </li>            
+            <li> <a href="/events"><i className="icon icon-signal"></i> <span>Events</span></a> </li>
+            <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Recent Updates</span></a> </li>
             <li className="content"> <span>Monthly Bandwidth Transfer</span>
               <div className="progress progress-mini progress-danger active progress-striped">
                 <div style={{width: 77 + "%"}} className="bar"></div>

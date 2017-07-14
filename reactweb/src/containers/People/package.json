@@ -2,5 +2,5 @@
   "name": "App",
   "version": "0.0.0",
   "private": true,
-  "main": "./Person.js"
+  "main": "./People.js"
 }

@@ -4,14 +4,18 @@ import React, { Component, PropTypes } from 'react';
 
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
-import Progress from "react-progress-2";
 
-export default class Person extends Component {
+export default class PersonRowItem extends Component {
   render() {
     return (
-          <div className="container-fluid">
-          	Person Page
-          </div>
+        <tr className="odd gradeX">
+          <td>Trident</td>
+          <td>Internet
+            Explorer 4.0</td>
+          <td>Win 95+111</td>
+          <td className="center"> 4</td>
+          <td className="center">X</td>
+        </tr>
     );
   }
 }
