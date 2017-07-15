@@ -25,6 +25,10 @@ var config = {
                 exclude: /node_modules/,
                 loader: "babel-loader"
             },
+            {
+               test: /\.exec\.js$/,
+               use: [ 'script-loader' ]
+       },
             /*{
                 test: /\.(eot|woff|woff2|ttf|svg|png|jpg)$/,
                 loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
@@ -63,7 +67,7 @@ var config = {
         modules: [__dirname, 'node_modules'],
         alias: {
             root: __dirname,
-            APIConfig: path.resolve(__dirname,'config.class.apiary.jsx'),
+            APIConfig: path.resolve(__dirname,'config.class.apiphp.jsx'),
             RouteURLMaker: path.resolve(__dirname,'route.url.maker.jsx'),
             pubjs: path.resolve(__dirname, 'public/js'),
             pubcss: path.resolve(__dirname, 'public/css'),
