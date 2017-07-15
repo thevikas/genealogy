@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import person from './person';
 import people from './people';
+import finder from './finder';
 
 /**
  * combineReducers is important to understand. As your app might grow in size
@@ -16,6 +17,7 @@ import people from './people';
  * More info: http://rackt.org/redux/docs/api/combineReducers.html
  */
 const rootReducer = combineReducers({
+  finder,
   people,
   person
 });

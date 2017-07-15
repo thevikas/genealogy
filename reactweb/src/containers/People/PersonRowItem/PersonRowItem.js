@@ -4,16 +4,17 @@ import React, { Component, PropTypes } from 'react';
 
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
+import PersonLink from "components/PersonLink";
 
 export default class PersonRowItem extends Component {
   render() {
     return (
         <tr className="odd gradeX">
-          <td>{this.props.personp.person.name}</td>
+          <td><PersonLink show='name' person={this.props.personp.person}/></td>
           <td>{this.props.personp.person.age}</td>
-          <td>{this.props.personp.spouse && this.props.personp.spouse.name}</td>
-          <td>{this.props.personp.father && this.props.personp.father.name}</td>
-          <td>{this.props.personp.mother && this.props.personp.mother.name}</td>
+          <td>{this.props.personp.spouse && <PersonLink show='name' person={this.props.personp.spouse}/>}</td>
+          <td>{this.props.personp.father && <PersonLink show='name' person={this.props.personp.father}/>}}</td>
+          <td>{this.props.personp.mother && <PersonLink show='name' person={this.props.personp.mother}/>}}</td>
         </tr>
     );
   }

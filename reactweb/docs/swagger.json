@@ -60,6 +60,7 @@
                                         "id_user": "1",
                                         "id_person": "1",
                                         "imageUrl": "",
+                                        "age": 47,
                                         "mobile": "8847529942",
                                         "location": "Sikar, Rajasthan",
                                         "email": "vikas@somewhere.in",
@@ -73,6 +74,24 @@
                                         "location": "Sikar, Rajasthan",
                                         "email": "vikas@somewhere.in",
                                         "name": "Chhaya Yadav"
+                                    },
+                                     "father": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Father Yadav"
+                                    },
+                                    "mother": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Mother Yadav"
                                     }
                                 },
                                 {
@@ -444,6 +463,10 @@
                 },
                 "last_name": {
                     "type": "string"
+                },
+                "age": {
+                    "type": "integer",
+                    "format": "int32"
                 }
             },
             "example": {

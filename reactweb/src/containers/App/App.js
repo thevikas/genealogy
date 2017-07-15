@@ -15,6 +15,7 @@ import Breadcrumb from 'components/Breadcrumb'
 
 import Dashboard from 'containers/Dashboard/'
 import People from 'containers/People/'
+import PersonView from 'containers/PersonView/'
 
 import Footer from 'components/Footer'
 
@@ -62,6 +63,7 @@ export default class App extends Component {
             <Breadcrumb/>
             <Route exact path="/" component={Dashboard}/>
         	<Route exact path="/people" component={People}/>
+            <Route path="/people/view/:personid" component={PersonView}/>
             </div>
             <Footer/>
             {1 && <DevTools />}

@@ -27,7 +27,7 @@ export function loadPeople() {
     }
 }
 
-export function loadPeopleAndFind(id_person) {
+export function loadPeopleAndFindPerson(id_person) {
     return function(dispatch){
         dispatch(loadPeople()).then(() => {
             return dispatch(findPerson(id_person))
