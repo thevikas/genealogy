@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 //import MessageItem from './MessageItem/'
 //import axios from 'axios';
 //import {Link} from 'react-router-dom';
@@ -17,8 +18,8 @@ export default class SideBar extends Component {
     return (
         <div id="sidebar"><a href="#" className="visible-phone"><i className="icon icon-home"></i> Dashboard</a>
           <ul>
-            <li className="active"><a href="/"><i className="icon icon-home"></i> <span>Dashboard</span></a> </li>
-            <li><a href="/people"><i className="icon icon-pencil"></i> <span>People</span></a></li>
+            <li className="active"><Link to="/"><i className="icon icon-home"></i> <span>Dashboard</span></Link> </li>
+            <li><Link to="/people"><i className="icon icon-pencil"></i> <span>People</span></Link></li>
             <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Charts &amp; graphs</span></a> </li>
             <li> <a href="/events"><i className="icon icon-signal"></i> <span>Events</span></a> </li>
             <li> <a href="charts.html"><i className="icon icon-signal"></i> <span>Recent Updates</span></a> </li>

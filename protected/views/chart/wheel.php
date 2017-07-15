@@ -44,7 +44,7 @@ echo $mother . " " . $father;
 <div id="vis">&nbsp;</div>
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
-var width = 840,
+var width = 1000,
     height = width,
     radius = width / 2,
     x = d3.scale.linear().range([0, 2 * Math.PI]),

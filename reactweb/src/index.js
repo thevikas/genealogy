@@ -6,7 +6,7 @@ import configureStore from './store/configureStore.dev';
 const store = configureStore();
 
 render(
-    <Provider store={store}>
+        <Provider store={store}>
       <App />
     </Provider>,
   document.getElementById('container_body')

@@ -16,6 +16,18 @@ export class PersonView extends Component {
         this.props.actions.loadPeopleAndFindPerson(this.props.match.params.personid)
     }
 
+    componentWillUnmount()
+    {
+        this.props.actions.setViewinfo({name: "",path: false});
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+        console.log("booom",nextProps);
+        if(nextProps.person.id_person)
+            this.props.actions.setViewinfo({name: nextProps.person.name,path: '/people/view/' + nextProps.person.id_person});
+    }
+
   render() {
     return (
           <div className="container-fluid">
@@ -88,17 +100,13 @@ function mapStateToProps(state) {
     console.log('IN mapStateToProps, trying to find ', state.finder.id_person)
       const personp = state.people.filter((personp) => personp.person.id_person == state.finder.id_person)
       if(personp.length==0) return {
-          person: {},
-          projects: [],
-          updates: []
+          person: {}
       }
       return {
           person: personp[0].person,
           father: personp[0].father ? personp[0].father : {},
           mother: personp[0].mother ? personp[0].mother : {},
-          spouse: personp[0].spouse ? personp[0].spouse : {},
-          updates: [],
-          projects: personp[0].projects
+          spouse: personp[0].spouse ? personp[0].spouse : {}
       };
 }
 

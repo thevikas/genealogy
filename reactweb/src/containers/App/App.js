@@ -2,25 +2,25 @@ import React, { Component, PropTypes } from 'react';
 //import { bindActionCreators } from 'redux';
 //import { connect } from 'react-redux';
 
-import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import Progress from "react-progress-2";
-
-import Header from 'components/Header'
 import TopNav from 'components/TopNav'
+import Header from 'components/Header'
 import SearchNav from 'components/TopNav/SearchNav'
 
 import SideBar from 'components/SideBar'
 import Breadcrumb from 'components/Breadcrumb'
 
 import Dashboard from 'containers/Dashboard/'
+import Footer from 'components/Footer'
+import DevTools from 'libs/DevTools';
+import {BrowserRouter, Route, Link} from 'react-router-dom';
 import People from 'containers/People/'
 import PersonView from 'containers/PersonView/'
+/*import ReactDOM from 'react-dom';
+import Progress from "react-progress-2";
 
-import Footer from 'components/Footer'
 
-import DevTools from 'libs/DevTools';
 
+*/
 /*
 import People from 'containers/People/'
 import NewPerson from 'containers/People/NewPerson/'
@@ -55,14 +55,13 @@ export default class App extends Component {
     return (
         <BrowserRouter>
             <xyz>
-            <Progress.Component/>
             <TopNav/>
             <SearchNav/>
             <SideBar/>
             <div id="content">
             <Breadcrumb/>
             <Route exact path="/" component={Dashboard}/>
-        	<Route exact path="/people" component={People}/>
+            <Route exact path="/people" component={People}/>
             <Route path="/people/view/:personid" component={PersonView}/>
             </div>
             <Footer/>

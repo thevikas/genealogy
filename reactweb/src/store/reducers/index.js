@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import person from './person';
 import people from './people';
 import finder from './finder';
-
+import viewinfo from './viewinfo';
 /**
  * combineReducers is important to understand. As your app might grow in size
  * and complexity, you will likely begin to split your reducers into separate
@@ -19,7 +19,8 @@ import finder from './finder';
 const rootReducer = combineReducers({
   finder,
   people,
-  person
+  person,
+  viewinfo
 });
 
 export default rootReducer;

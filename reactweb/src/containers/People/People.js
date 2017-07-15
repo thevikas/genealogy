@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PActions from 'store/actions';
 
-import ReactDOM from 'react-dom';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
-import Progress from "react-progress-2";
 import PersonRowItem from 'containers/People/PersonRowItem'
 
 export class People extends Component {
@@ -13,6 +11,7 @@ export class People extends Component {
     // Lifecycle method
     componentDidMount() {
         this.props.actions.loadPeople();
+        this.props.actions.setViewinfo({name: 'People',path: '/'});
     }
 
   render() {

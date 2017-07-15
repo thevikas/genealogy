@@ -6,6 +6,7 @@
 
 export const SET_USER_PROFILE = 'SET_USER_PROFILE';
 
+export const SET_VIEWINFO = 'SET_VIEWINFO';
 export const FIND_PERSON = 'FIND_PERSON';
 
 export const ADD_PERSON = 'ADD_PERSON';

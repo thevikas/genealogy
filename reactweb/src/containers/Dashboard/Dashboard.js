@@ -7,15 +7,22 @@ import {BrowserRouter, Route, Link} from 'react-router-dom';
 import Progress from "react-progress-2";
 
 export default class Dashboard extends Component {
+
+    // Lifecycle method
+    componentDidMount() {
+        this.props.actions.setViewinfo({name: "",path: false});
+    }
+
   render() {
     return (
           <div className="container-fluid">
             <div className="quick-actions_homepage">
               <ul className="quick-actions">
-                <li className="bg_lb"> <a href="/people"> <i className="icon-dashboard"></i> <span className="label label-important">20</span> People </a> </li>
+                <li className="bg_lb"> <a href="/people"> <i className="icon-dashboard"></i> <span
+                    className="label label-important">20</span> People 2</a> </li>
                 <li className="bg_lg span3"> <a href="charts.html"> <i className="icon-signal"></i> Charts </a> </li>
                 <li className="bg_ly"> <a href="/events"> <i className="icon-inbox"></i><span className="label label-success">101</span> Events </a> </li>
-                <li className="bg_lo"> <a href="tables.html"> <i className="icon-th"></i> Totaram </a> </li>                
+                <li className="bg_lo"> <a href="tables.html"> <i className="icon-th"></i> Totaram </a> </li>
               </ul>
             </div>
 
