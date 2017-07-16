@@ -50,6 +50,7 @@ export function findPerson(id_person)
 
 export function loadPerson(id_person)
 {
+    console.log("calling API to fetch person",id_person);
     return {
         types: [
             'LOAD', ADD_PERSON_SUCCESS, ADD_PERSON_FAIL
@@ -77,7 +78,7 @@ export function findOrLoadPerson(id_person)
           if(personp.length>0)
           {
               console.log("found in thunk, calling setperson",personp[0]);
-              return dispatch({type: SET_PERSON,action: {
+              return dispatch({type: SET_PERSON,personp: {
                   person: personp[0].person,
                   father: personp[0].father ? personp[0].father : {},
                   mother: personp[0].mother ? personp[0].mother : {},

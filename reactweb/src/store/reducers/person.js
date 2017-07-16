@@ -12,9 +12,9 @@ export default function person(state = {}, action) {
             var clone = Object.assign({}, state, action.user);
             return clone;
         case SET_PERSON:
-            console.log("found in reducer setperson");
-            var clone = Object.assign({}, state, action.person);
-            return clone;
+            console.log("found in reducer setperson",action);
+            //var clone = Object.assign({}, state, action.personp);
+            return action.personp;
         case ADD_PERSON_SUCCESS:
             console.log("got back from API",action);
             var clone = Object.assign({}, state, action.payload.data);

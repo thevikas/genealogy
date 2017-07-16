@@ -30,6 +30,8 @@ export class PersonView extends Component {
         console.log("newprops new-pid,state-pid",nextProps.match.params.personid,this.state.id_person);
         if(nextProps.match.params.personid != this.state.id_person)
             this.props.actions.findOrLoadPerson(nextProps.match.params.personid)
+
+        this.setState({id_person: nextProps.match.params.personid})
         //if(nextProps.person.id_person)
         //    this.props.actions.setViewinfo({name: nextProps.person.name,path: '/people/view/' + nextProps.person.id_person});
     }
@@ -108,7 +110,7 @@ function mapStateToProps(state) {
     console.log("mapStateToProps state?",state)
     return {
       person: state.person.person ? state.person.person : {},
-      father: state.person.father ? state.person.person : {},
+      father: state.person.father ? state.person.father : {},
       mother: state.person.mother ? state.person.mother : {},
       spouse: state.person.spouse ? state.person.spouse : {},
     };
