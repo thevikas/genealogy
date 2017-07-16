@@ -11,12 +11,20 @@ import PersonLink from "components/PersonLink";
 
 export class PersonView extends Component {
 
+    constructor(props) {
+        // Pass props to parent class
+        super(props);
+        // Set initial state
+        this.afterFindPromise = this.afterFindPromise.bind(this);
+    }
+
+    afterFindPromise()
+    {
+        console.log("PersonView promise done3",this.props);
+    }
     // Lifecycle method
     componentDidMount() {
-        this.props.actions.findOrLoadPerson(this.props.match.params.personid).then(function()
-        {
-            console.log("PersonView promise done1",this.props);
-        });
+        this.props.actions.findOrLoadPerson(this.props.match.params.personid).then(this.afterFindPromise);
 
         this.state = {
             id_person: this.props.match.params.personid
@@ -32,10 +40,7 @@ export class PersonView extends Component {
     {
         console.log("newprops new-pid,state-pid",nextProps.match.params.personid,this.state.id_person);
         if(nextProps.match.params.personid != this.state.id_person)
-            this.props.actions.findOrLoadPerson(nextProps.match.params.personid).then(function()
-            {
-                console.log("PersonView promise done2");
-            });
+            this.props.actions.findOrLoadPerson(nextProps.match.params.personid).then(this.afterFindPromise);
 
         this.setState({id_person: nextProps.match.params.personid})
         //if(nextProps.person.id_person)

@@ -47,11 +47,11 @@ export function findPerson(id_person) {
     return {type: FIND_PERSON, id_person: id_person}
 }
 
-export function loadPerson(id_person) {
+export function loadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
     console.log("calling API to fetch person", id_person);
     return {
         types: [
-            'LOAD', ADD_PERSON_SUCCESS, ADD_PERSON_FAIL
+            'LOAD', dispatch_type, ADD_PERSON_FAIL
         ],
         payload: {
             request: {
@@ -61,7 +61,7 @@ export function loadPerson(id_person) {
     }
 }
 
-export function findOrLoadPerson(id_person) {
+export function findOrLoadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
     console.log('trying to find :64', id_person)
     return function(dispatch, getState) {
         console.log('trying to find :67', id_person)
@@ -76,25 +76,31 @@ export function findOrLoadPerson(id_person) {
             console.log("found in thunk, calling setperson", personp[0]);
             return dispatch(
             {
-                type: SET_PERSON,
-                personp:
+                type: dispatch_type,
+                payload:
                 {
-                    person: personp[0].person,
-                    father: personp[0].father
-                        ? personp[0].father
-                        : {},
-                    mother: personp[0].mother
-                        ? personp[0].mother
-                        : {},
-                    spouse: personp[0].spouse
-                        ? personp[0].spouse
-                        : {}
+                    data:
+                    {
+                        person: personp[0].person,
+                        father: personp[0].father
+                            ? personp[0].father
+                            : {},
+                        mother: personp[0].mother
+                            ? personp[0].mother
+                            : {},
+                        spouse: personp[0].spouse
+                            ? personp[0].spouse
+                            : {},
+                        child_ids: personp[0].child_ids
+                            ? personp[0].child_ids
+                            : []
+                    }
                 }
             });
         }
 
         console.log("NOT found in thunk, calling appender");
-        return dispatch(loadPerson(id_person)).then(function()
+        return dispatch(loadPerson(id_person,dispatch_type)).then(function()
         {
             console.log("asking to append PERSON");
             return dispatch({type: APPEND_TO_PEOPLE, personp: getState().person});

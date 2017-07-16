@@ -24,6 +24,14 @@ export default function person(state = [], action) {
                 Helpers.copyPersonObject(newobj.father,action.personp.father);
                 Helpers.copyPersonObject(newobj.mother,action.personp.mother);
                 Helpers.copyPersonObject(newobj.spouse,action.personp.spouse);
+
+                if(action.personp.child_ids.length>0)
+                {
+                    newobj.child_ids = [];
+                    for(var i=0;i<action.personp.child_ids.length; i++)
+                        newobj.child_ids.push(action.personp.child_ids[i]);
+                }
+
                 return [newobj];
             }
         default:
