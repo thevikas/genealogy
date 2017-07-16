@@ -7,6 +7,7 @@ import {
     ADD_PERSON_FAIL,
     ADD_PEOPLE_FAIL,
     APPEND_TO_PEOPLE,
+    RESET_CHILDREN,
     FIND_PERSON,
     SET_VIEWINFO
 } from 'constants/ActionTypes';
@@ -35,22 +36,19 @@ export function loadPeople() {
 }
 
 export function loadPeopleAndFindPerson(id_person) {
-    return function(dispatch){
-        dispatch(loadPeople()).then(function(){
+    return function(dispatch) {
+        dispatch(loadPeople()).then(function() {
             return dispatch(findPerson(id_person))
         })
     }
 }
 
-
-export function findPerson(id_person)
-{
+export function findPerson(id_person) {
     return {type: FIND_PERSON, id_person: id_person}
 }
 
-export function loadPerson(id_person)
-{
-    console.log("calling API to fetch person",id_person);
+export function loadPerson(id_person) {
+    console.log("calling API to fetch person", id_person);
     return {
         types: [
             'LOAD', ADD_PERSON_SUCCESS, ADD_PERSON_FAIL
@@ -63,40 +61,47 @@ export function loadPerson(id_person)
     }
 }
 
-export function findOrLoadPerson(id_person)
-{
+export function findOrLoadPerson(id_person) {
     console.log('trying to find :64', id_person)
-    return function(dispatch,getState)
-    {
+    return function(dispatch, getState) {
         console.log('trying to find :67', id_person)
 
         //find the id in people state
         //if found, return dispatch
         var state = getState()
 
-          const personp = state.people.filter((personp) => personp.person.id_person == id_person)
-          if(personp.length>0)
-          {
-              console.log("found in thunk, calling setperson",personp[0]);
-              return dispatch({type: SET_PERSON,personp: {
-                  person: personp[0].person,
-                  father: personp[0].father ? personp[0].father : {},
-                  mother: personp[0].mother ? personp[0].mother : {},
-                  spouse: personp[0].spouse ? personp[0].spouse : {}
-              }});
-          }
+        const personp = state.people.filter((personp) => personp.person.id_person == id_person)
+        if (personp.length > 0)
+        {
+            console.log("found in thunk, calling setperson", personp[0]);
+            return dispatch(
+            {
+                type: SET_PERSON,
+                personp:
+                {
+                    person: personp[0].person,
+                    father: personp[0].father
+                        ? personp[0].father
+                        : {},
+                    mother: personp[0].mother
+                        ? personp[0].mother
+                        : {},
+                    spouse: personp[0].spouse
+                        ? personp[0].spouse
+                        : {}
+                }
+            }).then(function()
+            {
+                dispatch({type: RESET_CHILDREN})
+            })
+        }
 
-          console.log("NOT found in thunk, calling setperson");
-          return dispatch(loadPerson(id_person))
-          .then(function()
-              {
-                  console.log("asking to append PERSON");
-                  return dispatch(
-                      {
-                          type: APPEND_TO_PEOPLE, personp: getState().person
-                      });
-              }
-          )
+        console.log("NOT found in thunk, calling appender");
+        return dispatch(loadPerson(id_person)).then(function()
+        {
+            console.log("asking to append PERSON");
+            return dispatch({type: APPEND_TO_PEOPLE, personp: getState().person});
+        });
         //if not found, return another dispatch to fetch that id
         //->find again
     }

@@ -13,7 +13,10 @@ export class PersonView extends Component {
 
     // Lifecycle method
     componentDidMount() {
-        this.props.actions.findOrLoadPerson(this.props.match.params.personid)
+        this.props.actions.findOrLoadPerson(this.props.match.params.personid).then(function()
+        {
+            console.log("PersonView promise done1");
+        });
 
         this.state = {
             id_person: this.props.match.params.personid
@@ -29,7 +32,10 @@ export class PersonView extends Component {
     {
         console.log("newprops new-pid,state-pid",nextProps.match.params.personid,this.state.id_person);
         if(nextProps.match.params.personid != this.state.id_person)
-            this.props.actions.findOrLoadPerson(nextProps.match.params.personid)
+            this.props.actions.findOrLoadPerson(nextProps.match.params.personid).then(function()
+            {
+                console.log("PersonView promise done2");
+            });
 
         this.setState({id_person: nextProps.match.params.personid})
         //if(nextProps.person.id_person)

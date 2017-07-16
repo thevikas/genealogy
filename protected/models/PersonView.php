@@ -103,6 +103,13 @@ class PersonView extends Person
             $item ['mother'] = $this->mother->attrs;
         if (isset ( $this->spouses [0] ))
             $item ['spouse'] = $this->spouses [0]->attrs;
+        $children = $this->children;
+        if (count ( $children ))
+        {
+            $item ['child_ids'] = [ ];
+            foreach ( $children as $child )
+                $item ['child_ids'] [] = intval ( $child->cid );
+        }
         return $item;
     }
 
