@@ -73,7 +73,7 @@ class PersonView extends Person
         );
     }
 
-    public function getattrs()
+    public function getattrs($full = false)
     {
         $attrs = $this->getAttributes ( 
                 [ 
@@ -92,17 +92,22 @@ class PersonView extends Person
          * $attrs ['intro'] = $this->intro;
          * $attrs ['htmlid'] = $this->htmlid;
          */
-        return $attrs;
-        /*
-         * $attrs ['selectedCompany'] = $this->selectedCompany->attrs;
-         *
-         * $vals = [ ];
-         * foreach ( $this->attributeLabels () as $key => $val )
-         * {
-         * if (! empty ( $this->$key ))
-         * $vals [$key] = $this->$key;
-         * }
-         * return $vals;
-         */
+        if (! $full)
+            return $attrs;
+        
+        $item = [ ];
+        $item ['person'] = $attrs;
+        if (isset ( $this->father ))
+            $item ['father'] = $this->father->attrs;
+        if (isset ( $this->mother ))
+            $item ['mother'] = $this->mother->attrs;
+        if (isset ( $this->spouses [0] ))
+            $item ['spouse'] = $this->spouses [0]->attrs;
+        return $item;
+    }
+
+    static function fromhtmlid($htmlid)
+    {
+        return $htmlid; // disabling hashing for the time
     }
 }

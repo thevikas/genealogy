@@ -4,23 +4,18 @@ import {Link} from 'react-router-dom';
 
 export default class PersonLink extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = props;
-    }
-
     getMobile()
     {
-            if(typeof this.state.showmobile == 'undefined' || this.state.showmobile==false || typeof this.state.person.mobile == 'undefined' || !this.state.person.mobile)
+            if(typeof this.props.showmobile == 'undefined' || this.props.showmobile==false || typeof this.props.person.mobile == 'undefined' || !this.props.person.mobile)
                 return null;
-            return ' ' + this.state.person.mobile;
+            return ' ' + this.props.person.mobile;
     }
 
     render() {
-        if (this.state.person != undefined)
+        if (this.props.person.id_person != undefined)
             return (
-                <Link className="person" to={'/people/view/' + this.state.person.id_person.toString()}>
-                    {this.state.person.name}{this.getMobile()}
+                <Link className="person" to={'/people/view/' + this.props.person.id_person.toString()}>
+                    {this.props.person.name}{this.getMobile()}
                 </Link>
             )
         else

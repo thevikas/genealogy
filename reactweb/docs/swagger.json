@@ -254,100 +254,36 @@
                         },
                         "examples": {
                             "application/json": {
-                                "person": {
-                                    "id_user": "1",
-                                    "id_person": "1",
-                                    "imageUrl": "",
-                                    "mobile": "8847529942",
-                                    "location": "Sikar, Rajasthan",
-                                    "email": "vikas@pronity.in",
-                                    "name": "Vikas Yadav",
-                                    "first_name": "Vikas",
-                                    "last_name": "Yadav"
-                                },
-                                "projects": [{
-                                    "id_project": "1",
-                                    "createdAt": "2017-04-01T00:00:00Z",
-                                    "name": "name 1",
-                                    "city": "city 1",
-                                    "state": "state 1",
-                                    "dueAt": "2017-06-15T23:20:50.52Z",
-                                    "completed_pc": 52,
-                                    "weather_code": 905,
-                                    "manager": [{
-                                        "id_person": 1,
-                                        "name": "manager 1",
-                                        "email": "vikas@pronity.in"
-                                    }]
-                                }, {
-                                    "id_project": "2",
-                                    "createdAt": "2017-04-01T00:00:00Z",
-                                    "name": "name 2",
-                                    "city": "city 2",
-                                    "state": "state 2",
-                                    "dueAt": "2017-05-15T23:20:50.52Z",
-                                    "completed_pc": 67,
-                                    "weather_code": 72,
-                                    "manager": [{
-                                        "id_person": 2,
-                                        "name": "manager 2",
-                                        "email": "vikas@pronity.in"
-                                    }]
-                                }],
-                                "updates": [{
-                                        "id_update": "1",
-                                        "id_project": "1",
-                                        "filedAt": "2017-04-01T00:00:00Z",
-                                        "des": "Description of activity 1",
-                                        "imageUrls": [],
-                                        "filedBy": {
-                                            "name": "Filed By Name 1",
-                                            "id_person": 1,
-                                            "email": "vikas@pronity.in"
-                                        },
-                                        "project": {
-                                            "name": "Project of Update 1",
-                                            "id_project": 1,
-                                            "dueAt": "2017-04-01T00:00:00Z"
-                                        }
+                                    "person": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "age": 47,
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Vikas Yadav"
                                     },
-                                    {
-                                        "id_update": "2",
-                                        "id_project": "2",
-                                        "imageUrls": [],
-                                        "filedAt": "2017-04-01T00:00:00Z",
-                                        "des": "Update number two",
-                                        "project": {
-                                            "name": "Project of Update 2",
-                                            "id_project": 2,
-                                            "dueAt": "2017-04-01T00:00:00Z"
-                                        },
-                                        "filedBy": {
-                                            "name": "Filed By Name 2",
-                                            "id_person": 1,
-                                            "email": "vikas@pronity.in"
-                                        }
+                                    "spouse": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Chhaya Yadav"
                                     },
-                                    {
-                                        "id_update": "3",
-                                        "id_project": "3",
-                                        "imageUrls": [],
-                                        "filedAt": "2017-04-01T00:00:00Z",
-                                        "des": "Update number three",
-                                        "project": {
-                                            "name": "Project of Update 3",
-                                            "id_project": 3,
-                                            "dueAt": "2017-04-01T00:00:00Z"
-                                        },
-                                        "filedBy": {
-                                            "name": "Filed By Name 3",
-                                            "id_person": 1,
-                                            "email": "vikas@pronity.in"
-                                        }
+                                     "father": {
+                                        "id_user": "1",
+                                        "id_person": "1",
+                                        "imageUrl": "",
+                                        "mobile": "8847529942",
+                                        "location": "Sikar, Rajasthan",
+                                        "email": "vikas@somewhere.in",
+                                        "name": "Father Yadav"
                                     }
-                                ]
-                            }
 
+                                }
                         }
                     },
                     "400": {
@@ -402,7 +338,7 @@
             }
         }
     },
-    "definitions": {        
+    "definitions": {
         "PersonSpouseParents": {
             "type": "object",
             "required": ["person"],
@@ -420,7 +356,7 @@
                     "$ref": "#/definitions/Person"
                 }
             }
-        },        
+        },
         "Person": {
             "type": "object",
             "required": ["id_person", "mobile", "email", "name", "first_name", "last_name"],
@@ -480,6 +416,6 @@
                 "first_name": "Vikas",
                 "last_name": "Yadav"
             }
-        }               
+        }
     }
 }

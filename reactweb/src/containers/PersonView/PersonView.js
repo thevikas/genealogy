@@ -13,7 +13,11 @@ export class PersonView extends Component {
 
     // Lifecycle method
     componentDidMount() {
-        this.props.actions.loadPeopleAndFindPerson(this.props.match.params.personid)
+        this.props.actions.findOrLoadPerson(this.props.match.params.personid)
+
+        this.state = {
+            id_person: this.props.match.params.personid
+          };
     }
 
     componentWillUnmount()
@@ -23,12 +27,16 @@ export class PersonView extends Component {
 
     componentWillReceiveProps(nextProps)
     {
-        console.log("booom",nextProps);
-        if(nextProps.person.id_person)
-            this.props.actions.setViewinfo({name: nextProps.person.name,path: '/people/view/' + nextProps.person.id_person});
+        console.log("newprops new-pid,state-pid",nextProps.match.params.personid,this.state.id_person);
+        if(nextProps.match.params.personid != this.state.id_person)
+            this.props.actions.findOrLoadPerson(nextProps.match.params.personid)
+        //if(nextProps.person.id_person)
+        //    this.props.actions.setViewinfo({name: nextProps.person.name,path: '/people/view/' + nextProps.person.id_person});
     }
 
   render() {
+    if(!this.props.person)
+        return null;
     return (
           <div className="container-fluid">
               <div className="widget-box">
@@ -90,24 +98,22 @@ export class PersonView extends Component {
 
 PersonView.propTypes = {
   person: PropTypes.object.isRequired,
-  father: PropTypes.object.isRequired,
-  father: PropTypes.object.isRequired,
-  spouse: PropTypes.object.isRequired,
+  //father: PropTypes.object.isRequired,
+  //mother: PropTypes.object.isRequired,
+  //spouse: PropTypes.object.isRequired,
   actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
-    console.log('IN mapStateToProps, trying to find ', state.finder.id_person)
-      const personp = state.people.filter((personp) => personp.person.id_person == state.finder.id_person)
-      if(personp.length==0) return {
-          person: {}
-      }
-      return {
-          person: personp[0].person,
-          father: personp[0].father ? personp[0].father : {},
-          mother: personp[0].mother ? personp[0].mother : {},
-          spouse: personp[0].spouse ? personp[0].spouse : {}
-      };
+    console.log("mapStateToProps state?",state)
+    return {
+      person: state.person.person ? state.person.person : {},
+      father: state.person.father ? state.person.person : {},
+      mother: state.person.mother ? state.person.mother : {},
+      spouse: state.person.spouse ? state.person.spouse : {},
+    };
+
+
 }
 
 function mapDispatchToProps(dispatch) {
