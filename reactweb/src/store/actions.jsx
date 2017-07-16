@@ -90,10 +90,7 @@ export function findOrLoadPerson(id_person) {
                         ? personp[0].spouse
                         : {}
                 }
-            }).then(function()
-            {
-                dispatch({type: RESET_CHILDREN})
-            })
+            });
         }
 
         console.log("NOT found in thunk, calling appender");
@@ -101,7 +98,7 @@ export function findOrLoadPerson(id_person) {
         {
             console.log("asking to append PERSON");
             return dispatch({type: APPEND_TO_PEOPLE, personp: getState().person});
-        });
+        })
         //if not found, return another dispatch to fetch that id
         //->find again
     }

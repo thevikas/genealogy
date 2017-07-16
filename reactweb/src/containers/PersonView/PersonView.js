@@ -15,7 +15,7 @@ export class PersonView extends Component {
     componentDidMount() {
         this.props.actions.findOrLoadPerson(this.props.match.params.personid).then(function()
         {
-            console.log("PersonView promise done1");
+            console.log("PersonView promise done1",this.props);
         });
 
         this.state = {
@@ -119,6 +119,7 @@ function mapStateToProps(state) {
       father: state.person.father ? state.person.father : {},
       mother: state.person.mother ? state.person.mother : {},
       spouse: state.person.spouse ? state.person.spouse : {},
+      child_ids: state.person.child_ids ? state.person.child_ids : []
     };
 
 
