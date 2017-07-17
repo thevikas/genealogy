@@ -8,7 +8,7 @@ I also have a lot more space time.
 
 * To port it to php7 standard - completed - 20170712
 * Build a reactjs base frontend - ongoing - 20170712
-* Build a API to work with database
+* Build a API to work with database - ongoing - 20170714
 * Build android app which consumed the API
 
 # Reports
