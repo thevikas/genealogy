@@ -83,7 +83,7 @@ export class PersonView extends Component {
                       </div>
                   </div>}
 
-                  {this.props.spouse &&
+                  {this.props.spouse.name != undefined &&
                   <div className="control-group">
                     <label className="control-label">Spouse :</label>
                     <div className="controls">
@@ -91,7 +91,7 @@ export class PersonView extends Component {
                     </div>
                 </div>}
 
-                {this.props.father &&
+                {this.props.father.name != undefined &&
                 <div className="control-group">
                   <label className="control-label">Father :</label>
                   <div className="controls">
@@ -99,7 +99,7 @@ export class PersonView extends Component {
                   </div>
               </div>}
 
-              {this.props.mother &&
+              {this.props.mother.name != undefined &&
               <div className="control-group">
                 <label className="control-label">Mother :</label>
                 <div className="controls">
