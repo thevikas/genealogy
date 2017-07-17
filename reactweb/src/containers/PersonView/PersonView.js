@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PActions from 'store/actions';
-
+import DocumentTitle from 'react-document-title';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Link} from 'react-router-dom';
 import Progress from "react-progress-2";
@@ -61,6 +61,7 @@ export class PersonView extends Component {
     if(!this.props.person)
         return null;
     return (
+        <DocumentTitle title={this.props.person.name == undefined ? "Person View Loading" : this.props.person.name}>
           <div className="container-fluid">
               <div className="widget-box">
                 <div className="widget-title"> <span className="icon"> <i className="icon-align-justify"></i> </span>
@@ -110,7 +111,7 @@ export class PersonView extends Component {
                   </form>
                 </div>
               </div>
-
+              {this.props.children.length >0 &&
               <div className="widget-box">
                 <div className="widget-title"> <span className="icon"> <i className="icon-align-justify"></i> </span>
                   <h5>Children</h5>
@@ -124,8 +125,9 @@ export class PersonView extends Component {
                       </div>
 
                 </div>
-            </div>
+            </div>}
           </div>
+      </DocumentTitle>
     );
   }
 }
