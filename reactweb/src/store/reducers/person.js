@@ -43,6 +43,7 @@ export default function person(state = {}, action) {
         }
         case ADD_PERSON_SUCCESS:
             console.log("got back from API",action);
+            action.payload.data.children = [];
             var clone = Object.assign({}, state, action.payload.data);
             return clone;
         default:

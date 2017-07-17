@@ -107,17 +107,37 @@ export class PersonView extends Component {
                 </div>
             </div>}
 
-                    <div className="form-actions">
-                      <button type="submit" className="btn btn-success">Save</button>
-                    </div>
                   </form>
                 </div>
               </div>
+
+              <div className="widget-box">
+                <div className="widget-title"> <span className="icon"> <i className="icon-align-justify"></i> </span>
+                  <h5>Children</h5>
+                </div>
+                <div className="widget-content nopadding chat-users">
+
+                    <div className="panel-content nopadding">
+                        <ul className="contact-list">
+                          {this.props.children.map((personp, index) => <ChildItem key={personp.person.id_person} person={personp.person}/>)}
+                        </ul>
+                      </div>
+
+                </div>
+            </div>
           </div>
     );
   }
 }
 
+export function ChildItem(props) {
+    return <li id="user-Alex" className="online">
+            <i className={"fa " + (props.person.gender ? "fa-male" : "fa-female")}/>
+            <PersonLink show='name' person={props.person}>
+                <span>{props.person.name}</span>
+            </PersonLink>
+        </li>
+}
 
 PersonView.propTypes = {
   person: PropTypes.object.isRequired,
@@ -137,8 +157,6 @@ function mapStateToProps(state) {
       child_ids: state.person.child_ids ? state.person.child_ids : [],
       children: state.person.children ? state.person.children : []
     };
-
-
 }
 
 function mapDispatchToProps(dispatch) {

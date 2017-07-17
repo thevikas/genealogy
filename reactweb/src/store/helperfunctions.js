@@ -13,6 +13,7 @@ export function copyPersonObject(toobj,fromobj)
     toobj.email = fromobj.email;
     toobj.id_person = fromobj.id_person;
     toobj.age = fromobj.age;
+    toobj.gender = fromobj.gender;
     console.log("copy done",fromobj,toobj);
     return toobj;
 }

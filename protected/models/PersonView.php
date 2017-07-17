@@ -87,6 +87,7 @@ class PersonView extends Person
                 ] );
         $attrs ['id_person'] = $this->cid;
         $attrs ['age'] = intval ( $this->age );
+        $attrs ['gender'] = intval ( $this->gender );
         /*
          * $attrs ['languagebox'] = $this->getlanguagebox ();
          * $attrs ['intro'] = $this->intro;
