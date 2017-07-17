@@ -1135,6 +1135,7 @@ form {
 .form-horizontal .control-label {
 	padding-top: 15px;
 	width: 180px;
+	float:left;
 }
 .form-horizontal .controls {
 	margin-left: 200px;
@@ -1592,4 +1593,8 @@ div.dataTables_wrapper .ui-widget-header {
 {
 	padding-top: 5px;
 	font-size: 14px;
+}
+
+.person i.fa {
+	margin-right: 4px;
 }

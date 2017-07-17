@@ -132,10 +132,7 @@ export class PersonView extends Component {
 
 export function ChildItem(props) {
     return <li id="user-Alex" className="online">
-            <i className={"fa " + (props.person.gender ? "fa-male" : "fa-female")}/>
-            <PersonLink show='name' person={props.person}>
-                <span>{props.person.name}</span>
-            </PersonLink>
+            <PersonLink show='name' person={props.person}/>
         </li>
 }
 

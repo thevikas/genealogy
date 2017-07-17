@@ -15,6 +15,7 @@ export default class PersonLink extends Component {
         if (this.props.person.id_person != undefined)
             return (
                 <Link className="person" to={'/people/view/' + this.props.person.id_person.toString()}>
+                    <i aria-hidden="true" className={"fa " + (this.props.person.gender ? "fa-male" : "fa-female")}></i>
                     {this.props.person.name}{this.getMobile()}
                 </Link>
             )
