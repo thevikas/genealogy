@@ -9,6 +9,8 @@ import Progress from "react-progress-2";
 import PersonRowItem from 'containers/People/PersonRowItem'
 import PersonLink from "components/PersonLink";
 
+import { APPEND_TO_CHILDREN } from 'constants/ActionTypes';
+
 export class PersonView extends Component {
 
     constructor(props) {
@@ -21,6 +23,14 @@ export class PersonView extends Component {
     afterFindPromise()
     {
         console.log("PersonView promise done3",this.props);
+        if(this.props.child_ids.length>0)
+        {
+            for(var i=0; i< this.props.child_ids.length; i++)
+            {
+                console.log('finding child',this.props.child_ids[i]);
+                this.props.actions.findOrLoadPerson(this.props.child_ids[i],APPEND_TO_CHILDREN);
+            }
+        }
     }
     // Lifecycle method
     componentDidMount() {
@@ -124,7 +134,8 @@ function mapStateToProps(state) {
       father: state.person.father ? state.person.father : {},
       mother: state.person.mother ? state.person.mother : {},
       spouse: state.person.spouse ? state.person.spouse : {},
-      child_ids: state.person.child_ids ? state.person.child_ids : []
+      child_ids: state.person.child_ids ? state.person.child_ids : [],
+      children: state.person.children ? state.person.children : []
     };
 
 

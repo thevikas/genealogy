@@ -8,6 +8,7 @@ import {
     ADD_PEOPLE_FAIL,
     APPEND_TO_PEOPLE,
     RESET_CHILDREN,
+    APPEND_TO_CHILDREN,
     FIND_PERSON,
     SET_VIEWINFO
 } from 'constants/ActionTypes';
@@ -74,28 +75,31 @@ export function findOrLoadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
         if (personp.length > 0)
         {
             console.log("found in thunk, calling setperson", personp[0]);
-            return dispatch(
-            {
-                type: dispatch_type,
-                payload:
+            return new Promise(function(resolve,reject) {
+                dispatch(
                 {
-                    data:
+                    type: dispatch_type,
+                    payload:
                     {
-                        person: personp[0].person,
-                        father: personp[0].father
-                            ? personp[0].father
-                            : {},
-                        mother: personp[0].mother
-                            ? personp[0].mother
-                            : {},
-                        spouse: personp[0].spouse
-                            ? personp[0].spouse
-                            : {},
-                        child_ids: personp[0].child_ids
-                            ? personp[0].child_ids
-                            : []
+                        data:
+                        {
+                            person: personp[0].person,
+                            father: personp[0].father
+                                ? personp[0].father
+                                : {},
+                            mother: personp[0].mother
+                                ? personp[0].mother
+                                : {},
+                            spouse: personp[0].spouse
+                                ? personp[0].spouse
+                                : {},
+                            child_ids: personp[0].child_ids
+                                ? personp[0].child_ids
+                                : []
+                        }
                     }
-                }
+                });
+                resolve(personp[0]);
             });
         }
 
@@ -103,7 +107,16 @@ export function findOrLoadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
         return dispatch(loadPerson(id_person,dispatch_type)).then(function()
         {
             console.log("asking to append PERSON");
-            return dispatch({type: APPEND_TO_PEOPLE, personp: getState().person});
+            var personp;
+            if(dispatch_type ==APPEND_TO_CHILDREN)
+            {
+                var ll = getState().person.children.length;
+                personp = dispatch_type == APPEND_TO_CHILDREN ? getState().person.children[ll-1] : getState().person;
+            }
+            else
+                personp = getState().person;
+
+            return dispatch({type: APPEND_TO_PEOPLE, personp: personp});
         })
         //if not found, return another dispatch to fetch that id
         //->find again
