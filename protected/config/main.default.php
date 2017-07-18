@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array (
         'basePath' => dirname ( __FILE__ ) . DIRECTORY_SEPARATOR . '..',
-        'name' => 'My Web Application',
+        'name' => 'Genealogy',
         
         // preloading 'log' component
         'preload' => array (
@@ -19,14 +19,14 @@ return array (
                 'application.models.*',
                 'application.components.*',
                 'application.behaviours.*',
-                'application.controllers.*',
+                'application.controllers.*' 
         ),
         
         'modules' => array (
                 // uncomment the following to enable the Gii tool
                 'gii' => array (
                         'class' => 'system.gii.GiiModule',
-                        'password' => 'tj18',
+                        'password' => '',
                         // If removed, Gii defaults to localhost only. Edit
                         // carefully to taste.
                         'ipFilters' => array (
@@ -38,11 +38,9 @@ return array (
         
         // application components
         'components' => array (
-                'cache' => array (
-                        'class' => 'WPSuperCache'
-                ),
                 'user' => array (
                         // enable cookie-based authentication
+                        'class' => 'WebUser',
                         'allowAutoLogin' => true 
                 ),
                 // uncomment the following to enable URLs in path-format
@@ -57,12 +55,12 @@ return array (
                 ),
                 
                 'db' => array (
-                        'connectionString' => 'mysql:host=localhost;dbname=tasker',
+                        'connectionString' => 'mysql:host=localhost;dbname=gene',
                         'emulatePrepare' => true,
                         'username' => 'root',
                         'password' => '',
                         'charset' => 'utf8',
-                        'schemaCachingDuration'=>60*60
+                        'schemaCachingDuration' => 60 * 60 
                 ),
                 'errorHandler' => array (
                         // use 'site/error' action to display errors
@@ -72,38 +70,43 @@ return array (
                         'class' => 'CLogRouter',
                         'routes' => array (
                                 array (
-                                        'class' => 'CFileLogRoute',
-                                        //'levels' => 'error, warning' 
-                                ),
-                                /*array (
-                                        'class' => 'CWebLogRoute'
-                                )*/
-                        ),
-                        // uncomment the following to show log messages on web
-                        // pages                        
-                         
+                                        'class' => 'CFileLogRoute' 
+                                    // 'levels' => 'error, warning'
+                                ) 
+                            /*
+                         * array (
+                         * 'class' => 'CWebLogRoute'
+                         * )
+                         */
+                        ) 
+                    // uncomment the following to show log messages on web
+                    // pages
+                
                 ),
                 'clientScript' => array (
                         
                         'CoreScriptUrl' => '/js',
                         'coreScriptPosition' => CClientScript::POS_END,
-                        'packages' => include __DIR__ . '/script-packages.php',
-                        /*'scriptMap' => array (
-                                'jquery.js' => false,
-                                'jquery.min.js' => false 
-                        ) */
-                ), //clientScript
-                 
+                        'packages' => include __DIR__ . '/script-packages.php' 
+                    /*
+                 * 'scriptMap' => array (
+                 * 'jquery.js' => false,
+                 * 'jquery.min.js' => false
+                 * )
+                 */
+                )  // clientScript
+        
         ),
         
         // application-level parameters that can be accessed
         // using Yii::app()->params['paramName']
         'params' => array (
                 // this is used in contact page
+                'pass_salt' => 'SALT NEEDED HERE! 103',
                 'adminEmail' => 'webmaster@example.com',
-                'cachetime' => 60*60,
+                'cachetime' => 60 * 60,
                 'units' => [ 
                         'DAY' => 2 
                 ] 
-        ), 
+        ) 
 );

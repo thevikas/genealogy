@@ -7,27 +7,41 @@
  */
 class UserIdentity extends CUserIdentity
 {
-	/**
-	 * Authenticates a user.
-	 * The example implementation makes sure if the username and password
-	 * are both 'demo'.
-	 * In practical applications, this should be changed to authenticate
-	 * against some persistent user identity storage (e.g. database).
-	 * @return boolean whether authentication succeeds.
-	 */
-	public function authenticate()
-	{
-		$users=array(
-			// username => password
-			'demo'=>'demo',
-			'admin'=>'admin',
-		);
-		if(!isset($users[$this->username]))
-			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		elseif($users[$this->username]!==$this->password)
-			$this->errorCode=self::ERROR_PASSWORD_INVALID;
-		else
-			$this->errorCode=self::ERROR_NONE;
-		return !$this->errorCode;
-	}
+    var $groupid = 0;
+
+    /**
+     * This is right now the most simple ACL system.
+     * Not production quality.
+     * All users will have to be manually set in the text file
+     * Passwords are md5 salted
+     *
+     * @return boolean whether authentication succeeds.
+     */
+    public function authenticate()
+    {
+        $users = [ ];
+        $fh = fopen ( Yii::app ()->basePath . '/data/users.txt', 'r' );
+        $groups = [ ];
+        $lc = 1;
+        $this->groupid = 0;
+        while ( ! feof ( $fh ) )
+        {
+            $cols = fgetcsv ( $fh );
+            if ($cols [0] [0] == '#')
+                continue;
+            $users [$cols [0]] = $cols [1];
+            $groups [$cols [0]] = $cols [2];
+        }
+        
+        if (! isset ( $users [$this->username] ))
+            $this->errorCode = self::ERROR_USERNAME_INVALID;
+        elseif ($users [$this->username] !== md5 ( Yii::app ()->params ['pass_salt'] . $this->password ))
+            $this->errorCode = self::ERROR_PASSWORD_INVALID;
+        else
+        {
+            $this->groupid = $groups [$this->username];
+            $this->errorCode = self::ERROR_NONE;
+        }
+        return ! $this->errorCode;
+    }
 }
