@@ -113,7 +113,7 @@ class PersonController extends Controller
      * If creation is successful, the browser will be redirected to the 'view'
      * page.
      */
-    public function actionCreate($spouse_id = 0, $mother_cid = 0, $father_cid = 0, $child_cid = 0)
+    public function actionCreate($spouse_id = 0, $mother_id = 0, $father_id = 0, $child_id = 0)
     {
         $model = new Person ();
         $spouse = null;
@@ -146,15 +146,15 @@ class PersonController extends Controller
                         die ();
                     }
                 }
-                else if ($mother_cid)
+                else if ($mother_id)
                     $this->redirect ( 
                             array (
                                     'view',
-                                    'id' => $mother_cid 
+                                    'id' => $mother_id 
                             ) );
-                else if ($child_cid)
+                else if ($child_id)
                 {
-                    $child = Person::model ()->findByPk ( $child_cid );
+                    $child = Person::model ()->findByPk ( $child_id );
                     if ($model->gender)
                         $child->father_cid = $model->cid;
                     else
@@ -168,7 +168,7 @@ class PersonController extends Controller
                     $this->redirect ( 
                             array (
                                     'view',
-                                    'id' => $child_cid 
+                                    'id' => $child_id 
                             ) );
                 }
                 else
@@ -185,10 +185,10 @@ class PersonController extends Controller
         }
         else
         {
-            if ($mother_cid)
-                $model->mother_cid = $mother_cid;
-            if ($father_cid)
-                $model->father_cid = $father_cid;
+            if ($mother_id)
+                $model->mother_cid = $mother_id;
+            if ($father_id)
+                $model->father_cid = $father_id;
         }
         $this->render ( 'create', 
                 array (
@@ -260,7 +260,11 @@ class PersonController extends Controller
     public function actionIndex($gid = 0)
     {
         $p = new Person ();
-        $p->owner_gid = $gid;
+        
+        // looking at other's data is not blocked, yet
+        if ($gid)
+            $p->owner_gid = $gid;
+        
         $dataProvider = $p->search ();
         $this->render ( 'index', array (
                 'dataProvider' => $dataProvider 

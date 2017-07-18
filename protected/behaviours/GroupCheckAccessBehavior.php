@@ -48,7 +48,7 @@ class GroupCheckAccessBehavior extends CActiveRecordBehavior
             $this->owner->addError ( '', __ ( 'Access Denied' ) );
         }
         
-        if ($this->owner->owner_gid != $this->owner_gid)
+        if (! $this->owner->isNewRecord && $this->owner->owner_gid != $this->owner_gid)
         {
             $this->owner->addError ( 'owner_gid', __ ( 'Cannot be updated' ) );
             $rt = false;
