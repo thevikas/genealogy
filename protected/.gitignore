@@ -1,5 +1,4 @@
 yiic*
 vendor
 config
-*.php
 data/*
