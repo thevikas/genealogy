@@ -44,6 +44,7 @@
 </style>
 <script type="text/javascript">
 var jsonurl = '<?=$jsonurl?>';
+var maxlevels = <?=$maxlevels?>;
 </script>
 <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://d3js.org/d3.v3.js"></script>
