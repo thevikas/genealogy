@@ -10,6 +10,7 @@
  * @property integer $mid
  * @property string $comments
  * @property string $dom
+ * @property integer $owner_gid
  *
  * The followings are the available model relations:
  * @property Persons $husbandC
@@ -152,6 +153,7 @@ class Marriage extends CActiveRecord
         $criteria->compare ( 'mid', $this->mid );
         $criteria->compare ( 'comments', $this->comments, true );
         $criteria->compare ( 'dom', $this->dom, true );
+        $criteria->compare ( 'owner_gid', $this->owner_gid, true );
         
         return new CActiveDataProvider ( $this, array (
                 'criteria' => $criteria 
@@ -162,7 +164,7 @@ class Marriage extends CActiveRecord
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your
      * CActiveRecord descendants!
-     * 
+     *
      * @param string $className
      *            active record class name.
      * @return Marriage the static model class

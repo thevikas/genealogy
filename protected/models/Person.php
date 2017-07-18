@@ -24,6 +24,7 @@
  * @property string $phone_off
  * @property string $father_root
  * @property string $updated
+ * @property integer $owner_gid 
  *
  * The followings are the available model relations:
  * @property Eventdates[] $eventdates
@@ -293,7 +294,7 @@ class Person extends CActiveRecord
         $criteria->compare ( 'firstname', $this->firstname, true );
         $criteria->compare ( 'father_cid', $this->father_cid );
         $criteria->compare ( 'mother_cid', $this->mother_cid );
-        $criteria->compare ( 'dated', $this->dated, true );
+        $criteria->compare ( 'created', $this->created, true );
         $criteria->compare ( 'deleted', $this->deleted );
         $criteria->compare ( 'lastname', $this->lastname, true );
         $criteria->compare ( 'gender', $this->gender );
@@ -309,6 +310,7 @@ class Person extends CActiveRecord
         $criteria->compare ( 'phone_off', $this->phone_off, true );
         $criteria->compare ( 'father_root', $this->father_root, true );
         $criteria->compare ( 'updated', $this->updated, true );
+        $criteria->compare ( 'owner_gid', $this->owner_gid, true );
         
         return new CActiveDataProvider ( $this, array (
                 'criteria' => $criteria 

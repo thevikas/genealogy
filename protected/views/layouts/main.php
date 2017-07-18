@@ -1,4 +1,4 @@
-<?php 
+<?php
 /* @var $this Controller */
 ?>
 <!DOCTYPE html>
@@ -66,9 +66,18 @@ $this->widget ( 'zii.widgets.CMenu',
                                 ) 
                         ),
                         array (
-                                'label' => 'People',
+                                'label' => 'All People',
+                                'visible' => Yii::app ()->user->isGuest,
                                 'url' => array (
                                         '/person' 
+                                ) 
+                        ),
+                        array (
+                                'label' => 'My People',
+                                'visible' => ! Yii::app ()->user->isGuest,
+                                'url' => array (
+                                        '/person/index',
+                                        'gid' => Yii::app ()->user->groupid 
                                 ) 
                         ),
                         array (
@@ -110,11 +119,15 @@ if (isset ( $this->breadcrumbs ))
     ?>
 		<?php
     
-$this->widget ( 'zii.widgets.CBreadcrumbs', array (
+    $this->widget ( 'zii.widgets.CBreadcrumbs', array (
             'links' => $this->breadcrumbs 
     ) );
     ?><!-- breadcrumbs -->
 	<?php endif?>
+
+
+
+
 
 
 	<?php

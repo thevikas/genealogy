@@ -257,9 +257,11 @@ class PersonController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex()
+    public function actionIndex($gid = 0)
     {
-        $dataProvider = new CActiveDataProvider ( 'Person' );
+        $p = new Person ();
+        $p->owner_gid = $gid;
+        $dataProvider = $p->search ();
         $this->render ( 'index', array (
                 'dataProvider' => $dataProvider 
         ) );
