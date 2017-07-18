@@ -47,6 +47,9 @@ class Person extends CActiveRecord
     public function behaviors()
     {
         return array (
+                'GroupCheckAccessBehavior' => [ 
+                        'class' => 'GroupCheckAccessBehavior' 
+                ],
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
                         'controller' => 'person',
@@ -59,12 +62,13 @@ class Person extends CActiveRecord
                                 if (count ( $spouses ) == 1)
                                 {
                                     if (! empty ( $params ['flip'] ))
-                                        $str = $spouses [0]->getnamelink ( [ 
-                                                'nospouse' => 1 
-                                        ] ) . ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' . $str;
+                                        $str = $spouses [0]->getnamelink ( 
+                                                [ 
+                                                        'nospouse' => 1 
+                                                ] ) . ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' . $str;
                                     else
-                                        $str .= ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' .
-                                                 $spouses [0]->getnamelink ( [ 
+                                        $str .= ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' . $spouses [0]->getnamelink ( 
+                                                [ 
                                                         'nospouse' => 1 
                                                 ] );
                                 }
@@ -315,7 +319,7 @@ class Person extends CActiveRecord
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your
      * CActiveRecord descendants!
-     * 
+     *
      * @param string $className
      *            active record class name.
      * @return Person the static model class

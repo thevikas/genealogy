@@ -219,6 +219,7 @@ class PersonController extends Controller
         if (isset ( $_POST ['Person'] ))
         {
             $model->attributes = $_POST ['Person'];
+            
             if ($model->save ())
                 $this->redirect ( 
                         array (
