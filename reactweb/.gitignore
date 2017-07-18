@@ -1,0 +1,15 @@
+/dredd.yml
+/circle.yml
+/route.url.maker.jsx
+/server.js
+/web.config.dev.js
+/web.config.prod.js
+/apitest.sh
+/config.class.apiary.jsx
+/config.class.apiphp.jsx
+node_modules
+vendors
+public/css/*
+public/js/*
+*.js
+

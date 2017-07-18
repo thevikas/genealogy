@@ -1,0 +1,6 @@
+themes
+.htaccess
+.project
+.settings
+assets/*
+*.php
