@@ -87,13 +87,19 @@ class Person extends CActiveRecord
                                         $mage = $interval->format ( '(%y yrs)' );
                                     }
                                     
+                                    $mlink = CHtml::link ( CHtml::image ( '/imgs/marriage.gif' ), 
+                                            [ 
+                                                    '/marriage/view',
+                                                    'id' => $marriage->mid 
+                                            ] );
+                                    
                                     if (! empty ( $params ['flip'] ))
                                         $str = $spouses [0]->getnamelink ( 
                                                 [ 
                                                         'nospouse' => 1 
-                                                ] ) . ' ' . CHtml::image ( '/imgs/marriage.gif' ) . $mage . ' ' . $str;
+                                                ] ) . ' ' . $mlink . $mage . ' ' . $str;
                                     else
-                                        $str .= ' ' . CHtml::image ( '/imgs/marriage.gif' ) . $mage . ' ' . $spouses [0]->getnamelink ( 
+                                        $str .= ' ' . $mlink . $mage . ' ' . $spouses [0]->getnamelink ( 
                                                 [ 
                                                         'nospouse' => 1 
                                                 ] );
