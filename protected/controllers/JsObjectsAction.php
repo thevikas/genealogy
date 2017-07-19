@@ -29,16 +29,21 @@ class JsObjectsAction extends CAction
                                             array (
                                                     'q' => $q,
                                                     'qlike' => $qlike 
-                                            ) ), 'id_person', 
+                                            ) ), 'cid', 
                                     function ($data)
                                     {
+                                        $label = $data->name . ' #' . $data->cid;
+                                        if ($data->age > 0)
+                                            $label .= '(' . $data->age . ')';
+                                        if (isset ( $data->father ))
+                                            $label .= ' - ' . $data->father->name;
                                         return array (
-                                                'label' => $data->name . " (id:{$data->cid}) " . $data->age . 'yrs',
+                                                'label' => $label,
                                                 'value' => $data->cid 
                                         );
                                     } ) );
                     break;
-                }            
+                }
         }
         
         return $list;
@@ -50,7 +55,7 @@ class JsObjectsAction extends CAction
             return json_encode ( array () );
         $list = $this->prepareJSobjects ( $t, $q );
         $this->controller->layout = false;
-        @header ( 'Content-Type: text/plain' );
+        @header ( "Content-Type: application/json" );
         // 201604271747:vikas:#459:Gurgaon:improving jsobjects, to search two
         // incomplete words
         

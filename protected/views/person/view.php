@@ -4,9 +4,22 @@
 $this->breadcrumbs = array (
         'People' => array (
                 'index' 
-        ),
-        $model->name 
+        ) 
 );
+
+if ($model->grandfather)
+    $this->breadcrumbs [$model->grandfather->name] = [ 
+            '/person/view',
+            'id' => $model->father->cid 
+    ];
+
+if ($model->father)
+    $this->breadcrumbs [$model->father->name] = [ 
+            '/person/view',
+            'id' => $model->father->cid 
+    ];
+
+$this->breadcrumbs [] = $model->name;
 
 $this->menu = array (
         array (

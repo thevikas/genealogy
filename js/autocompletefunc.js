@@ -45,8 +45,8 @@ $(function() {
 		minLength : 3,
 		select : function(event, ui) {
 			if(event.shiftKey)
-				return autojump(event, ui, "/aperson/update/id/");
-			return autojump(event, ui, "/aperson/view/id/");
+				return autojump(event, ui, "/person/update/id/");
+			return autojump(event, ui, "/person/view/id/");
 		}
 	});
 

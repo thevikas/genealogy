@@ -54,21 +54,46 @@ class Person extends CActiveRecord
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
                         'controller' => 'person',
-                        'template' => '{link} {age}yrs',
+                        'template' => '{link}',
                         'callback' => function ($str, $model, $params)
                         {
+                            if ($model->age > 0)
+                            {
+                                $str .= ' ' . $model->age . 'yrs';
+                            }
                             if (! isset ( $params ['nospouse'] ))
                             {
                                 $spouses = array_merge ( $model->husbands, $model->wives );
                                 if (count ( $spouses ) == 1)
                                 {
+                                    $mage = '';
+                                    if ($spouses [0]->gender)
+                                        $marriage = Marriage::model ()->findByAttributes ( 
+                                                [ 
+                                                        'husband_cid' => $spouses [0]->cid,
+                                                        'wife_cid' => $model->cid 
+                                                ] );
+                                    else
+                                        $marriage = Marriage::model ()->findByAttributes ( 
+                                                [ 
+                                                        'husband_cid' => $model->cid,
+                                                        'wife_cid' => $spouses [0]->cid 
+                                                ] );
+                                    if (! empty ( $marriage->dom ))
+                                    {
+                                        $datetime1 = new DateTime ();
+                                        $datetime2 = new DateTime ( $marriage->dom );
+                                        $interval = $datetime1->diff ( $datetime2 );
+                                        $mage = $interval->format ( '(%y yrs)' );
+                                    }
+                                    
                                     if (! empty ( $params ['flip'] ))
                                         $str = $spouses [0]->getnamelink ( 
                                                 [ 
                                                         'nospouse' => 1 
-                                                ] ) . ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' . $str;
+                                                ] ) . ' ' . CHtml::image ( '/imgs/marriage.gif' ) . $mage . ' ' . $str;
                                     else
-                                        $str .= ' ' . CHtml::image ( '/imgs/marriage.gif' ) . ' ' . $spouses [0]->getnamelink ( 
+                                        $str .= ' ' . CHtml::image ( '/imgs/marriage.gif' ) . $mage . ' ' . $spouses [0]->getnamelink ( 
                                                 [ 
                                                         'nospouse' => 1 
                                                 ] );
@@ -480,5 +505,11 @@ class Person extends CActiveRecord
                 'cmp' 
         ] );
         return $gchild;
+    }
+
+    public function getgrandfather()
+    {
+        if (isset ( $this->father->father ))
+            return $this->father->father;
     }
 }

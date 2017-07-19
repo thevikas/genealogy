@@ -1,5 +1,6 @@
 <?php
 /* @var $this Controller */
+Yii::app ()->clientScript->registerCoreScript ( 'autocomplete' );
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,6 +94,10 @@ $this->widget ( 'zii.widgets.CMenu',
                                         '/site/contact' 
                                 ) 
                         ),
+                        [ 
+                                'label' => 'GitHub',
+                                'url' => 'https://github.com/thevikas/genealogy' 
+                        ],
                         array (
                                 'label' => 'Login',
                                 'url' => array (
@@ -124,6 +129,9 @@ if (isset ( $this->breadcrumbs ))
     ) );
     ?><!-- breadcrumbs -->
 	<?php endif?>
+
+
+
 
 
 
