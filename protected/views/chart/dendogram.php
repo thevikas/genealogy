@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<html>
 <meta charset="utf-8">
 <style>
 
@@ -23,6 +23,21 @@
   stroke: #555;
   stroke-opacity: 0.4;
   stroke-width: 1.5px;
+}
+
+text.man
+{
+    fill: blue;
+}
+
+text.dead
+{
+    font-style: italic;
+}
+
+text.nodob
+{
+font-weight: bold;
 }
 
 </style>
@@ -76,6 +91,9 @@ d3.json("?jsononly=1&c=<?=$chart_code?>", function(error, data) {
   node.append("text")
       .attr("dy", 3)
       .attr("x", function(d) { return d.children ? -8 : 8; })
+      .attr("class", function(d) { 
+          return d.data.class;  
+          })
       .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
       .text(function(d) {
     	  return d.data.name;
@@ -133,3 +151,4 @@ $(document).ready(function() {
 		</pre>
 	</div>
 </div>
+</html>

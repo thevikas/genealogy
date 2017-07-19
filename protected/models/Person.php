@@ -421,7 +421,13 @@ class Person extends CActiveRecord
     {
         $data = [ ];
         $data ['name'] = $this->name . " " . $this->age . "y";
+        #http://gene.local/index.php/chart/d3/253?c=0
         $data ["class"] = $this->gender ? 'man' : 'woman';
+        $data ["class"] += " " + empty($this->dod) ? 'dead' : 'dead';
+        $data ["class"] += " " + count($this->spouses)>0 ? 'married' : 'single';
+        $data ["class"] += " " + $this->age >0 ? 'dob' : 'nodob';
+        
+        
         $data ["textClass"] = "nodeText";
         $data ["depthOffset"] = $depth;
         if (count ( $this->spouses ))
@@ -476,6 +482,12 @@ class Person extends CActiveRecord
         
         $data = [ ];
         $data ['name'] = trim ( $this->name . " " . $this->age . "y" );
+        
+        $data ["class"] = implode(' ',[ $this->gender ? 'man' : 'woman',
+        empty($this->dod) ? '' : 'dead',
+        count($this->spouses)>0 ? 'married' : 'single',
+        $this->age >0 ? 'dob' : 'nodob']);        
+        
         if (count ( $this->children ))
         {
             foreach ( $this->children as $child )
