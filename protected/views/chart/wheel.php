@@ -4,7 +4,7 @@
 
 <!DOCTYPE html>
 <meta charset="utf-8">
-<title>Coffee Flavour Wheel</title>
+<title><?=$person->name?> - Wheel</title>
 <meta name="description" content="A visualisation of coffee flavours.">
 <style>
 @import url(/css/wheel_style.css);

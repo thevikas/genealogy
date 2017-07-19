@@ -105,7 +105,8 @@ class Person extends CActiveRecord
                                                 ] );
                                 }
                             }
-                            $str = CHtml::image ( $model->gender ? '/imgs/man_icon.gif' : '/imgs/woman_icon.gif' ) . $str;
+                            $alive = empty($model->dod) ? '' : 'dead_';
+                            $str = CHtml::image ( $model->gender ? "/imgs/{$alive}man_icon.gif" : "/imgs/{$alive}woman_icon.gif" ) . $str;
                             return $str;
                         } 
                 ) 
@@ -365,11 +366,13 @@ class Person extends CActiveRecord
     public function getage()
     {
         $datetime1 = new DateTime ( $this->dob );
-        $datetime2 = new DateTime ();
+        $datetime2 = new DateTime (empty($this->dod) ? 'now' : $this->dod);
         $interval = $datetime1->diff ( $datetime2 );
         $age = $interval->format ( '%Y' );
         if ($age > 200)
             $age = 0;
+        
+            
         return $age;
     }
 
