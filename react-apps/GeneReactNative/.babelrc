@@ -1,8 +1,20 @@
-    {
-  "presets": ["babel-preset-expo"],
-  "env": {
-    "development": {
-      "plugins": ["transform-react-jsx-source"]
+{
+    "presets": ["babel-preset-expo"],
+    "plugins": [
+        ["module-resolver", {
+            "root": [".."],
+            "alias": {
+                "APIConfig": "./config.class.apiphp.jsx",
+                "libs": "./src/libs",
+                "store": "./src/store",
+                "constants": "./src/constants",
+                "containers": "./src/native/containers"
+            }
+        }]
+    ],
+    "env": {
+        "development": {
+            "plugins": ["transform-react-jsx-source"]
+        }
     }
-  }
 }

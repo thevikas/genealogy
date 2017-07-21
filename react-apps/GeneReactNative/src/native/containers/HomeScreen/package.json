@@ -1,0 +1,6 @@
+{
+  "name": "HomeScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./HomeScreen.js"
+}
