@@ -1,0 +1,40 @@
+{
+  "name": "GeneReactNative",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "jest-expo": "~18.0.0",
+    "react-native-scripts": "0.0.50",
+    "react-test-renderer": "16.0.0-alpha.12"
+  },
+  "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
+  "scripts": {
+    "start": "react-native-scripts start",
+    "eject": "react-native-scripts eject",
+    "android": "react-native-scripts android",
+    "ios": "react-native-scripts ios",
+    "test": "node node_modules/jest/bin/jest.js --watch"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "expo": "^18.0.3",
+    "react": "^16.0.0-alpha.12",
+    "react-native": "^0.45.1",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2",
+    "redux-axios-middleware": "^4.0.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "moduleNameMapper": {
+    "APIConfig": "<rootDir>/config.class.apiary.jsx",
+    "SwaggerSpec": "<rootDir>/../../docs/swagger.json",
+    "^store/(.*)$": "<rootDir>/src/store/$1",
+    "^containers/(.*)$": "<rootDir>/src/native/containers/$1",
+    "^constants/(.*)$": "<rootDir>/src/constants/$1",
+    "^components/(.*)$": "<rootDir>/src/native/components/$1",
+    "^libs/(.*)$": "<rootDir>/src/libs/$1"
+  }
+}
