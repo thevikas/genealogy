@@ -1,32 +1,22 @@
-//@todo test this file!
-import {
-    SET_USER_PROFILE,
-    SET_PERSON,
-    ADD_PEOPLE_SUCCESS,
-    ADD_PERSON_SUCCESS,
-    ADD_PERSON_FAIL,
-    ADD_PEOPLE_FAIL,
-    APPEND_TO_PEOPLE,
-    RESET_CHILDREN,
-    APPEND_TO_CHILDREN,
-    FIND_PERSON,
-    SET_VIEWINFO
-} from 'constants/ActionTypes';
+/**
+ * @providesModule PActions
+ */
+import * as types from 'constants/ActionTypes';
 
 import * as APIConfig from 'APIConfig';
 
 export function setViewinfo(viewinfo) {
-    return {type: SET_VIEWINFO, viewinfo};
+    return {type: types.SET_VIEWINFO, viewinfo};
 }
 
 export function setUser(user) {
-    return {type: SET_USER_PROFILE, user};
+    return {type: types.SET_USER_PROFILE, user};
 }
 
 export function loadPeople() {
     return {
         types: [
-            'LOAD', ADD_PEOPLE_SUCCESS, ADD_PEOPLE_FAIL
+            'LOAD', types.ADD_PEOPLE_SUCCESS, types.ADD_PEOPLE_FAIL
         ],
         payload: {
             request: {
@@ -45,14 +35,14 @@ export function loadPeopleAndFindPerson(id_person) {
 }
 
 export function findPerson(id_person) {
-    return {type: FIND_PERSON, id_person: id_person}
+    return {type: types.FIND_PERSON, id_person: id_person}
 }
 
-export function loadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
+export function loadPerson(id_person,dispatch_type = types.ADD_PERSON_SUCCESS) {
     console.log("calling API to fetch person", id_person);
     return {
         types: [
-            'LOAD', dispatch_type, ADD_PERSON_FAIL
+            'LOAD', dispatch_type, types.ADD_PERSON_FAIL
         ],
         payload: {
             request: {
@@ -62,7 +52,7 @@ export function loadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
     }
 }
 
-export function findOrLoadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
+export function findOrLoadPerson(id_person,dispatch_type = types.ADD_PERSON_SUCCESS) {
     console.log('trying to find :64', id_person)
     return function(dispatch, getState) {
         console.log('trying to find :67', id_person)
@@ -108,15 +98,15 @@ export function findOrLoadPerson(id_person,dispatch_type = ADD_PERSON_SUCCESS) {
         {
             console.log("asking to append PERSON");
             var personp;
-            if(dispatch_type ==APPEND_TO_CHILDREN)
+            if(dispatch_type ==types.APPEND_TO_CHILDREN)
             {
                 var ll = getState().person.children.length;
-                personp = dispatch_type == APPEND_TO_CHILDREN ? getState().person.children[ll-1] : getState().person;
+                personp = dispatch_type == types.APPEND_TO_CHILDREN ? getState().person.children[ll-1] : getState().person;
             }
             else
                 personp = getState().person;
 
-            return dispatch({type: APPEND_TO_PEOPLE, personp: personp});
+            return dispatch({type: types.APPEND_TO_PEOPLE, personp: personp});
         })
         //if not found, return another dispatch to fetch that id
         //->find again

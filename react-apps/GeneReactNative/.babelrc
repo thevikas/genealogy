@@ -4,7 +4,7 @@
         ["module-resolver", {
             "root": [".."],
             "alias": {
-                "APIConfig": "./config.class.apiphp.jsx",
+                "APIConfig": "./config.class.apiphp.js",
                 "libs": "./src/libs",
                 "store": "./src/store",
                 "constants": "./src/constants",

@@ -1,17 +1,13 @@
-import {
-    APPEND_TO_CHILDREN,
-    RESET_CHILDREN
-} from 'ActionTypes';
-
+import * as types from 'constants/ActionTypes';
 import  * as Helpers from 'helperfunctions'
 
 export default function person(state = [], action) {
     switch (action.type) {
-        case ADD_PEOPLE_SUCCESS:
+        case types.ADD_PEOPLE_SUCCESS:
             return action.payload.data;
-        case RESET_CHILDREN:
+        case types.RESET_CHILDREN:
             return [];
-        case APPEND_TO_CHILDREN:
+        case types.APPEND_TO_CHILDREN:
             if(state && state.length>0)
             {
                 console.log("concat to people",action,state);

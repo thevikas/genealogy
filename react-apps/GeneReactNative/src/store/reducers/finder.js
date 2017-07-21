@@ -1,11 +1,8 @@
-import {
-    FIND_PERSON,
-    FIND_UPDATE
-} from 'ActionTypes';
+import * as types from 'constants/ActionTypes';
 
 export default function updates(state = {}, action) {
     switch (action.type) {
-        case FIND_PERSON:
+        case types.FIND_PERSON:
             var clone = Object.assign({}, state, {
                 id_person: action.id_person
             });

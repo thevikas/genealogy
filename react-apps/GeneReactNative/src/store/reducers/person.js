@@ -1,23 +1,17 @@
-import {
-    SET_USER_PROFILE,
-    ADD_PEOPLE,
-    SET_PERSON,
-    ADD_PERSON_SUCCESS,
-    APPEND_TO_CHILDREN
-} from 'ActionTypes';
+import * as types from 'constants/ActionTypes';
 import  * as Helpers from 'helperfunctions'
 
 
 export default function person(state = {}, action) {
     switch (action.type) {
-        case SET_USER_PROFILE:
+        case types.SET_USER_PROFILE:
             var clone = Object.assign({}, state, action.user);
             return clone;
-        case SET_PERSON:
+        case types.SET_PERSON:
             console.log("found in reducer setperson",action);
             //var clone = Object.assign({}, state, action.personp);
             return action.personp;
-        case APPEND_TO_CHILDREN:
+        case types.APPEND_TO_CHILDREN:
         {
             var children_array;
             if(state.children == undefined)
@@ -41,7 +35,7 @@ export default function person(state = {}, action) {
             var clone = Object.assign({}, state, {children: children_array});
             return clone;
         }
-        case ADD_PERSON_SUCCESS:
+        case types.ADD_PERSON_SUCCESS:
             console.log("got back from API",action);
             action.payload.data.children = [];
             var clone = Object.assign({}, state, action.payload.data);

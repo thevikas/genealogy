@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import rootReducer from './reducers';
-import { createLogger } from 'redux-logger';
+import createLogger from 'redux-logger';
 import thunk from 'redux-thunk';
 //import DevTools from 'devtools';
 import axios from 'axios';
@@ -10,9 +10,11 @@ const client = axios.create({ //all axios can be used, shown in axios documentat
   responseType: 'json'
 });
 
+const logger = createLogger();
+
 const finalCreateStore = compose(
   // Middleware you want to use in development:
-  applyMiddleware(thunk, axiosMiddleware(client))
+  applyMiddleware(logger, thunk, axiosMiddleware(client))
   // Required! Enable Redux DevTools with the monitors you chose
   //DevTools.instrument()
 )(createStore);

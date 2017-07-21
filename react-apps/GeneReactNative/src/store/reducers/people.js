@@ -1,17 +1,12 @@
-import {
-    SET_USER_PROFILE,
-    ADD_PEOPLE,
-    ADD_PEOPLE_SUCCESS,
-    APPEND_TO_PEOPLE
-} from 'ActionTypes';
+import * as types from 'constants/ActionTypes';
 
 import  * as Helpers from 'helperfunctions'
 
 export default function person(state = [], action) {
     switch (action.type) {
-        case ADD_PEOPLE_SUCCESS:
+        case types.ADD_PEOPLE_SUCCESS:
             return action.payload.data;
-        case APPEND_TO_PEOPLE:
+        case types.APPEND_TO_PEOPLE:
             if(state && state.length>0)
             {
                 console.log("concat to people",action,state);

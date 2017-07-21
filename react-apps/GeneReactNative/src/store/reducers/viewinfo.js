@@ -1,10 +1,8 @@
-import {
-    SET_VIEWINFO,
-} from 'ActionTypes';
+import * as types from 'constants/ActionTypes';
 
 export default function setviewinfo(state = {}, action) {
     switch (action.type) {
-        case SET_VIEWINFO:
+        case types.SET_VIEWINFO:
             var clone = Object.assign({}, state, {
                 name: action.viewinfo.name,
                 path: action.viewinfo.path
