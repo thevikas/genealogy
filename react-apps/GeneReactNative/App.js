@@ -11,7 +11,7 @@ const store = configureStore();
 const SimpleApp = StackNavigator({
     Home: { screen: HomeScreen },
     RecentPeople: { screen: RecentPeople },
-    PersonView: { screen: PersonView }
+    PersonView : { screen: PersonView }
 });
 
 

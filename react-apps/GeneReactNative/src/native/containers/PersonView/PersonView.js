@@ -27,6 +27,7 @@ class PersonView extends React.Component {
             id_person: this.props.navigation.state.params.id_person
         };
         this.afterFindPromise = this.afterFindPromise.bind(this);
+        this._changePerson = this._changePerson.bind(this);
     }
 
     afterFindPromise()
@@ -64,6 +65,13 @@ class PersonView extends React.Component {
         console.log("componentDidUpdate")
     }
 
+    _changePerson(id_person)
+    {
+        console.log("got clicked on father",id_person);
+        this.props.actions.findOrLoadPerson(id_person).then(this.afterFindPromise);
+        this.setState({id_person: id_person})
+    }
+
     render() {
         const {navigate} = this.props.navigation;
         console.log("After finishing fetching", this.props);
@@ -72,20 +80,20 @@ class PersonView extends React.Component {
                 <View style={styles.mydata}>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Father Name</Text>
-                        <Text onPress={() => navigate("PersonView", {id_person: this.props.father.id_person})} style={styles.item}>{this.props.father.name}</Text>
+                        <Text onPress={() => this._changePerson(this.props.father.id_person)} style={styles.item}>{this.props.father.name}</Text>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Mother Name</Text>
-                        <Text onPress={() => navigate("PersonView", {id_person: this.props.mother.id_person})} style={styles.item}>{this.props.mother.name}</Text>
+                        <Text onPress={() => this._changePerson(this.props.mother.id_person)} style={styles.item}>{this.props.mother.name}</Text>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Spouse Name</Text>
-                        <Text onPress={() => navigate("PersonView", {id_person: this.props.spouse.id_person})} style={styles.item}>{this.props.spouse.name}</Text>
+                        <Text onPress={() => this._changePerson(this.props.mother.id_person)} style={styles.item}>{this.props.spouse.name}</Text>
                     </View>
                 </View>
                 <View style={styles.mychildren}>
                     <Text style={styles.childrenheader}>Children</Text>
-                    <FlatList data={this.props.children} renderItem={({item}) => <Text onPress={() => navigate("PersonView", {id_person: item.person.id_person})} style={styles.item}>{item.person.name}</Text>}/>
+                    <FlatList data={this.props.children} renderItem={({item}) => <Text onPress={() => this._changePerson(item.person.id_person)} style={styles.item}>{item.person.name}</Text>}/>
                 </View>
             </View>
         );
@@ -101,8 +109,7 @@ const styles = StyleSheet.create({
     mydata: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start',
-        backgroundColor: 'green'
+        alignItems: 'flex-start'
     },
     mychildren: {
         flexDirection: 'column',
@@ -110,7 +117,6 @@ const styles = StyleSheet.create({
         height: "80%"
     },
     myrow: {
-        backgroundColor: 'yellow',
         flexDirection: 'row'
     },
     label: {
@@ -120,7 +126,7 @@ const styles = StyleSheet.create({
         width: "30%"
     },
     childrow: {
-        color: "white"
+
     },
     childrenheader: {
         padding: 10,
@@ -128,7 +134,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     item: {
-        backgroundColor: 'pink',
         padding: 10,
         fontSize: 18,
         fontWeight: 'bold'
