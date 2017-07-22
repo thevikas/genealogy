@@ -17,18 +17,19 @@ class RecentPeople extends React.Component {
 
   // Lifecycle method
   componentDidMount() {
-      console.log("RecentPeople mounted!")
+      console.log("RecentPeople mounted!",this.props)
       this.props.actions.loadPeople();
   }
 
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <View>
         <Text>Recent People List. People count: {this.props.people.length}</Text>
 
             <FlatList
                  data={this.props.people}
-                 renderItem={({item}) => <Text style={styles.item}>{item.person.name}</Text>}
+                 renderItem={({item}) => <Text onPress={() => navigate("PersonView",{id_person: item.person.id_person})} style={styles.item}>{item.person.name}</Text>}
                />
       </View>
     );

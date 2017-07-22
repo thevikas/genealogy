@@ -1,6 +1,0 @@
-{
-  "name": "ChatScreen",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./ChatScreen.js"
-}

@@ -4,14 +4,14 @@ import { Provider } from 'react-redux';
 import { configureStore } from 'configureStore';
 import { StackNavigator } from 'react-navigation';
 import HomeScreen from 'containers/HomeScreen';
-import ChatScreen from 'containers/ChatScreen';
 import RecentPeople from 'containers/RecentPeople';
+import PersonView from 'containers/PersonView';
 const store = configureStore();
 
 const SimpleApp = StackNavigator({
     Home: { screen: HomeScreen },
-    Chat: { screen: ChatScreen },
-    RecentPeople: { screen: RecentPeople }
+    RecentPeople: { screen: RecentPeople },
+    PersonView: { screen: PersonView }
 });
 
 
