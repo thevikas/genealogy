@@ -36,9 +36,9 @@ export class PersonView extends Component {
     componentDidMount() {
         this.props.actions.findOrLoadPerson(this.props.match.params.personid).then(this.afterFindPromise);
 
-        this.state = {
+        this.setState({
             id_person: this.props.match.params.personid
-          };
+        });
     }
 
     componentWillUnmount()

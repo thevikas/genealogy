@@ -13,9 +13,21 @@ import * as types from 'constants/ActionTypes';
 
 class PersonView extends React.Component {
     static navigationOptions = function(navigation) {
-        console.log("checking navigationOptions",navigation);
-        return {title: navigation.navigation.state.params.name == undefined ? "Person View Loading" : navigation.navigation.state.params.name};
+        console.log("checking navigationOptions", navigation);
+        return {
+            title: navigation.navigation.state.params.name == undefined
+                ? "Person View Loading"
+                : navigation.navigation.state.params.name
+        };
     };
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            id_person: this.props.navigation.state.params.id_person
+        };
+        this.afterFindPromise = this.afterFindPromise.bind(this);
+    }
 
     afterFindPromise()
     {
@@ -29,13 +41,17 @@ class PersonView extends React.Component {
         }
     }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id_person: this.props.navigation.state.params.id_person
-        };
-        this.afterFindPromise = this.afterFindPromise.bind(this);
+    componentWillReceiveProps(nextProps)
+    {
+        console.log("newprops new-pid,state-pid", nextProps, this.state.id_person);
+        /*
+        if(nextProps.match.params.personid != this.state.id_person)
+            this.props.actions.findOrLoadPerson(nextProps.match.params.personid).then(this.afterFindPromise);
+
+        this.setState({id_person: nextProps.match.params.personid})
+        */
     }
+
     // Lifecycle method
     componentDidMount() {
         console.log("PersonView mounted!", this.props)
@@ -43,26 +59,33 @@ class PersonView extends React.Component {
         this.props.actions.findOrLoadPerson(this.state.id_person).then(this.afterFindPromise);
     }
 
+    componentDidUpdate(prevProps, prevState)
+    {
+        console.log("componentDidUpdate")
+    }
+
     render() {
-        const { navigate } = this.props.navigation;
+        const {navigate} = this.props.navigation;
+        console.log("After finishing fetching", this.props);
         return (
             <View style={styles.container}>
                 <View style={styles.mydata}>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Father Name</Text>
-                        <Text onPress={() => navigate("PersonView",{id_person: this.props.father.id_person})} style={styles.item}>{this.props.father.name}</Text>
+                        <Text onPress={() => navigate("PersonView", {id_person: this.props.father.id_person})} style={styles.item}>{this.props.father.name}</Text>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Mother Name</Text>
-                        <Text onPress={() => navigate("PersonView",{id_person: this.props.mother.id_person})} style={styles.item}>{this.props.mother.name}</Text>
+                        <Text onPress={() => navigate("PersonView", {id_person: this.props.mother.id_person})} style={styles.item}>{this.props.mother.name}</Text>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Spouse Name</Text>
-                        <Text onPress={() => navigate("PersonView",{id_person: this.props.spouse.id_person})} style={styles.item}>{this.props.spouse.name}</Text>
+                        <Text onPress={() => navigate("PersonView", {id_person: this.props.spouse.id_person})} style={styles.item}>{this.props.spouse.name}</Text>
                     </View>
                 </View>
                 <View style={styles.mychildren}>
-
+                    <Text style={styles.childrenheader}>Children</Text>
+                    <FlatList data={this.props.children} renderItem={({item}) => <Text onPress={() => navigate("PersonView", {id_person: item.person.id_person})} style={styles.item}>{item.person.name}</Text>}/>
                 </View>
             </View>
         );
@@ -76,27 +99,19 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start'
     },
     mydata: {
-        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: 'flex-start',
-        backgroundColor: 'green',
-        height: 100
+        backgroundColor: 'green'
     },
     mychildren: {
-        flex: 1,
-        backgroundColor: 'blue',
         flexDirection: 'column',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        height: "80%"
     },
     myrow: {
-        flex: 1,
         backgroundColor: 'yellow',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        flexShrink: 1,
-        alignItems: 'flex-start',
-        height: 44
+        flexDirection: 'row'
     },
     label: {
         padding: 10,
@@ -104,12 +119,19 @@ const styles = StyleSheet.create({
         height: 44,
         width: "30%"
     },
+    childrow: {
+        color: "white"
+    },
+    childrenheader: {
+        padding: 10,
+        fontSize: 22,
+        fontWeight: 'bold'
+    },
     item: {
         backgroundColor: 'pink',
         padding: 10,
         fontSize: 18,
-        fontWeight: 'bold',
-        height: 44
+        fontWeight: 'bold'
     }
 })
 
