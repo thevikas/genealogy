@@ -9,17 +9,21 @@ export const styles = StyleSheet.create({
     mydata: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        minHeight: "    25%",
+        maxHeight: "25%"
     },
     mychildren: {
         flexDirection: 'column',
         justifyContent: 'flex-start',
     },
     recent: {
+        borderTopWidth: 2,
+        borderColor: "blue",
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        minHeight: 100,
-        maxHeight: 100
+        minHeight: "25%",
+        maxHeight: "25%"
     },
     myrow: {
         flexDirection: 'row'

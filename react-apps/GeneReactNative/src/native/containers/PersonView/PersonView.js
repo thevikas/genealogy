@@ -93,14 +93,16 @@ class PersonView extends React.Component {
                         <PersonLink person={this.props.spouse} _changePerson={this._changePerson}/>
                     </View>
                 </View>
+                {this.props.children.length>0 &&
                 <View style={styles.mychildren}>
                     <Text style={styles.childrenheader}>Children</Text>
                     <FlatList data={this.props.children} renderItem={({item}) => <PersonLink person={item.person} _changePerson={this._changePerson}/>}/>
-                </View>
+                </View>}
+                {this.props.recent.length>0 &&
                 <View style={styles.recent}>
                     <Text style={styles.childrenheader}>Recent</Text>
                     <FlatList data={this.props.recent} renderItem={({item}) => <PersonLink person={item} _changePerson={this._changePerson}/>}/>
-                </View>
+                </View>}
             </View>
         );
     }
