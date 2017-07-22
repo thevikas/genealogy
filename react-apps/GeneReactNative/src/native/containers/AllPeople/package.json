@@ -1,0 +1,6 @@
+{
+  "name": "AllPeople",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AllPeople.js"
+}

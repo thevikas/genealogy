@@ -19,6 +19,10 @@ const finalCreateStore = compose(
   //DevTools.instrument()
 )(createStore);
 
+const initialState = {
+    recentpeople: []
+}
+
 module.exports = function configureStore(initialState) {
   const store = finalCreateStore(rootReducer, initialState);
 

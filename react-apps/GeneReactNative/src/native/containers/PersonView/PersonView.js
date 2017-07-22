@@ -3,13 +3,14 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, Text, View, FlatList, Button} from 'react-native';
+import {styles} from 'libs/styles';
+import PersonLink from 'components/PersonLink';
 //redux START
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as PActions from '../../../store/actions';
-//redux END
-
 import * as types from 'constants/ActionTypes';
+//redux END
 
 class PersonView extends React.Component {
     static navigationOptions = function(navigation) {
@@ -40,6 +41,7 @@ class PersonView extends React.Component {
                 this.props.actions.findOrLoadPerson(this.props.child_ids[i], types.APPEND_TO_CHILDREN);
             }
         }
+        this.props.actions.appendRecentPerson(this.props.person);
     }
 
     componentWillReceiveProps(nextProps)
@@ -67,7 +69,7 @@ class PersonView extends React.Component {
 
     _changePerson(id_person)
     {
-        console.log("got clicked on father",id_person);
+        console.log("got clicked on father", id_person);
         this.props.actions.findOrLoadPerson(id_person).then(this.afterFindPromise);
         this.setState({id_person: id_person})
     }
@@ -80,68 +82,33 @@ class PersonView extends React.Component {
                 <View style={styles.mydata}>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Father Name</Text>
-                        <Text onPress={() => this._changePerson(this.props.father.id_person)} style={styles.item}>{this.props.father.name}</Text>
+                        <PersonLink person={this.props.father} _changePerson={this._changePerson}/>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Mother Name</Text>
-                        <Text onPress={() => this._changePerson(this.props.mother.id_person)} style={styles.item}>{this.props.mother.name}</Text>
+                        <PersonLink person={this.props.mother} _changePerson={this._changePerson}/>
                     </View>
                     <View style={styles.myrow}>
                         <Text style={styles.label}>Spouse Name</Text>
-                        <Text onPress={() => this._changePerson(this.props.mother.id_person)} style={styles.item}>{this.props.spouse.name}</Text>
+                        <PersonLink person={this.props.spouse} _changePerson={this._changePerson}/>
                     </View>
                 </View>
                 <View style={styles.mychildren}>
                     <Text style={styles.childrenheader}>Children</Text>
-                    <FlatList data={this.props.children} renderItem={({item}) => <Text onPress={() => this._changePerson(item.person.id_person)} style={styles.item}>{item.person.name}</Text>}/>
+                    <FlatList data={this.props.children} renderItem={({item}) => <PersonLink person={item.person} _changePerson={this._changePerson}/>}/>
+                </View>
+                <View style={styles.recent}>
+                    <Text style={styles.childrenheader}>Recent</Text>
+                    <FlatList data={this.props.recent} renderItem={({item}) => <PersonLink person={item} _changePerson={this._changePerson}/>}/>
                 </View>
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'flex-start'
-    },
-    mydata: {
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start'
-    },
-    mychildren: {
-        flexDirection: 'column',
-        justifyContent: 'flex-start',
-        height: "80%"
-    },
-    myrow: {
-        flexDirection: 'row'
-    },
-    label: {
-        padding: 10,
-        fontSize: 18,
-        height: 44,
-        width: "30%"
-    },
-    childrow: {
-
-    },
-    childrenheader: {
-        padding: 10,
-        fontSize: 22,
-        fontWeight: 'bold'
-    },
-    item: {
-        padding: 10,
-        fontSize: 18,
-        fontWeight: 'bold'
-    }
-})
-
 PersonView.propTypes = {
     person: PropTypes.object.isRequired,
+    recentpeople: PropTypes.object.isRequired,
     //father: PropTypes.object.isRequired,
     //mother: PropTypes.object.isRequired,
     //spouse: PropTypes.object.isRequired,
@@ -165,6 +132,9 @@ function mapStateToProps(state) {
             : {},
         child_ids: state.person.child_ids
             ? state.person.child_ids
+            : [],
+        recent: state.recentpeople
+            ? state.recentpeople
             : [],
         children: state.person.children
             ? state.person.children

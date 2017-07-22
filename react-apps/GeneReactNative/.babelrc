@@ -8,6 +8,7 @@
                 "libs": "./src/libs",
                 "store": "./src/store",
                 "constants": "./src/constants",
+                "components": "./src/native/components",
                 "containers": "./src/native/containers"
             }
         }]

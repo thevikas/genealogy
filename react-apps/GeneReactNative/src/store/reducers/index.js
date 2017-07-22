@@ -6,6 +6,7 @@ import person from './person';
 import people from './people';
 import finder from './finder';
 import viewinfo from './viewinfo';
+import recentpeople from './recentpeople';
 /**
  * combineReducers is important to understand. As your app might grow in size
  * and complexity, you will likely begin to split your reducers into separate
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   finder,
   people,
   person,
-  viewinfo
+  viewinfo,
+  recentpeople
 });
 
 export default rootReducer;

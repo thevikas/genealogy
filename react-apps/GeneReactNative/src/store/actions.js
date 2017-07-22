@@ -34,6 +34,10 @@ export function loadPeopleAndFindPerson(id_person) {
     }
 }
 
+export function appendRecentPerson(person) {
+    return {type: types.APPEND_TO_RPEOPLE, person: person}
+}
+
 export function findPerson(id_person) {
     return {type: types.FIND_PERSON, id_person: id_person}
 }

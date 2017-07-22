@@ -14,13 +14,14 @@ export default class HomeScreen extends React.Component {
       <View>
         <Text>Hello, Chat App!</Text>
         <Button
+          onPress={() => navigate('AllPeople')}
+          title="All People"
+        />
+        <Button
           onPress={() => navigate('RecentPeople')}
           title="Recent People"
         />
-        <Button
-          onPress={() => navigate('Chat')}
-          title="Chat Screen"
-        />
+
       </View>
     );
   }
