@@ -24,6 +24,7 @@ export function setUser(user) {
 }
 
 export function loadPeople() {
+    console.log("loadPeople called");
     return {
         types: [
             'LOAD', ADD_PEOPLE_SUCCESS, ADD_PEOPLE_FAIL

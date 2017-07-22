@@ -1,27 +1,51 @@
 /**
  * @provi1desModule RecentPeople
  */
- import React, { Component, PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import HomeScreen from 'containers/HomeScreen';
-import { Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
 //redux START
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as PActions from '../../../store/actions';
 //redux END
 
-export class RecentPeople extends React.Component {
+class RecentPeople extends React.Component {
   static navigationOptions = {
     title: 'Recent People',
   };
+
+  // Lifecycle method
+  componentDidMount() {
+      console.log("RecentPeople mounted!")
+      this.props.actions.loadPeople();
+  }
+
   render() {
     return (
       <View>
-        <Text>Recent People List</Text>
+        <Text>Recent People List. People count: {this.props.people.length}</Text>
+
+            <FlatList
+                 data={this.props.people}
+                 renderItem={({item}) => <Text style={styles.item}>{item.person.name}</Text>}
+               />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+})
 
 RecentPeople.propTypes = {
   people: PropTypes.array.isRequired,
