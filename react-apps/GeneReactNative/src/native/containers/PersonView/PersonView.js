@@ -46,10 +46,24 @@ class PersonView extends React.Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View>
-                <Text onPress={() => navigate("PersonView",{id_person: this.props.father.id_person})} style={styles.item}>{this.props.father.name}</Text>
-                <Text onPress={() => navigate("PersonView",{id_person: this.props.mother.id_person})} style={styles.item}>{this.props.mother.name}</Text>
-                <Text onPress={() => navigate("PersonView",{id_person: this.props.spouse.id_person})} style={styles.item}>{this.props.spouse.name}</Text>
+            <View style={styles.container}>
+                <View style={styles.mydata}>
+                    <View style={styles.myrow}>
+                        <Text style={styles.label}>Father Name</Text>
+                        <Text onPress={() => navigate("PersonView",{id_person: this.props.father.id_person})} style={styles.item}>{this.props.father.name}</Text>
+                    </View>
+                    <View style={styles.myrow}>
+                        <Text style={styles.label}>Mother Name</Text>
+                        <Text onPress={() => navigate("PersonView",{id_person: this.props.mother.id_person})} style={styles.item}>{this.props.mother.name}</Text>
+                    </View>
+                    <View style={styles.myrow}>
+                        <Text style={styles.label}>Spouse Name</Text>
+                        <Text onPress={() => navigate("PersonView",{id_person: this.props.spouse.id_person})} style={styles.item}>{this.props.spouse.name}</Text>
+                    </View>
+                </View>
+                <View style={styles.mychildren}>
+
+                </View>
             </View>
         );
     }
@@ -58,9 +72,40 @@ class PersonView extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 22
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    mydata: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        backgroundColor: 'green',
+        height: 100
+    },
+    mychildren: {
+        flex: 1,
+        backgroundColor: 'blue',
+        flexDirection: 'column',
+        justifyContent: 'flex-start'
+    },
+    myrow: {
+        flex: 1,
+        backgroundColor: 'yellow',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        flexShrink: 1,
+        alignItems: 'flex-start',
+        height: 44
+    },
+    label: {
+        padding: 10,
+        fontSize: 18,
+        height: 44,
+        width: "30%"
     },
     item: {
+        backgroundColor: 'pink',
         padding: 10,
         fontSize: 18,
         fontWeight: 'bold',
