@@ -7,7 +7,6 @@
 /apitest.sh
 /config.class.apiary.jsx
 /config.class.apiphp.jsx
-node_modules
 vendors
 public/css/*
 public/js/*
