@@ -30,7 +30,8 @@ export class PersonView extends Component {
                 console.log('finding child',this.props.child_ids[i]);
                 this.props.actions.findOrLoadPerson(this.props.child_ids[i],APPEND_TO_CHILDREN);
             }
-        }
+        }   
+        this.props.actions.appendRecentPerson(this.props.person);
     }
     // Lifecycle method
     componentDidMount() {

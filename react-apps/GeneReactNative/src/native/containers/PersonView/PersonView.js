@@ -110,7 +110,6 @@ class PersonView extends React.Component {
 
 PersonView.propTypes = {
     person: PropTypes.object.isRequired,
-    recentpeople: PropTypes.object.isRequired,
     //father: PropTypes.object.isRequired,
     //mother: PropTypes.object.isRequired,
     //spouse: PropTypes.object.isRequired,

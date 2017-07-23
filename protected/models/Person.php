@@ -87,6 +87,8 @@ class Person extends CActiveRecord
                                         $mage = $interval->format ( '(%y yrs)' );
                                     }
                                     
+                                    $mlink = '';
+                                    if(!empty($marriage))
                                     $mlink = CHtml::link ( CHtml::image ( '/imgs/marriage.gif' ), 
                                             [ 
                                                     '/marriage/view',

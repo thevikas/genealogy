@@ -5,13 +5,15 @@ import {Link} from 'react-router-dom';
 //import * as APIConfig from 'APIConfig';
 //import Gravatar from 'react-gravatar'
 //For installing redux on this component
+import * as PActions from 'store/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 //import * as PActions from 'store/actions';
 //redux ends
+import PersonLink from "webcomponents/PersonLink";
 
-export default class TopNav extends Component {
+export class TopNav extends Component {
 
     // Lifecycle method
     componentDidMount() {
@@ -32,15 +34,9 @@ export default class TopNav extends Component {
                 <li><a href="login.html"><i className="icon-key"></i> Log Out</a></li>
               </ul>
             </li>
-            <li className="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" className="dropdown-toggle"><i className="icon icon-envelope"></i> <span className="text">Messages</span> <span className="label label-important">5</span> <b className="caret"></b></a>
+            <li className="dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" className="dropdown-toggle"><i className="icon icon-envelope"></i> <span className="text">Recent</span> <span className="label label-important">{this.props.recent.length}</span> <b className="caret"></b></a>
               <ul className="dropdown-menu">
-                <li><a className="sAdd" title="" href="#"><i className="icon-plus"></i> new message</a></li>
-                <li className="divider"></li>
-                <li><a className="sInbox" title="" href="#"><i className="icon-envelope"></i> inbox</a></li>
-                <li className="divider"></li>
-                <li><a className="sOutbox" title="" href="#"><i className="icon-arrow-up"></i> outbox</a></li>
-                <li className="divider"></li>
-                <li><a className="sTrash" title="" href="#"><i className="icon-trash"></i> trash</a></li>
+                {this.props.recent.map((person, index) => <li key={person.id_person}><PersonLink show='name' person={person}/></li>)}
               </ul>
             </li>
             <li className=""><a title="" href="#"><i className="icon icon-cog"></i> <span className="text">Settings</span></a></li>
@@ -50,16 +46,16 @@ export default class TopNav extends Component {
     )
   }
 }
-/*
+
 TopNav.propTypes = {
-    person: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-    messages: PropTypes.array.isRequired
+    actions: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
     console.log("mapStateToProps topnav",state.updates)
-    return {person: state.person, messages: state.updates};
+    return {recent: state.recentpeople
+        ? state.recentpeople
+        : []};
 }
 
 function mapDispatchToProps(dispatch) {
@@ -69,4 +65,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TopNav);
-*/
