@@ -6,7 +6,7 @@ var APP_DIR = path.resolve(__dirname, 'src');
 var production= false;
 
 var config = {
-    entry: APP_DIR + '/index.js',
+    entry: APP_DIR + '/../../GeneReactNative/src/geneweb/index.js',
     output: {
         path: BUILD_DIR,
         filename: 'js/bundle.js'
@@ -71,12 +71,12 @@ var config = {
             RouteURLMaker: path.resolve(__dirname,'route.url.maker.jsx'),
             pubjs: path.resolve(__dirname, 'public/js'),
             pubcss: path.resolve(__dirname, 'public/css'),
-            libs: path.resolve(__dirname, 'src/libs'),
-            store: path.resolve(__dirname, 'src/store'),
-            constants: path.resolve(__dirname, 'src/constants'),
-            comps: path.resolve(__dirname, 'src/components'),
-            containers: path.resolve(__dirname, 'src/containers'),
-            components: path.resolve(__dirname, 'src/components'),
+            libs: path.resolve(__dirname, '../GeneReactNative/src/libs'),
+            store: path.resolve(__dirname, '../GeneReactNative/src/store'),
+            helperfunctions: path.resolve(__dirname, '../GeneReactNative/src/store/helperfunctions.js'),
+            constants: path.resolve(__dirname, '../GeneReactNative/src/constants'),
+            webcontainers: path.resolve(__dirname, '../GeneReactNative/src/geneweb/containers'),
+            webcomponents: path.resolve(__dirname, '../GeneReactNative/src/geneweb/components'),
         },
         extensions: ['.js', '.jsx' ]
     },
