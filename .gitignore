@@ -3,7 +3,8 @@ themes
 .project
 .settings
 assets/*
-css/font-awesome.min.css
+css/*
+js/*
 images/ui-icons*
 fonts/*
 node_modules

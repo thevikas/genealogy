@@ -33,6 +33,14 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
+	
+	/**
+	 * To show statistics about the whole database
+	 */
+	public function actionStats()
+	{
+	    $this->render('stats');
+	}
 
 	/**
 	 * This is the action to handle external exceptions.
