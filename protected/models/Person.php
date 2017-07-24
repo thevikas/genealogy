@@ -89,7 +89,7 @@ class Person extends CActiveRecord
                                     
                                     $mlink = '';
                                     if(!empty($marriage))
-                                    $mlink = CHtml::link ( CHtml::image ( '/imgs/marriage.gif' ), 
+                                    $mlink = CHtml::link ( CHtml::image ( '/images/marriage.gif' ), 
                                             [ 
                                                     '/marriage/view',
                                                     'id' => $marriage->mid 
@@ -108,7 +108,7 @@ class Person extends CActiveRecord
                                 }
                             }
                             $alive = empty($model->dod) ? '' : 'dead_';
-                            $str = CHtml::image ( $model->gender ? "/imgs/{$alive}man_icon.gif" : "/imgs/{$alive}woman_icon.gif" ) . $str;
+                            $str = CHtml::image ( $model->gender ? "/images/{$alive}man_icon.gif" : "/images/{$alive}woman_icon.gif" ) . $str;
                             return $str;
                         } 
                 ) 
