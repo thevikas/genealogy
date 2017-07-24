@@ -2,6 +2,7 @@ var gulp = require('gulp');
 
 gulp.task('js', function(){
   return gulp.src(['react-apps/node_modules/jquery/dist/jquery.min.js',
+                'node_modules/d3/build/d3.min.js',
                 'react-apps/node_modules/jquery-ui-dist/jquery-ui.min.js'])
     .pipe(gulp.dest('js/'))
 });

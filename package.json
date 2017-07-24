@@ -2,7 +2,9 @@
   "name": "Genealogy",
   "version": "1.0.0",
   "description": "",
-  "dependencies": {},
+  "dependencies": {
+    "d3": "^4.10.0"
+  },
   "devDependencies": {
     "gulp": "^3.9.1"
   },

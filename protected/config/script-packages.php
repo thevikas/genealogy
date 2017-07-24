@@ -63,7 +63,7 @@ return array (
                 ],
                 'js' => [
                         'lodash.min.js',
-                        'd3.v4.min.js',
+                        'd3.min.js',
                 ],
                 'depends' => [
                 ]
