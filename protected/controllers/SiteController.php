@@ -37,9 +37,9 @@ class SiteController extends Controller
 	/**
 	 * To show statistics about the whole database
 	 */
-	public function actionStats($max_level = 5,$limit = 200)
+	public function actionStats($max_level = 5,$limit = 200,$root_id=1)
 	{
-	    $this->render('stats',['max_level' => $max_level,'limit' => $limit]);
+	    $this->render('stats',['max_level' => $max_level,'limit' => $limit,'root_id' => $root_id]);
 	}
 
 	/**

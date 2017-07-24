@@ -129,6 +129,11 @@ class Person extends CActiveRecord
     {
         return array_merge ( $this->husbands, $this->wives );
     }
+    
+    public function getmarriages()
+    {
+        return array_merge ( $this->marriages1, $this->marriages2);
+    }
 
     /**
      *
@@ -539,6 +544,40 @@ class Person extends CActiveRecord
     public function getid_person()
     {
         return $this->cid;
+    }
+    
+    public function getAudit()
+    {
+        $notes = [];
+        if (empty ( $this->dob ))
+            $notes [] = __ ( 'DOB' );
+        if (! isset ( $this->father ))
+            $notes [] = __ ( 'Father' );
+        if (! isset ( $this->mother ))
+            $notes [] = __ ( 'Mother' );
+        if($this->age>30)
+        {
+            $spoues = $this->spouses;
+            if(count($spoues)==0)
+                $notes[] = __('Spouse');
+        }
+        $marriages = $this->marriages;
+        foreach($marriages as $marriage)
+        {
+            if(empty($marriage->dom))
+            {
+                $notes[] = __('DOM');
+                break;
+            }
+        }
+        $children = $this->children;
+        if(count($children)==0)
+        {
+            if($this->age>0 && $this->age<20);
+            else
+                $notes[] = __('Children');
+        }
+        return implode(', ',$notes);
     }
     
 }

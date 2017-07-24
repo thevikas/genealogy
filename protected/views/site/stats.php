@@ -93,7 +93,7 @@ $data = [];
 echo '<pre>';
 
 $counted_ids = [];
-$queue_ids = [1];
+$queue_ids = [$root_id];
 $level = 1;
 $ctr=0;
 while($next_id = array_pop($queue_ids))
@@ -111,8 +111,9 @@ while($next_id = array_pop($queue_ids))
     $data0 = CountDistance(1,$starting_level,$next_id,$model_cache);
     $data += $data0;
     $queue_ids = array_merge($queue_ids,array_keys($data));
-    if($ctr++ > 200) break;
+    if($ctr++ > $limit) break;
 }
+$data[$root_id] = 1;
 asort($data);
 
 foreach($data as $id => $v)
@@ -122,6 +123,6 @@ foreach($data as $id => $v)
     else
         $model = $model_cache[$id];
     
-    echo $v . "\t" . $model->namelink . "\n";
+    echo $v . "\t" . $model->namelink . " = " . $model->audit . "\n";
 }
 echo '</pre>';

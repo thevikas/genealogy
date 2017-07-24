@@ -64,6 +64,13 @@ $this->menu = array (
                 ) 
         ),
         array (
+                'label' => __ ( 'Stat Report' ),
+                'url' => array (
+                        'site/stats',
+                        'root_id' => $model->cid
+                )
+        ),
+        array (
                 'label' => __ ( 'Tree Report' ),
                 'url' => array (
                         'person/tree',
