@@ -32,3 +32,96 @@ $stats['total_females_pc'] = 100*$stats['total_females']/$stats['total_people'];
 echo '<pre>';
 print_r($stats);
 echo '</pre>';
+
+echo "<h1>Distance Calculator</h1>";
+
+$model_cache = [];
+
+function CountDistance($distance_for_id, $start_count, $count_from_id, $model_cache)
+{
+    $data = [ ];
+    if (! $count_from_id)
+        return [ ];
+    if (empty ( $model_cache [$count_from_id] ))
+        $model = Person::model ()->findByPk ( $count_from_id );
+    $model_cache [$count_from_id] = $model;
+    if (! $model)
+        return [ ];
+    // count for father
+    if ($model->father)
+    {
+        $data [$model->father->id_person] = $start_count + 1;
+        if (empty ( $model_cache [$model->father->id_person] ))
+            $model_cache [$model->father->id_person] = $model->father;
+    }
+    // count for mother
+    if ($model->mother)
+    {
+        $data [$model->mother->id_person] = $start_count + 1;
+        if (empty ( $model_cache [$model->mother->id_person] ))
+            $model_cache [$model->mother->id_person] = $model->mother;
+            
+    }
+    // count for spouse
+    $spouses = $model->spouses;
+    if (count ( $spouses ) > 0)
+    {
+        foreach ( $spouses as $spouse )
+        {
+            $data [$spouse->id_person] = $start_count + 1;
+            if (empty ( $model_cache [$spouse->id_person] ))
+                $model_cache [$spouse->id_person] = $spouse;
+                
+        }
+    }
+    // count all children
+    $children = $model->children;
+    if (count ( $children ) > 0)
+    {
+        foreach ( $children as $child )
+        {
+            $data [$child->id_person] = $start_count + 1;
+            if (empty ( $model_cache [$child->id_person] ))
+                $model_cache [$child->id_person] = $child;
+                
+        }
+    }
+    return $data;
+}
+
+$data = [];
+echo '<pre>';
+
+$counted_ids = [];
+$queue_ids = [1];
+$level = 1;
+$ctr=0;
+while($next_id = array_pop($queue_ids))
+{
+    //ignore if ID is already scanned
+    if(isset($counted_ids[$next_id]))
+        continue;
+    
+    $counted_ids[$next_id] = 1;
+    
+    $starting_level = empty($data[$next_id]) ? 1 : $data[$next_id];
+    if($starting_level>$max_level)
+            continue;
+    
+    $data0 = CountDistance(1,$starting_level,$next_id,$model_cache);
+    $data += $data0;
+    $queue_ids = array_merge($queue_ids,array_keys($data));
+    if($ctr++ > 200) break;
+}
+asort($data);
+
+foreach($data as $id => $v)
+{
+    if (empty ( $model_cache [$id] ))
+        $model = Person::model()->findByPk($id);
+    else
+        $model = $model_cache[$id];
+    
+    echo $v . "\t" . $model->namelink . "\n";
+}
+echo '</pre>';

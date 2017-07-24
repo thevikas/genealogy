@@ -535,4 +535,10 @@ class Person extends CActiveRecord
         if (isset ( $this->father->father ))
             return $this->father->father;
     }
+    
+    public function getid_person()
+    {
+        return $this->cid;
+    }
+    
 }
