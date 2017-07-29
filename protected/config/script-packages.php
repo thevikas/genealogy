@@ -2,16 +2,16 @@
 return array (
         'jquery' => [ 
                 'js' => [ 
-                    'jquery.js', 
+                    'jquery.min.js', 
                 ] 
         ],
         'jquery-ui' => [ 
                 'baseCssUrl' => '/css',
                 'js' => [ 
-                        'jquery-ui.js' 
+                        'jquery-ui.min.js' 
                 ],
                 'css' => [ 
-                        'jquery-ui.css' 
+                        'jquery-ui.min.css' 
                 ],
                 'depends' => [ 
                         'jquery' 
