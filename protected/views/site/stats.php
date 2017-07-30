@@ -29,6 +29,25 @@ $stats['total_dead_males_pc'] = 100*$stats['total_dead_males']/($stats['total_pe
 
 $stats['total_females_pc'] = 100*$stats['total_females']/$stats['total_people'];
 
+$stats['total_females_2000'] = Person::model()->count('gender=0 and dob > :dob',[':dob' => '2000-01-01']);
+$stats['total_males_2000'] = Person::model()->count('gender=1 and dob > :dob',[':dob' => '2000-01-01']);
+$stats['total_people_2000'] = $stats['total_males_2000'] +  $stats['total_females_2000'];
+$stats['total_males_2000_pc'] = 100*$stats['total_females_2000']/$stats['total_people_2000'];
+$stats['total_females_2000_pc'] = 100 - $stats['total_males_2000_pc'];
+
+$stats['femals_per_1K_males_2000'] = 1000*$stats['total_females_2000_pc']*2/100;
+
+
+###
+
+$stats['total_females_p2000'] = Person::model()->count('gender=0 and dob between :dob1 and :dob2',[':dob1' => '1700-01-01',':dob2' => '2000-01-01']);
+$stats['total_males_p2000'] = Person::model()->count('gender=1 and dob between :dob1 and :dob2',[':dob1' => '1700-01-01',':dob2' => '2000-01-01']);
+$stats['total_people_p2000'] = $stats['total_males_p2000'] +  $stats['total_females_p2000'];
+$stats['total_males_p2000_pc'] = 100*$stats['total_females_p2000']/$stats['total_people_p2000'];
+$stats['total_females_p2000_pc'] = 100 - $stats['total_males_p2000_pc'];
+
+$stats['femals_per_1K_males_p2000'] = 1000*$stats['total_females_p2000_pc']*2/100;
+
 echo '<pre>';
 print_r($stats);
 echo '</pre>';
