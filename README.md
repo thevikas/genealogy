@@ -30,3 +30,7 @@ Can generate genealogy tree using D3 in many ways.
 ### [D3.js Drag and Drop, Zoomable](http://bl.ocks.org/robschmuecker/7880033)
 
 ![](https://c1.staticflickr.com/5/4292/35186932073_709f92bf68_o_d.png)
+
+# Build Status
+
+[![CircleCI](https://circleci.com/gh/thevikas/genealogy/tree/master.svg?style=shield)](https://circleci.com/gh/thevikas/genealogy/tree/master)
