@@ -2,3 +2,6 @@ yiic*
 vendor
 config
 data/*
+gene.backup*
+*.sh
+
