@@ -13,8 +13,9 @@ jobs:
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mysql:9.4
+      #image: circleci/php:7.1-apache-browsers
 
-    working_directory: ~/repo
+    working_directory: ~/repo/protected
 
     steps:
       - checkout

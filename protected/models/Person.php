@@ -24,7 +24,7 @@
  * @property string $phone_off
  * @property string $father_root
  * @property string $updated
- * @property integer $owner_gid 
+ * @property integer $owner_gid
  *
  * The followings are the available model relations:
  * @property Eventdates[] $eventdates
@@ -44,12 +44,13 @@
 class Person extends CActiveRecord
 {
     static $maxlevels = 0;
+    var $queryvar1;
 
     public function behaviors()
     {
         return array (
-                'GroupCheckAccessBehavior' => [ 
-                        'class' => 'GroupCheckAccessBehavior' 
+                'GroupCheckAccessBehavior' => [
+                        'class' => 'GroupCheckAccessBehavior'
                 ],
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
@@ -68,16 +69,16 @@ class Person extends CActiveRecord
                                 {
                                     $mage = '';
                                     if ($spouses [0]->gender)
-                                        $marriage = Marriage::model ()->findByAttributes ( 
-                                                [ 
+                                        $marriage = Marriage::model ()->findByAttributes (
+                                                [
                                                         'husband_cid' => $spouses [0]->cid,
-                                                        'wife_cid' => $model->cid 
+                                                        'wife_cid' => $model->cid
                                                 ] );
                                     else
-                                        $marriage = Marriage::model ()->findByAttributes ( 
-                                                [ 
+                                        $marriage = Marriage::model ()->findByAttributes (
+                                                [
                                                         'husband_cid' => $model->cid,
-                                                        'wife_cid' => $spouses [0]->cid 
+                                                        'wife_cid' => $spouses [0]->cid
                                                 ] );
                                     if (! empty ( $marriage->dom ))
                                     {
@@ -86,42 +87,42 @@ class Person extends CActiveRecord
                                         $interval = $datetime1->diff ( $datetime2 );
                                         $mage = $interval->format ( '(%y yrs)' );
                                     }
-                                    
+
                                     $mlink = '';
                                     if(!empty($marriage))
-                                    $mlink = CHtml::link ( CHtml::image ( '/images/marriage.gif' ), 
-                                            [ 
+                                    $mlink = CHtml::link ( CHtml::image ( '/images/marriage.gif' ),
+                                            [
                                                     '/marriage/view',
-                                                    'id' => $marriage->mid 
+                                                    'id' => $marriage->mid
                                             ] );
-                                    
+
                                     if (! empty ( $params ['flip'] ))
-                                        $str = $spouses [0]->getnamelink ( 
-                                                [ 
-                                                        'nospouse' => 1 
+                                        $str = $spouses [0]->getnamelink (
+                                                [
+                                                        'nospouse' => 1
                                                 ] ) . ' ' . $mlink . $mage . ' ' . $str;
                                     else
-                                        $str .= ' ' . $mlink . $mage . ' ' . $spouses [0]->getnamelink ( 
-                                                [ 
-                                                        'nospouse' => 1 
+                                        $str .= ' ' . $mlink . $mage . ' ' . $spouses [0]->getnamelink (
+                                                [
+                                                        'nospouse' => 1
                                                 ] );
                                 }
                             }
                             $alive = empty($model->dod) ? '' : 'dead_';
                             $str = CHtml::image ( $model->gender ? "/images/{$alive}man_icon.gif" : "/images/{$alive}woman_icon.gif" ) . $str;
                             return $str;
-                        } 
-                ) 
+                        }
+                )
         );
     }
 
     public function beforeSave()
     {
         $this->name = $this->firstname . ' ' . $this->lastname;
-        
+
         $this->dob = empty ( $this->dob ) ? null : $this->dob;
         $this->dod = empty ( $this->dod ) ? null : $this->dod;
-        
+
         return parent::beforeSave ();
     }
 
@@ -129,7 +130,7 @@ class Person extends CActiveRecord
     {
         return array_merge ( $this->husbands, $this->wives );
     }
-    
+
     public function getmarriages()
     {
         return array_merge ( $this->marriages1, $this->marriages2);
@@ -156,31 +157,31 @@ class Person extends CActiveRecord
                 array (
                         'father_cid, mother_cid, deleted, gender, bPics, isDead',
                         'numerical',
-                        'integerOnly' => true 
+                        'integerOnly' => true
                 ),
                 array (
                         'firstname, lastname, name',
                         'length',
-                        'max' => 255 
+                        'max' => 255
                 ),
                 array (
                         'treepos, father_root',
                         'length',
-                        'max' => 10 
+                        'max' => 10
                 ),
                 array (
                         'address',
                         'length',
-                        'max' => 250 
+                        'max' => 250
                 ),
                 array (
                         'phone_mobile, phone_res, phone_off',
                         'length',
-                        'max' => 20 
+                        'max' => 20
                 ),
                 array (
                         'created, dob, dod',
-                        'safe' 
+                        'safe'
                 ),
                 // The following rule is used by search().
                 // @todo Please remove those attributes that should not be
@@ -188,8 +189,8 @@ class Person extends CActiveRecord
                 array (
                         'cid, firstname, father_cid, mother_cid, created, deleted, lastname, gender, name, dob, dod, bPics, treepos, isDead, address, phone_mobile, phone_res, phone_off, father_root, updated',
                         'safe',
-                        'on' => 'search' 
-                ) 
+                        'on' => 'search'
+                )
         );
     }
 
@@ -205,53 +206,53 @@ class Person extends CActiveRecord
                 'eventdates' => array (
                         self::HAS_MANY,
                         'Eventdates',
-                        'cid' 
+                        'cid'
                 ),
                 'marriages1' => array (
                         self::HAS_MANY,
                         'Marriage',
-                        'husband_cid' 
+                        'husband_cid'
                 ),
                 'marriages2' => array (
                         self::HAS_MANY,
                         'Marriage',
-                        'wife_cid' 
+                        'wife_cid'
                 ),
                 'husbands' => array (
                         self::MANY_MANY,
                         'Person',
-                        'marriages(wife_cid,husband_cid)' 
+                        'marriages(wife_cid,husband_cid)'
                 ),
                 'wives' => array (
                         self::MANY_MANY,
                         'Person',
-                        'marriages(husband_cid,wife_cid)' 
+                        'marriages(husband_cid,wife_cid)'
                 ),
                 'father' => array (
                         self::BELONGS_TO,
                         'Person',
-                        'father_cid' 
+                        'father_cid'
                 ),
                 'children1' => array (
                         self::HAS_MANY,
                         'Person',
-                        'father_cid' 
+                        'father_cid'
                 ),
                 'mother' => array (
                         self::BELONGS_TO,
                         'Person',
-                        'mother_cid' 
+                        'mother_cid'
                 ),
                 'children2' => array (
                         self::HAS_MANY,
                         'Person',
-                        'mother_cid' 
+                        'mother_cid'
                 ),
                 'pics' => array (
                         self::HAS_MANY,
                         'Pics',
-                        'cid' 
-                ) 
+                        'cid'
+                )
         );
     }
 
@@ -270,12 +271,12 @@ class Person extends CActiveRecord
             $childs = $this->children2;
         else
             $childs = $this->children1;
-        
-        uasort ( $childs, [ 
+
+        uasort ( $childs, [
                 $this,
-                'cmp' 
+                'cmp'
         ] );
-        
+
         return $childs;
     }
 
@@ -306,7 +307,7 @@ class Person extends CActiveRecord
                 'phone_off' => __ ( 'Phone Off' ),
                 'father_root' => __ ( 'Father Root' ),
                 'updated' => __ ( 'Updated' ),
-                'spouse' => __ ( 'Spouse' ) 
+                'spouse' => __ ( 'Spouse' )
         );
     }
 
@@ -328,7 +329,7 @@ class Person extends CActiveRecord
         // @todo Please modify the following code to remove attributes that
         // should not be searched.
         $criteria = new CDbCriteria ();
-        
+
         $criteria->compare ( 'cid', $this->cid );
         $criteria->compare ( 'firstname', $this->firstname, true );
         $criteria->compare ( 'father_cid', $this->father_cid );
@@ -350,9 +351,9 @@ class Person extends CActiveRecord
         $criteria->compare ( 'father_root', $this->father_root, true );
         $criteria->compare ( 'updated', $this->updated, true );
         $criteria->compare ( 'owner_gid', $this->owner_gid, true );
-        
+
         return new CActiveDataProvider ( $this, array (
-                'criteria' => $criteria 
+                'criteria' => $criteria
         ) );
     }
 
@@ -378,8 +379,8 @@ class Person extends CActiveRecord
         $age = $interval->format ( '%Y' );
         if ($age > 200)
             $age = 0;
-        
-            
+
+
         return $age;
     }
 
@@ -391,7 +392,7 @@ class Person extends CActiveRecord
     {
         $arr = array ();
         $carr = array ();
-        
+
         $name1 = trim ( $this->firstname . " " . $this->lastname ) . " ";
         $sc = strpos ( $name1, " " );
         // print "sc=$sc, [$name1] ";
@@ -400,16 +401,16 @@ class Person extends CActiveRecord
         if ($name1 == "NoName")
             $name1 = "?";
         $arr ['name'] = $name1;
-        
+
         $md = 0;
-        
-        $children = Person::model ()->findAll ( 
-                [ 
+
+        $children = Person::model ()->findAll (
+                [
                         'condition' => ':cid in (father_cid,mother_cid)',
-                        'params' => [ 
-                                ':cid' => $this->cid 
+                        'params' => [
+                                ':cid' => $this->cid
                         ],
-                        'select' => 'firstname,lastname,cid' 
+                        'select' => 'firstname,lastname,cid'
                 ] );
         // $sql = "select cid from persons where {$this->id} in
         // (father_cid,mother_cid)";
@@ -433,8 +434,8 @@ class Person extends CActiveRecord
         $data ["class"] += " " + empty($this->dod) ? 'dead' : 'dead';
         $data ["class"] += " " + count($this->spouses)>0 ? 'married' : 'single';
         $data ["class"] += " " + $this->age >0 ? 'dob' : 'nodob';
-        
-        
+
+
         $data ["textClass"] = "nodeText";
         $data ["depthOffset"] = $depth;
         if (count ( $this->spouses ))
@@ -442,17 +443,17 @@ class Person extends CActiveRecord
             foreach ( $this->spouses as $spouse )
             {
                 $marriage = [ ];
-                $marriage ['spouse'] = [ 
+                $marriage ['spouse'] = [
                         'name' => $spouse->name,
-                        'class' => $spouse->gender ? 'man' : 'woman' 
+                        'class' => $spouse->gender ? 'man' : 'woman'
                 ];
-                $children = Person::model ()->findAll ( 
-                        [ 
+                $children = Person::model ()->findAll (
+                        [
                                 'condition' => 'father_cid in (:id1,:id2) and mother_cid in (:id1,:id2)',
-                                'params' => [ 
+                                'params' => [
                                         'id1' => $this->cid,
-                                        'id2' => $spouse->cid 
-                                ] 
+                                        'id2' => $spouse->cid
+                                ]
                         ] );
                 foreach ( $children as $child )
                 {
@@ -486,15 +487,15 @@ class Person extends CActiveRecord
     {
         if (self::$maxlevels < $level)
             self::$maxlevels = $level;
-        
+
         $data = [ ];
         $data ['name'] = trim ( $this->name . " " . $this->age . "y" );
-        
+
         $data ["class"] = implode(' ',[ $this->gender ? 'man' : 'woman',
         empty($this->dod) ? '' : 'dead',
         count($this->spouses)>0 ? 'married' : 'single',
-        $this->age >0 ? 'dob' : 'nodob']);        
-        
+        $this->age >0 ? 'dob' : 'nodob']);
+
         if (count ( $this->children ))
         {
             foreach ( $this->children as $child )
@@ -512,10 +513,10 @@ class Person extends CActiveRecord
         {
             $gchild = array_merge ( $gchild, $child->children );
         }
-        
-        uasort ( $gchild, [ 
+
+        uasort ( $gchild, [
                 $this,
-                'cmp' 
+                'cmp'
         ] );
         return $gchild;
     }
@@ -527,10 +528,10 @@ class Person extends CActiveRecord
         {
             $gchild = array_merge ( $gchild, $child->children );
         }
-        
-        uasort ( $gchild, [ 
+
+        uasort ( $gchild, [
                 $this,
-                'cmp' 
+                'cmp'
         ] );
         return $gchild;
     }
@@ -540,44 +541,44 @@ class Person extends CActiveRecord
         if (isset ( $this->father->father ))
             return $this->father->father;
     }
-    
+
     public function getid_person()
     {
         return $this->cid;
     }
-    
+
     public function getAudit()
     {
         $notes = [];
         if (empty ( $this->dob ))
-            $notes [] = __ ( 'DOB' );
+            $notes [] = 'DOB' ;
         if (! isset ( $this->father ))
-            $notes [] = __ ( 'Father' );
+            $notes [] =  'Father' ;
         if (! isset ( $this->mother ))
-            $notes [] = __ ( 'Mother' );
+            $notes [] =  'Mother' ;
         if($this->age>30)
         {
             $spoues = $this->spouses;
             if(count($spoues)==0)
-                $notes[] = __('Spouse');
+                $notes[] = 'Spouse';
         }
         $marriages = $this->marriages;
         foreach($marriages as $marriage)
         {
             if(empty($marriage->dom))
             {
-                $notes[] = __('DOM');
+                $notes[] = 'DOM';
                 break;
             }
         }
         $children = $this->children;
         if(count($children)==0)
         {
-            if($this->age>0 && $this->age<20);
+            if($this->age>0 && $this->age<25);
             else
-                $notes[] = __('Children');
+                $notes[] = 'Children';
         }
-        return implode(', ',$notes);
+        return $notes;
     }
-    
+
 }
