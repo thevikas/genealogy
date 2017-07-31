@@ -57,63 +57,69 @@ echo CHtml::encode ( Yii::app ()->name );
 	<div id="mainmenu">
 		<?php
 
-$this->widget ( 'zii.widgets.CMenu', 
+$this->widget ( 'zii.widgets.CMenu',
         array (
                 'items' => array (
                         array (
                                 'label' => 'Home',
                                 'url' => array (
-                                        '/site/index' 
-                                ) 
+                                        '/site/index'
+                                )
                         ),
                         array (
                                 'label' => 'All People',
                                 'visible' => Yii::app ()->user->isGuest,
                                 'url' => array (
-                                        '/person' 
-                                ) 
+                                        '/person'
+                                )
                         ),
                         array (
                                 'label' => 'My People',
                                 'visible' => ! Yii::app ()->user->isGuest,
                                 'url' => array (
                                         '/person/index',
-                                        'gid' => Yii::app ()->user->groupid 
-                                ) 
+                                        'gid' => Yii::app ()->user->groupid
+                                )
                         ),
-                        array (
+						array (
+                                'label' => __('Statistics'),
+                                'url' => array (
+                                        '/site/stats' 
+                                )
+                        ),
+						/*array (
                                 'label' => 'About',
                                 'url' => array (
                                         '/site/page',
-                                        'view' => 'about' 
-                                ) 
+                                        'view' => 'about'
+                                )
                         ),
                         array (
                                 'label' => 'Contact',
                                 'url' => array (
-                                        '/site/contact' 
-                                ) 
-                        ),
-                        [ 
+                                        '/site/contact'
+                                )
+                        ),*/
+                        [
                                 'label' => 'GitHub',
-                                'url' => 'https://github.com/thevikas/genealogy' 
+                                'url' => 'https://github.com/thevikas/genealogy'
                         ],
                         array (
                                 'label' => 'Login',
                                 'url' => array (
-                                        '/site/login' 
+                                        '/site/login'
                                 ),
-                                'visible' => Yii::app ()->user->isGuest 
+                                'visible' => Yii::app ()->user->isGuest
                         ),
                         array (
                                 'label' => 'Logout (' . Yii::app ()->user->name . ' G:' . Yii::app ()->user->groupid .
                                          ')',
                                         'url' => array (
-                                                '/site/logout' 
+                                                '/site/logout'
                                         ),
-                                        'visible' => ! Yii::app ()->user->isGuest 
-                        ) 
-                ) 
+                                        'visible' => ! Yii::app ()->user->isGuest
+                        )
+                )
         ) );
 ?>
 	</div><!-- mainmenu -->
@@ -123,9 +129,9 @@ if (isset ( $this->breadcrumbs ))
 :
     ?>
 		<?php
-    
+
     $this->widget ( 'zii.widgets.CBreadcrumbs', array (
-            'links' => $this->breadcrumbs 
+            'links' => $this->breadcrumbs
     ) );
     ?><!-- breadcrumbs -->
 	<?php endif?>

@@ -10,7 +10,7 @@ class SiteController extends Controller
 			// captcha action renders the CAPTCHA image displayed on the contact page
 	        'jsobjects'=>array(
 	                'class'=>'JsObjectsAction',
-	        ),	        
+	        ),
 	        'captcha'=>array(
 				'class'=>'CCaptchaAction',
 				'backColor'=>0xFFFFFF,
@@ -33,13 +33,13 @@ class SiteController extends Controller
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
 	}
-	
+
 	/**
 	 * To show statistics about the whole database
 	 */
 	public function actionStats($max_level = 5,$limit = 200,$root_id=1)
 	{
-	    $this->render('stats',['max_level' => $max_level,'limit' => $limit,'root_id' => $root_id]);
+	    $this->render('stats',['max_level' => $max_level,'limit' => $limit,'root_id' => $root_id,'model' => Person::model()->findByPk($root_id)]);
 	}
 
 	/**

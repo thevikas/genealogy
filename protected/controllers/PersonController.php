@@ -27,14 +27,14 @@ class PersonController extends Controller
                 // captcha action renders the CAPTCHA image displayed on the
                 // contact page
                 'tree' => array (
-                        'class' => 'TreeAction' 
+                        'class' => 'TreeAction'
                 ),
                 'd3chart' => array (
-                        'class' => 'D3Action' 
+                        'class' => 'D3Action'
                 ),
                 'circlechart' => array (
-                        'class' => 'CircleChartAction' 
-                ) 
+                        'class' => 'CircleChartAction'
+                )
         );
     }
 
@@ -55,40 +55,41 @@ class PersonController extends Controller
                                 'view',
                                 'tree',
                                 'circlechart',
-                                'd3chart' 
+                                'd3chart',
+                                'distance'
                         ),
                         'users' => array (
-                                '*' 
-                        ) 
+                                '*'
+                        )
                 ),
                 array (
                         'allow', // allow authenticated user to perform
                                  // 'create' and 'update' actions
                         'actions' => array (
                                 'create',
-                                'update' 
+                                'update'
                         ),
                         'users' => array (
-                                '@' 
-                        ) 
+                                '@'
+                        )
                 ),
                 array (
                         'allow', // allow admin user to perform 'admin'
                                  // and 'delete' actions
                         'actions' => array (
                                 'admin',
-                                'delete' 
+                                'delete'
                         ),
                         'users' => array (
-                                'admin' 
-                        ) 
+                                'admin'
+                        )
                 ),
                 array (
                         'deny', // deny all users
                         'users' => array (
-                                '*' 
-                        ) 
-                ) 
+                                '*'
+                        )
+                )
         );
     }
 
@@ -104,7 +105,7 @@ class PersonController extends Controller
         $this->pageTitle = $model->name;
         RecentPerson::add ( $id );
         $this->render ( 'view', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -119,10 +120,10 @@ class PersonController extends Controller
         $spouse = null;
         if ($spouse_id)
             $spouse = Person::model ()->findByPk ( $spouse_id );
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        
+
         if (isset ( $_POST ['Person'] ))
         {
             $model->attributes = $_POST ['Person'];
@@ -135,10 +136,10 @@ class PersonController extends Controller
                     $m->husband_cid = $model->gender ? $model->cid : $spouse_id;
                     $m->wife_cid = $model->gender ? $spouse_id : $model->cid;
                     if ($m->save ())
-                        $this->redirect ( 
+                        $this->redirect (
                                 array (
                                         'view',
-                                        'id' => $spouse_id 
+                                        'id' => $spouse_id
                                 ) );
                     else
                     {
@@ -147,10 +148,10 @@ class PersonController extends Controller
                     }
                 }
                 else if ($mother_id)
-                    $this->redirect ( 
+                    $this->redirect (
                             array (
                                     'view',
-                                    'id' => $mother_id 
+                                    'id' => $mother_id
                             ) );
                 else if ($child_id)
                 {
@@ -164,18 +165,18 @@ class PersonController extends Controller
                         error_log ( print_r ( $child->errors, true ) );
                         throw new Exception ( "Saving child failed" );
                     }
-                    
-                    $this->redirect ( 
+
+                    $this->redirect (
                             array (
                                     'view',
-                                    'id' => $child_id 
+                                    'id' => $child_id
                             ) );
                 }
                 else
-                    $this->redirect ( 
+                    $this->redirect (
                             array (
                                     'view',
-                                    'id' => $model->cid 
+                                    'id' => $model->cid
                             ) );
             }
         }
@@ -190,10 +191,10 @@ class PersonController extends Controller
             if ($father_id)
                 $model->father_cid = $father_id;
         }
-        $this->render ( 'create', 
+        $this->render ( 'create',
                 array (
                         'model' => $model,
-                        'spouse' => $spouse 
+                        'spouse' => $spouse
                 ) );
     }
 
@@ -208,28 +209,28 @@ class PersonController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->loadModel ( $id );
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        
-        $this->pageTitle = __ ( 'Update {name}', [ 
-                '{name}' => $model->name 
+
+        $this->pageTitle = __ ( 'Update {name}', [
+                '{name}' => $model->name
         ] );
-        
+
         if (isset ( $_POST ['Person'] ))
         {
             $model->attributes = $_POST ['Person'];
-            
+
             if ($model->save ())
-                $this->redirect ( 
+                $this->redirect (
                         array (
                                 'view',
-                                'id' => $model->cid 
+                                'id' => $model->cid
                         ) );
         }
-        
+
         $this->render ( 'update', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -244,13 +245,13 @@ class PersonController extends Controller
     public function actionDelete($id)
     {
         $this->loadModel ( $id )->delete ();
-        
+
         // if AJAX request (triggered by deletion via admin grid view), we
         // should not redirect the browser
         if (! isset ( $_GET ['ajax'] ))
-            $this->redirect ( 
+            $this->redirect (
                     isset ( $_POST ['returnUrl'] ) ? $_POST ['returnUrl'] : array (
-                            'admin' 
+                            'admin'
                     ) );
     }
 
@@ -260,14 +261,14 @@ class PersonController extends Controller
     public function actionIndex($gid = 0)
     {
         $p = new Person ();
-        
+
         // looking at other's data is not blocked, yet
         if ($gid)
             $p->owner_gid = $gid;
-        
+
         $dataProvider = $p->search ();
         $this->render ( 'index', array (
-                'dataProvider' => $dataProvider 
+                'dataProvider' => $dataProvider
         ) );
     }
 
@@ -280,9 +281,9 @@ class PersonController extends Controller
         $model->unsetAttributes (); // clear any default values
         if (isset ( $_GET ['Person'] ))
             $model->attributes = $_GET ['Person'];
-        
+
         $this->render ( 'admin', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -318,4 +319,12 @@ class PersonController extends Controller
             Yii::app ()->end ();
         }
     }
+
+    /**
+	 * To show statistics about the whole database
+	 */
+	public function actionDistance($max_level = 5,$limit = 200,$root_id=1)
+	{
+	    $this->render('distance',['max_level' => $max_level,'limit' => $limit,'root_id' => $root_id,'model' => Person::model()->findByPk($root_id)]);
+	}
 }

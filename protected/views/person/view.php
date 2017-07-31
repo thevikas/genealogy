@@ -3,20 +3,20 @@
 /* @var $model Person */
 $this->breadcrumbs = array (
         'People' => array (
-                'index' 
-        ) 
+                'index'
+        )
 );
 
 if ($model->grandfather)
-    $this->breadcrumbs [$model->grandfather->name] = [ 
+    $this->breadcrumbs [$model->grandfather->name] = [
             '/person/view',
-            'id' => $model->father->cid 
+            'id' => $model->father->cid
     ];
 
 if ($model->father)
-    $this->breadcrumbs [$model->father->name] = [ 
+    $this->breadcrumbs [$model->father->name] = [
             '/person/view',
-            'id' => $model->father->cid 
+            'id' => $model->father->cid
     ];
 
 $this->breadcrumbs [] = $model->name;
@@ -25,48 +25,48 @@ $this->menu = array (
         array (
                 'label' => __ ( 'List Person' ),
                 'url' => array (
-                        'index' 
-                ) 
+                        'index'
+                )
         ),
         array (
                 'label' => __ ( 'Create Person' ),
                 'url' => array (
-                        'create' 
-                ) 
+                        'create'
+                )
         ),
         array (
                 'label' => __ ( 'Update Person' ),
                 'url' => array (
                         'update',
-                        'id' => $model->cid 
-                ) 
+                        'id' => $model->cid
+                )
         ),
         array (
                 'label' => __ ( 'Create Parent' ),
                 'url' => array (
                         'create',
-                        'child_id' => $model->cid 
-                ) 
+                        'child_id' => $model->cid
+                )
         ),
         array (
                 'label' => __ ( 'Create Spouse' ),
                 'url' => array (
                         'create',
-                        'spouse_id' => $model->cid 
-                ) 
+                        'spouse_id' => $model->cid
+                )
         ),
         array (
                 'label' => __ ( 'Add Spouse' ),
                 'url' => array (
                         'marriage/create',
                         'spouse_id' => $model->cid,
-                        'sg' => $model->gender 
-                ) 
+                        'sg' => $model->gender
+                )
         ),
         array (
-                'label' => __ ( 'Stat Report' ),
+                'label' => __ ( 'Distance Report' ),
                 'url' => array (
-                        'site/stats',
+                        'distance',
                         'root_id' => $model->cid
                 )
         ),
@@ -74,47 +74,47 @@ $this->menu = array (
                 'label' => __ ( 'Tree Report' ),
                 'url' => array (
                         'person/tree',
-                        'id' => $model->cid 
-                ) 
+                        'id' => $model->cid
+                )
         ),
         array (
                 'label' => __ ( 'Circle Chart' ),
                 'url' => array (
                         'person/circlechart',
-                        'id' => $model->cid 
-                ) 
+                        'id' => $model->cid
+                )
         ),
         array (
                 'label' => __ ( 'D3 Chart Dendogram' ),
                 'url' => array (
                         'chart/d3',
                         'id' => $model->cid,
-                        "c" => 0 
-                ) 
+                        "c" => 0
+                )
         ),
         array (
                 'label' => __ ( 'D3 Chart Radial' ),
                 'url' => array (
                         'chart/d3',
                         'id' => $model->cid,
-                        "c" => 1 
-                ) 
+                        "c" => 1
+                )
         ),
         array (
                 'label' => __ ( 'D3 Chart Drag &amp; Drop' ),
                 'url' => array (
                         'chart/d3',
                         'id' => $model->cid,
-                        "c" => 2 
-                ) 
+                        "c" => 2
+                )
         ),
         array (
                 'label' => __ ( 'D3 Wheel' ),
                 'url' => array (
                         'chart/d3',
                         'id' => $model->cid,
-                        "c" => 3 
-                ) 
+                        "c" => 3
+                )
         ),
         array (
                 'label' => __ ( 'Delete Person' ),
@@ -122,46 +122,46 @@ $this->menu = array (
                 'linkOptions' => array (
                         'submit' => array (
                                 'delete',
-                                'id' => $model->cid 
+                                'id' => $model->cid
                         ),
-                        'confirm' => 'Are you sure you want to delete this item?' 
-                ) 
+                        'confirm' => 'Are you sure you want to delete this item?'
+                )
         ),
         array (
                 'label' => __ ( 'Manage Person' ),
                 'url' => array (
-                        'admin' 
-                ) 
-        ) 
+                        'admin'
+                )
+        )
 );
 ?>
 
 <h1><?php
 
-echo $model->getnamelink ( [ 
+echo $model->getnamelink ( [
         'nospouse' => 1,
-        'nolink' 
+        'nolink'
 ] );
 ?></h1>
 
 <?php
 
-echo $this->renderPartial ( '_view', [ 
+echo $this->renderPartial ( '_view', [
         'data' => $model,
-        'detailed' => true 
+        'detailed' => true
 ] );
 ?>
 <?php
 
-echo $this->renderPartial ( '_grandchildren', [ 
+echo $this->renderPartial ( '_grandchildren', [
         'data' => $model,
-        'detailed' => true 
+        'detailed' => true
 ] );
 ?>
 <?php
 
-echo $this->renderPartial ( '_greatgrandchildren', [ 
+echo $this->renderPartial ( '_greatgrandchildren', [
         'data' => $model,
-        'detailed' => true 
+        'detailed' => true
 ] );
 ?>

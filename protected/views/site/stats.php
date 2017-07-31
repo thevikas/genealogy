@@ -1,5 +1,7 @@
 <?php
 /* @var $this SiteController */
+$this->breadcrumbs [] = __('Stats');
+
 $this->pageTitle = Yii::app ()->name;
 
 $stats ['total_people'] = Person::model ()->count ();
@@ -97,117 +99,19 @@ $mother_data = Yii::app()->db->createCommand($q1('mother_cid','desc'))->querySca
 
 $stats ['age_of_last_child_fathers'] = $father_data;
 $stats ['age_of_last_child_mothers'] = $mother_data;
-//$stats ['age_of_first_mothers'] = ;
 
-echo '<pre>';
-print_r ( $stats );
-echo '</pre>';
-
-
-echo "<h1>Distance Calculator</h1>";
-
-$model_cache = [ ];
-
-function CountDistance($distance_for_id, $start_count, $count_from_id, $model_cache)
+$data3=[];
+function filter1(&$v,$k)
 {
-    $data = [ ];
-    if (! $count_from_id)
-        return [ ];
-    if (empty ( $model_cache [$count_from_id] ))
-        $model = Person::model ()->findByPk ( $count_from_id );
-    $model_cache [$count_from_id] = $model;
-    if (! $model)
-        return [ ];
-    // count for father
-    if ($model->father)
-    {
-        $data [$model->father->id_person] = $start_count + 1;
-        if (empty ( $model_cache [$model->father->id_person] ))
-            $model_cache [$model->father->id_person] = $model->father;
-    }
-    // count for mother
-    if ($model->mother)
-    {
-        $data [$model->mother->id_person] = $start_count + 1;
-        if (empty ( $model_cache [$model->mother->id_person] ))
-            $model_cache [$model->mother->id_person] = $model->mother;
-    }
-    // count for spouse
-    $spouses = $model->spouses;
-    if (count ( $spouses ) > 0)
-    {
-        foreach ( $spouses as $spouse )
-        {
-            $data [$spouse->id_person] = $start_count + 1;
-            if (empty ( $model_cache [$spouse->id_person] ))
-                $model_cache [$spouse->id_person] = $spouse;
-        }
-    }
-    // count all children
-    $children = $model->children;
-    if (count ( $children ) > 0)
-    {
-        foreach ( $children as $child )
-        {
-            $data [$child->id_person] = $start_count + 1;
-            if (empty ( $model_cache [$child->id_person] ))
-                $model_cache [$child->id_person] = $child;
-        }
-    }
-    return $data;
+    $v = ['name' => $k, 'value' => $v];
 }
 
-$data = [ ];
-echo '<pre>';
+array_walk($stats,"filter1");
+sort($stats);
 
-$counted_ids = [ ];
-$queue_ids = [
-        $root_id
-];
-$level = 1;
-$ctr = 0;
-while ( $next_id = array_pop ( $queue_ids ) )
-{
-    // ignore if ID is already scanned
-    if (isset ( $counted_ids [$next_id] ))
-        continue;
-
-    $counted_ids [$next_id] = 1;
-
-    $starting_level = empty ( $data [$next_id] ) ? 1 : $data [$next_id];
-    if ($starting_level > $max_level)
-        continue;
-
-    $data0 = CountDistance ( 1, $starting_level, $next_id, $model_cache );
-    $data += $data0;
-    $queue_ids = array_merge ( $queue_ids, array_keys ( $data ) );
-    if ($ctr ++ > $limit)
-        break;
-}
-$data [$root_id] = 1;
-asort ( $data );
-
-$data2 = [ ];
-foreach ( $data as $id => $v )
-{
-    if (empty ( $model_cache [$id] ))
-        $model = Person::model ()->findByPk ( $id );
-    else
-        $model = $model_cache [$id];
-
-    // echo $v . "\t" . $model->namelink . " = " . implode ( ',', $model->audit
-    // ) . "\n";
-
-    $item ['model'] = $model;
-    $item ['id'] = $model->cid;
-    $item ['level'] = $v;
-    $item ['audit'] = $model->audit;
-    $data2 [] = $item;
-}
-echo '</pre>';
-
-$dataProvider = new CArrayDataProvider ( $data2, array (
-        'id' => 'id',
+$dataProvider = new CArrayDataProvider ( $stats, array (
+        'id' => 'name',
+        'keyField' => 'name',
         'pagination' => array (
                 'pageSize' => 200
         )
@@ -216,78 +120,11 @@ $dataProvider = new CArrayDataProvider ( $data2, array (
 Yii::app ()->clientScript->registerCoreScript ( 'font-awesome' );
 
 $this->widget ( 'zii.widgets.grid.CGridView',
-        array (
+        [
                 'id' => 'person-grid',
                 'dataProvider' => $dataProvider,
                 // 'filter'=>$model,
                 'columns' => [
-                        [
-                                'name' => __ ( 'Level' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return $data ['level'];
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'Name' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    // print_r ( $data ['audit'] );
-                                    return $data ['model']->getnamelink (
-                                            [
-                                                    'nospouse' => 1
-                                            ] );
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'Age' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return $data ['model']->age > 0 ? $data ['model']->age : '';
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'DOB' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return array_search ( 'DOB', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'DOM' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return array_search ( 'DOM', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'Father' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return array_search ( 'Father', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'Mother' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return array_search ( 'Mother', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
-                                }
-                        ],
-                        [
-                                'name' => __ ( 'Children' ),
-                                'type' => 'raw',
-                                'value' => function ($data)
-                                {
-                                    return array_search ( 'Children', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
-                                }
-                        ]
-                ]
-        ) );
+                    ["name" => "name","header" => __('Name')],["name" => "value","header" =>__('Value')]]
+        ]
+);
