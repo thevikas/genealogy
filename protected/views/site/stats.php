@@ -100,6 +100,24 @@ $mother_data = Yii::app()->db->createCommand($q1('mother_cid','desc'))->querySca
 $stats ['age_of_last_child_fathers'] = $father_data;
 $stats ['age_of_last_child_mothers'] = $mother_data;
 
+$sql="select datediff(min(dob),dom) as dt from marriages m join persons c on c.father_cid=m.husband_cid
+    where dom>'1970-1-1' and dob>'1700-1-1'
+    group by husband_cid,dom
+    order by datediff(min(dob),dom)
+    limit 0,100";
+
+$data = Yii::app()->db->createCommand($sql)->queryAll();
+$ctr = 0;
+$pp = 1;
+foreach($data as $d)
+{
+    if($d['dt']<180) 
+        continue;
+    $pp *= $d['dt'];
+    $ctr++;
+}
+$stats ['first_child_years_after_marriage'] = pow($pp,1/$ctr)/365.25;
+
 $data3=[];
 function filter1(&$v,$k)
 {
