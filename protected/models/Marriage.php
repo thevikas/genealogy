@@ -22,18 +22,18 @@ class Marriage extends CActiveRecord
     public function behaviors()
     {
         return array (
-                'GroupCheckAccessBehavior' => [ 
-                        'class' => 'GroupCheckAccessBehavior' 
+                'GroupCheckAccessBehavior' => [
+                        'class' => 'GroupCheckAccessBehavior'
                 ],
                 'CTimestampBehavior' => array (
                         'class' => 'zii.behaviors.CTimestampBehavior',
                         'createAttribute' => 'created',
-                        'updateAttribute' => null 
+                        'updateAttribute' => null
                 ),
                 'NameLinkBehavior' => array (
                         'class' => 'application.behaviours.NameLinkBehavior',
-                        'controller' => 'marriage' 
-                ) 
+                        'controller' => 'marriage'
+                )
         );
     }
 
@@ -57,21 +57,21 @@ class Marriage extends CActiveRecord
         return array (
                 array (
                         'husband_cid, wife_cid',
-                        'required' 
+                        'required'
                 ),
                 array (
                         'husband_cid, wife_cid',
                         'numerical',
-                        'integerOnly' => true 
+                        'integerOnly' => true
                 ),
                 array (
                         'comments',
                         'length',
-                        'max' => 255 
+                        'max' => 255
                 ),
                 array (
                         'dom',
-                        'safe' 
+                        'safe'
                 ),
                 // The following rule is used by search().
                 // @todo Please remove those attributes that should not be
@@ -79,8 +79,8 @@ class Marriage extends CActiveRecord
                 array (
                         'husband_cid, wife_cid, created, mid, comments, dom',
                         'safe',
-                        'on' => 'search' 
-                ) 
+                        'on' => 'search'
+                )
         );
     }
 
@@ -102,13 +102,13 @@ class Marriage extends CActiveRecord
                 'husband' => array (
                         self::BELONGS_TO,
                         'Person',
-                        'husband_cid' 
+                        'husband_cid'
                 ),
                 'wife' => array (
                         self::BELONGS_TO,
                         'Person',
-                        'wife_cid' 
-                ) 
+                        'wife_cid'
+                )
         );
     }
 
@@ -124,7 +124,7 @@ class Marriage extends CActiveRecord
                 'created' => __ ( 'created' ),
                 'mid' => __ ( 'Mid' ),
                 'comments' => __ ( 'Comments' ),
-                'dom' => __ ( 'Date of Marriage' ) 
+                'dom' => __ ( 'Date of Marriage' )
         );
     }
 
@@ -146,7 +146,7 @@ class Marriage extends CActiveRecord
         // @todo Please modify the following code to remove attributes that
         // should not be searched.
         $criteria = new CDbCriteria ();
-        
+
         $criteria->compare ( 'husband_cid', $this->husband_cid );
         $criteria->compare ( 'wife_cid', $this->wife_cid );
         $criteria->compare ( 'created', $this->created, true );
@@ -154,9 +154,9 @@ class Marriage extends CActiveRecord
         $criteria->compare ( 'comments', $this->comments, true );
         $criteria->compare ( 'dom', $this->dom, true );
         $criteria->compare ( 'owner_gid', $this->owner_gid, true );
-        
+
         return new CActiveDataProvider ( $this, array (
-                'criteria' => $criteria 
+                'criteria' => $criteria
         ) );
     }
 
@@ -172,5 +172,24 @@ class Marriage extends CActiveRecord
     public static function model($className = __CLASS__)
     {
         return parent::model ( $className );
+    }
+
+    /**
+     * #20170803:vikas:ggn:added nice age to marriage model too
+     */
+    public function getniceage()
+    {
+        $datetime1 = new DateTime ();
+        $datetime2 = new DateTime ( $this->dom );
+        $interval = $datetime1->diff ( $datetime2 );
+
+        $age = $interval->format ( '%y' );
+        if($age==0)
+        {
+            return $interval->format ( '%m m' );
+        }
+        else if ($age > 200)
+            $age = 0;
+        return $age .  ' y';
     }
 }

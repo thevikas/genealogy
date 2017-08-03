@@ -6,11 +6,11 @@ $this->breadcrumbs = array (
                 'index'
         )
 );
-
+#20170803:vikas:ggn:fixed error in breadcrumb link vs text
 if ($model->grandfather)
     $this->breadcrumbs [$model->grandfather->name] = [
             '/person/view',
-            'id' => $model->father->cid
+            'id' => $model->grandfather->cid
     ];
 
 if ($model->father)

@@ -58,9 +58,10 @@ class Person extends CActiveRecord
                         'template' => '{link}',
                         'callback' => function ($str, $model, $params)
                         {
-                            if ($model->age > 0)
+                            #20170803:vikas:ggn:added nice age to namelink
+                            if (!empty($model->dob))
                             {
-                                $str .= ' ' . $model->age . 'yrs';
+                                $str .= ' ' . $model->niceage;
                             }
                             if (! isset ( $params ['nospouse'] ))
                             {
@@ -82,10 +83,7 @@ class Person extends CActiveRecord
                                                 ] );
                                     if (! empty ( $marriage->dom ))
                                     {
-                                        $datetime1 = new DateTime ();
-                                        $datetime2 = new DateTime ( $marriage->dom );
-                                        $interval = $datetime1->diff ( $datetime2 );
-                                        $mage = $interval->format ( '(%y yrs)' );
+                                        $mage = '(' . $marriage->niceage . ')';
                                     }
 
                                     $mlink = '';
@@ -371,12 +369,31 @@ class Person extends CActiveRecord
         return parent::model ( $className );
     }
 
+    /**
+     * #20170803:vikas:ggn:added nice age to namelink
+     */
+    public function getniceage()
+    {
+        $datetime1 = new DateTime ( $this->dob );
+        $datetime2 = new DateTime (empty($this->dod) ? 'now' : $this->dod);
+        $interval = $datetime1->diff ( $datetime2 );
+
+        $age = $interval->format ( '%y' );
+        if($age==0)
+        {
+            return $interval->format ( '%m m' );
+        }
+        else if ($age > 200)
+            $age = 0;
+        return $age .  ' y';
+    }
+
     public function getage()
     {
         $datetime1 = new DateTime ( $this->dob );
         $datetime2 = new DateTime (empty($this->dod) ? 'now' : $this->dod);
         $interval = $datetime1->diff ( $datetime2 );
-        $age = $interval->format ( '%Y' );
+        $age = $interval->format ( '%y' );
         if ($age > 200)
             $age = 0;
 
