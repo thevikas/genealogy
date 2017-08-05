@@ -2,7 +2,7 @@
 /* @var $this SiteController */
 $this->breadcrumbs [] = __('Stats');
 
-$this->pageTitle = Yii::app ()->name;
+$this->pageTitle = "Database Statistics - " . date('Y M d');
 
 $stats ['total_people'] = Person::model ()->count ();
 $stats ['total_people_with_dob'] = Person::model ()->count ( 'dob > :dob', [
@@ -111,7 +111,7 @@ $ctr = 0;
 $pp = 1;
 foreach($data as $d)
 {
-    if($d['dt']<180) 
+    if($d['dt']<180)
         continue;
     $pp *= $d['dt'];
     $ctr++;
