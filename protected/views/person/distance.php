@@ -139,7 +139,7 @@ $this->menu = array (
         )
 );
 
-$this->pageTitle = Yii::app ()->name;
+$this->pageTitle = __('{name} - Distance Chart',['{name}' => $model->name]);
 
 echo "<h1>Distance Calculator</h1>";
 
@@ -307,7 +307,9 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                                 'type' => 'raw',
                                 'value' => function ($data)
                                 {
-                                    return array_search ( 'Father', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
+                                    return array_search ( 'Father', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : CHtml::link('<i class="fa fa-plus" aria-hidden="true"></i>',['person/create',
+                                            'child_id' => $data['id'],'gender' => 1
+                                    ]);
                                 }
                         ],
                         [
@@ -315,7 +317,10 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                                 'type' => 'raw',
                                 'value' => function ($data)
                                 {
-                                    return array_search ( 'Mother', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
+                                    return array_search ( 'Mother', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : 
+                                    CHtml::link('<i class="fa fa-plus" aria-hidden="true"></i>',['person/create',
+                                            'child_id' => $data['id'],'gender' => 0
+                                    ]);
                                 }
                         ],
                         [
@@ -323,7 +328,26 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                                 'type' => 'raw',
                                 'value' => function ($data)
                                 {
-                                    return array_search ( 'Children', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : '';
+                                    $pluslink = '';
+                                    $father_id = $mother_id = 0;
+                                    if(isset($data['model']->spouses[0]))
+                                    {
+                                        
+                                        if($data['model']->gender)
+                                        {
+                                            $father_id = $data['id'];
+                                            $mother_id = $data['model']->spouses[0]->cid;
+                                        }
+                                        else
+                                        {
+                                            $father_id = $data['model']->spouses[0]->cid;
+                                            $mother_id = $data['id'];                                            
+                                        }
+                                        $pluslink =  CHtml::link('<i class="fa fa-plus" aria-hidden="true"></i>',['person/create',
+                                                'father_id' => $father_id,'mother_id' => $mother_id
+                                        ]);
+                                    }
+                                    return array_search ( 'Children', $data ['audit'] ) === false ? '<i class="fa fa-check" aria-hidden="true"></i>' : $pluslink;
                                 }
                         ]
                 ]

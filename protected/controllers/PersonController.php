@@ -114,7 +114,7 @@ class PersonController extends Controller
      * If creation is successful, the browser will be redirected to the 'view'
      * page.
      */
-    public function actionCreate($spouse_id = 0, $mother_id = 0, $father_id = 0, $child_id = 0)
+    public function actionCreate($spouse_id = 0, $mother_id = 0, $father_id = 0, $child_id = 0,$gender=-1)
     {
         $model = new Person ();
         $spouse = null;
@@ -183,6 +183,10 @@ class PersonController extends Controller
         else if ($spouse)
         {
             $model->gender = intval ( ! $spouse->gender );
+        }
+        else if($child_id && $gender != -1)
+        {
+            $model->gender = $gender;
         }
         else
         {
