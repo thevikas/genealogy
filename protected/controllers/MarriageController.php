@@ -35,11 +35,12 @@ class MarriageController extends Controller
                                  // 'view' actions
                         'actions' => array (
                                 'index',
-                                'view' 
+                                'view',
+                                'stats',
                         ),
                         'users' => array (
-                                '*' 
-                        ) 
+                                '*'
+                        )
                 ),
                 array (
                         'allow', // allow authenticated user to perform
@@ -47,30 +48,83 @@ class MarriageController extends Controller
                         'actions' => array (
                                 'create',
                                 'update',
-                                'rep1' 
+                                'rep1'
                         ),
                         'users' => array (
-                                '@' 
-                        ) 
+                                '@'
+                        )
                 ),
                 array (
                         'allow', // allow admin user to perform 'admin'
                                  // and 'delete' actions
                         'actions' => array (
                                 'admin',
-                                'delete' 
+                                'delete'
                         ),
                         'users' => array (
-                                'admin' 
-                        ) 
+                                'admin'
+                        )
                 ),
                 array (
                         'deny', // deny all users
                         'users' => array (
-                                '*' 
-                        ) 
-                ) 
+                                '*'
+                        )
+                )
         );
+    }
+
+    /**
+     * Displays a particular model.
+     *
+     * @param integer $id
+     *            the ID of the model to be displayed
+     */
+    public function actionStats()
+    {
+        $mm = Marriage::model()->findAll([
+            'condition' => 't.dom > :dom and (husband.dob > :hdob or wife.dob>:wdob)',
+            'with' => ['husband','wife'],
+            'together' => true,
+            'params' => ['hdob' => '1700-01-01','wdob' => '1700-01-01','dom' => '1700-1-1'],
+        ]);
+        echo "mm=" . count($mm);
+        $data = [];
+        foreach($mm as $m)
+        {
+            $r = [
+                'id' => $m->mid,
+                'marriage' => $m,
+                'husband' => $m->husband,
+                'wife' => $m->wife,
+                'mage' => $m->age
+            ];
+            if($m->husband->age)
+            {
+                $r['hage'] = $m->husband->age;
+                $r['hmage'] = $m->husband->age - $m->age;
+            }
+
+            if($m->wife->age)
+            {
+                $r['wage'] = $m->wife->age;
+                $r['wmage'] = $m->wife->age - $m->age;
+            }
+
+            $data[] = $r;
+        }
+
+
+
+        $dataProvider = new CArrayDataProvider ( $data, array (
+                //'id' => 'id',
+                'keyField' => 'id',
+                'pagination' => array (
+                        'pageSize' => 200
+                )
+        ) );
+
+        $this->render('stats',['dp' => $dataProvider]);
     }
 
     /**
@@ -82,13 +136,13 @@ class MarriageController extends Controller
     public function actionView($id)
     {
         $model = $this->loadModel ( $id );
-        $this->pageTitle = __ ( '{hub} & {wife} Marriage', 
-                [ 
+        $this->pageTitle = __ ( '{hub} & {wife} Marriage',
+                [
                         '{hub}' => $model->husband->name,
-                        '{wife}' => $model->wife->name 
+                        '{wife}' => $model->wife->name
                 ] );
         $this->render ( 'view', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -100,18 +154,18 @@ class MarriageController extends Controller
     public function actionCreate($spouse_id = 0, $sg = 0)
     {
         $model = new Marriage ();
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        
+
         if (isset ( $_POST ['Marriage'] ))
         {
             $model->attributes = $_POST ['Marriage'];
             if ($model->save ())
-                $this->redirect ( 
+                $this->redirect (
                         array (
                                 'view',
-                                'id' => $model->mid 
+                                'id' => $model->mid
                         ) );
         }
         else if ($spouse_id)
@@ -122,7 +176,7 @@ class MarriageController extends Controller
                 $model->wife_cid = $spouse_id;
         }
         $this->render ( 'create', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -137,23 +191,23 @@ class MarriageController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->loadModel ( $id );
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
-        
+
         if (isset ( $_POST ['Marriage'] ))
         {
             $model->attributes = $_POST ['Marriage'];
             if ($model->save ())
-                $this->redirect ( 
+                $this->redirect (
                         array (
                                 'view',
-                                'id' => $model->mid 
+                                'id' => $model->mid
                         ) );
         }
-        
+
         $this->render ( 'update', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -168,13 +222,13 @@ class MarriageController extends Controller
     public function actionDelete($id)
     {
         $this->loadModel ( $id )->delete ();
-        
+
         // if AJAX request (triggered by deletion via admin grid view), we
         // should not redirect the browser
         if (! isset ( $_GET ['ajax'] ))
-            $this->redirect ( 
+            $this->redirect (
                     isset ( $_POST ['returnUrl'] ) ? $_POST ['returnUrl'] : array (
-                            'admin' 
+                            'admin'
                     ) );
     }
 
@@ -185,7 +239,7 @@ class MarriageController extends Controller
     {
         $dataProvider = new CActiveDataProvider ( 'Marriage' );
         $this->render ( 'index', array (
-                'dataProvider' => $dataProvider 
+                'dataProvider' => $dataProvider
         ) );
     }
 
@@ -193,9 +247,9 @@ class MarriageController extends Controller
     {
         $model = new MarriageReport1 ( 'search' );
         $model->unsetAttributes (); // clear any default values
-        
+
         $this->render ( 'rep1', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 
@@ -208,9 +262,9 @@ class MarriageController extends Controller
         $model->unsetAttributes (); // clear any default values
         if (isset ( $_GET ['Marriage'] ))
             $model->attributes = $_GET ['Marriage'];
-        
+
         $this->render ( 'admin', array (
-                'model' => $model 
+                'model' => $model
         ) );
     }
 

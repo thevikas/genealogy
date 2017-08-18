@@ -82,9 +82,15 @@ $this->widget ( 'zii.widgets.CMenu',
                                 )
                         ),
 						array (
-                                'label' => __('Statistics'),
+                                'label' => __('General Statistics'),
                                 'url' => array (
-                                        '/site/stats' 
+                                        '/site/stats'
+                                )
+                        ),
+						array (
+                                'label' => __('Marriage Statistics'),
+                                'url' => array (
+                                        '/site/stats'
                                 )
                         ),
 						/*array (

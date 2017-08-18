@@ -192,4 +192,19 @@ class Marriage extends CActiveRecord
             $age = 0;
         return $age .  ' y';
     }
+
+    /**
+     * #20170803:vikas:ggn:added nice age to marriage model too
+     */
+    public function getage()
+    {
+        $datetime1 = new DateTime ();
+        $datetime2 = new DateTime ( $this->dom );
+        $interval = $datetime1->diff ( $datetime2 );
+
+        $age = $interval->format ( '%y' );
+        if ($age > 200)
+            $age = 0;
+        return $age;
+    }
 }
