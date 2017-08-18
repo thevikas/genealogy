@@ -90,7 +90,7 @@ $this->widget ( 'zii.widgets.CMenu',
 						array (
                                 'label' => __('Marriage Statistics'),
                                 'url' => array (
-                                        '/site/stats'
+                                        '/marriage/stats'
                                 )
                         ),
 						/*array (
