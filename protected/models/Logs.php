@@ -17,18 +17,18 @@ class Logs extends CActiveRecord
 	#20170823:vikas:between-hyd-bangalore-in-train
 	#:copied from original constants.php
 	#200508030744:vikas:some log now added
-	const LOG_NEWPERSON = 48; #200706291212
-	const LOG_RUSHHOUR = 49; #200706291212
-	const LOG_ADDSPOUSEMAN = 50;
-	const LOG_ADDSPOUSEWOMAN = 51;
-	const LOG_SETFATHER = 52;
-	const LOG_SETMOTHER = 53;
-	const LOG_ADDCHILD = 54;
-	const LOG_ADDPARENT = 55;
-	const LOG_SUMMARY = 56;
-	const LOG_EDITPERSON = 57;
-	const LOG_DELETEPERSON = 58; #200508260716
-	const LOG_SEARCH = 59; #200607081234
+	public const LOG_NEWPERSON = 48; #200706291212
+	public const LOG_RUSHHOUR = 49; #200706291212
+	public const LOG_ADDSPOUSEMAN = 50;
+	public const LOG_ADDSPOUSEWOMAN = 51;
+	public const LOG_SETFATHER = 52;
+	public const LOG_SETMOTHER = 53;
+	public const LOG_ADDCHILD = 54;
+	public const LOG_ADDPARENT = 55;
+	public const LOG_SUMMARY = 56;
+	public const LOG_EDITPERSON = 57;
+	public const LOG_DELETEPERSON = 58; #200508260716
+	public const LOG_SEARCH = 59; #200607081234
 
 	/**
 	 * @return string the associated database table name
@@ -118,5 +118,18 @@ class Logs extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public static function l($ltype,$pkval)
+	{
+		$l = new Logs();
+		$l->ltype = $ltype;
+		$l->uid = $pkval;
+		$l->dated = date('Y-m-d H:i:s');
+		if(!$l->save())
+		{
+			error_log(print_r($l->errors,true));
+			throw new Exception("could not save Log");
+		}
 	}
 }

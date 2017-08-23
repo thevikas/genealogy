@@ -49,6 +49,11 @@ class Person extends CActiveRecord
     public function behaviors()
     {
         return array (
+                'SimpleLogBehavior' => [
+                    'class' => 'SimpleLogBehavior',
+                    'ltype_create' => Logs::LOG_NEWPERSON,
+                    'ltype_update' => Logs::LOG_EDITPERSON,
+                ],
                 'GroupCheckAccessBehavior' => [
                         'class' => 'GroupCheckAccessBehavior'
                 ],
