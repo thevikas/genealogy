@@ -19,7 +19,7 @@ Yii::app()->clientScript->registerCoreScript('autocomplete');
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
-	
+
 	<div class="row">
 		<?php echo $form->labelEx($model,'husband_cid'); ?>
 		<?php echo $form->hiddenField($model,'husband_cid'); ?>
@@ -35,7 +35,7 @@ Yii::app()->clientScript->registerCoreScript('autocomplete');
 	<div class="row">
 		<?php echo $form->labelEx($model,'wife_cid'); ?>
 		<?php echo $form->hiddenField($model,'wife_cid'); ?>
-		<?php if(isset($model->husband->name)) echo CHtml::textField('wife_quick',$model->wife_cid ? $model->husband->name : '',array(
+		<?php if(isset($model->wife->name)) echo CHtml::textField('wife_quick',$model->wife_cid ? $model->wife->name : '',array(
 	                'placeholder' => $model->getAttributeLabel('wife_cid'),
 		            'class' => 'person_quick',
 		            'size' => 50,
