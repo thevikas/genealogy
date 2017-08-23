@@ -1,3 +1,4 @@
+<?php //Chart ID 1 ?>
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
@@ -26,6 +27,7 @@
 }
 
 </style>
+<h1>Radial</h1>
 <p>
 <?php
 echo $person->namelink . "<br/>";
@@ -34,7 +36,8 @@ echo $mother . " " . $father;
 </p>
 
 <svg width="<?=$sizes['width']?>" height="<?=$sizes['height']?>"></svg>
-<script src="https://d3js.org/d3.v4.min.js"></script>
+<?php Yii::app()->registerCoreScript('d3'); ?>
+
 <script>
 
 var svg = d3.select("svg"),

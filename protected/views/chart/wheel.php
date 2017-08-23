@@ -1,4 +1,5 @@
 <?php
+//Chart 3
 /** @see https://www.jasondavies.com/coffee-wheel/ */
 ?>
 
@@ -34,6 +35,7 @@ p#intro {
   margin: 1em 0;
 }
 </style>
+<h1>Radial</h1>
 <p>
 <?php
 echo $person->namelink . "<br/>";
@@ -42,7 +44,7 @@ echo $mother . " " . $father;
 </p>
 
 <div id="vis">&nbsp;</div>
-<script src="http://d3js.org/d3.v3.js"></script>
+<?php Yii::app()->clientScript->registerCoreScript('d3'); ?>
 <script>
 var width = 2000,
     height = width,

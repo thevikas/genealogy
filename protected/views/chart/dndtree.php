@@ -1,3 +1,4 @@
+<?php //chart ID 2 ?>
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style type="text/css">
