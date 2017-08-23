@@ -18,6 +18,10 @@ class Logs extends CActiveRecord
 	#20170823:vikas:between-hyd-bangalore-in-train
 	#:copied from original constants.php
 	#200508030744:vikas:some log now added
+
+	public const LOG_LOGIN = 1; #201708231351
+	public const LOG_LOGOUT = 2; #201708231351
+
 	public const LOG_NEWPERSON = 48; #200706291212
 	public const LOG_RUSHHOUR = 49; #200706291212
 	public const LOG_ADDSPOUSEMAN = 50;
