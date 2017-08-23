@@ -207,4 +207,18 @@ class Marriage extends CActiveRecord
             $age = 0;
         return $age;
     }
+
+    /**
+     * Finds PK of marriage by partner IDs
+     */
+    public static function findIdBySpouse($sid1,$sid2)
+    {
+        $obj = self::model()->find([
+            'condition' => ':sid1 in (husband_cid,wife_cid) and :sid2 in (husband_cid,wife_cid)',
+            'params' => ['sid1' => $sid1,'sid2' => $sid2]
+        ]);
+        if(isset($obj->mid))
+            return $obj->mid;
+        return false;
+    }
 }

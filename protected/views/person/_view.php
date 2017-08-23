@@ -6,30 +6,36 @@
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
 	<?php echo $data->getnamelink(['nospouse' => 1]); ?>
 	<br />
-	
+
 	<?php if($data->father_cid) {?>
 	<b><?php echo CHtml::encode($data->getAttributeLabel('father_cid')); ?>:</b>
 	<?php echo $data->father->getnamelink(['nospouse' => 1]);?>
-	<br /> 
+	<br />
 	<?php }
-	
+
 	if($data->mother_cid) {?>
 	<b><?php echo CHtml::encode($data->getAttributeLabel('mother_cid')); ?>:</b>
 	<?php echo $data->mother->getnamelink(['nospouse' => 1]);?>
 	<br />
 	<?php }
-	
+
 	$spouses = array_merge($data->husbands,$data->wives );
     if (count ( $spouses ) == 1)
     {
         ?><b><?php echo CHtml::encode($data->getAttributeLabel('spouse')); ?>:</b>
-         <?php 
+         <?php
          echo $spouses[0]->getnamelink(['nospouse' => 1]);
+		 echo CHtml::link ( CHtml::image ( '/images/marriage.gif' ),
+				 [
+						 '/marriage/view',
+						 'id' => MArriage::findIdBySpouse($spouses[0]->cid,$data->cid)
+				 ] );
+;
          echo ' ' . CHtml::link(__('+child'),
                  [
                      'person/create',
                         'mother_id' => $spouses[0]->gender ? $data->cid : $spouses[0]->cid ,
-                        'father_id' => $spouses[0]->gender ? $spouses[0]->cid : $data->cid                 
+                        'father_id' => $spouses[0]->gender ? $spouses[0]->cid : $data->cid
                 ]); ?>
          <br />
          <?php
@@ -115,7 +121,7 @@ foreach ( $data->father->children1 as $per )
     {
         if($per->cid == $data->cid)
             continue;
-        
+
         echo CHtml::tag ( 'li', [ ], $per->namelink );
     }
     ?>
