@@ -234,7 +234,8 @@ class Person extends CActiveRecord
                 'children1' => array (
                         self::HAS_MANY,
                         'Person',
-                        'father_cid'
+                        'father_cid',
+                        'order' => 'dob,cid',
                 ),
                 'mother' => array (
                         self::BELONGS_TO,
@@ -244,7 +245,8 @@ class Person extends CActiveRecord
                 'children2' => array (
                         self::HAS_MANY,
                         'Person',
-                        'mother_cid'
+                        'mother_cid',
+                        'order' => 'dob,cid',
                 ),
                 'pics' => array (
                         self::HAS_MANY,
@@ -256,11 +258,13 @@ class Person extends CActiveRecord
 
     function cmp($a, $b)
     {
-        if ($a->age == $b->age)
+        $at = strtotime($a->dob);
+        $bt = strtotime($b->dob);
+        if ($at == $bt)
         {
             return 0;
         }
-        return ($a->age < $b->age) ? 1 : - 1;
+        return ($at >  $bt ? 1 : - 1);
     }
 
     public function getchildren()
