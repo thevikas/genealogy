@@ -18,6 +18,7 @@ $stats ['total_people_with_dom_pc'] = 100 * $stats ['total_people_with_dom'] / $
 
 $stats ['total_females'] = Person::model ()->count ( 'gender=0' );
 $stats ['total_females_pc'] = 100 * $stats ['total_females'] / $stats ['total_people'];
+$stats ['total_males'] = $stats ['total_people'] - $stats ['total_females'];
 
 $stats ['total_people_born_last_year'] = Person::model ()->count ( 'dob >= :dob',
         [
