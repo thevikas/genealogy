@@ -12,6 +12,7 @@
  */
 class Logs extends CActiveRecord
 {
+	static $last_log_time;
 
 	#genealogy
 	#20170823:vikas:between-hyd-bangalore-in-train
@@ -120,12 +121,20 @@ class Logs extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public static function l($ltype,$pkval)
+	public static function l($ltype,$pkval,$param = [])
 	{
+		//20170823:this is a tryout to set exactly same log times
+		//for all sequencial log events in the database
+		//train-to-cbe
+		if(!isset(self::$last_log_time))
+			self::$last_log_time = time();
+
 		$l = new Logs();
 		$l->ltype = $ltype;
 		$l->uid = $pkval;
-		$l->dated = date('Y-m-d H:i:s');
+		$l->dated = date('Y-m-d H:i:s',self::$last_log_time);
+		if(!empty($param))
+			$l->param = serialize($param);
 		if(!$l->save())
 		{
 			error_log(print_r($l->errors,true));
