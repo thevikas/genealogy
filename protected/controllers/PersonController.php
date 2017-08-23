@@ -262,7 +262,7 @@ class PersonController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex($gid = 0)
+    public function actionIndex($gid = 0,$mru=0)
     {
         $p = new Person ();
 
@@ -270,7 +270,15 @@ class PersonController extends Controller
         if ($gid)
             $p->owner_gid = $gid;
 
-        $dataProvider = $p->search ();
+        $crit = [];
+        if($mru)
+        {
+            $crit['with'] = ['mru'];
+            $crit['order'] = 'mru.dated desc';
+            $crit['together'] = true;
+        }
+
+        $dataProvider = $p->search ($crit);
         $this->render ( 'index', array (
                 'dataProvider' => $dataProvider
         ) );

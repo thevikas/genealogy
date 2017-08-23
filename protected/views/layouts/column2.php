@@ -19,25 +19,25 @@ echo $content;
 echo $this->renderPartial ( '//layouts/_quicksearch' );
 
 $this->beginWidget ( 'zii.widgets.CPortlet', array (
-        'title' => 'Operations' 
+        'title' => 'Operations'
 ) );
 
-$this->widget ( 'zii.widgets.CMenu', 
+$this->widget ( 'zii.widgets.CMenu',
         array (
                 'items' => $this->menu,
                 'htmlOptions' => array (
-                        'class' => 'operations' 
-                ) 
+                        'class' => 'operations'
+                )
         ) );
 $this->endWidget ();
 
 $this->beginWidget ( 'zii.widgets.CPortlet', array (
-        'title' => __ ( 'Recent People' ) 
+        'title' => CHtml::link(__( 'Recent People' ) ,['person/index','mru' => 1]) 
 ) );
 
-$this->widget ( 'zii.widgets.CMenu', 
+$this->widget ( 'zii.widgets.CMenu',
         array (
-                'items' => Controller::recentpersons () 
+                'items' => Controller::recentpersons ()
             // 'title'=>'Recent Persons',
         ) );
 

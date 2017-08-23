@@ -3,6 +3,11 @@
 /* @var $data Person */
 ?>
 <div class="view">
+	<div class="span-5" style="float:right">
+		<b><?php echo CHtml::encode($data->getAttributeLabel('updated')); ?>:</b>
+		<?php echo CHtml::encode($data->updated); ?>
+	</div>
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('name')); ?>:</b>
 	<?php echo $data->getnamelink(['nospouse' => 1]); ?>
 	<br />
@@ -104,7 +109,6 @@
  *
  */
 ?>
-
 </div>
 
 <?php

@@ -201,6 +201,11 @@ class Person extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array (
+                'mru' => array (
+                        self::BELONGS_TO,
+                        'RecentPerson',
+                        'cid'
+                ),
                 'eventdates' => array (
                         self::HAS_MANY,
                         'Eventdates',
@@ -326,11 +331,11 @@ class Person extends CActiveRecord
      * @return CActiveDataProvider the data provider that can return the models
      *         based on the search/filter conditions.
      */
-    public function search()
+    public function search($crit = [])
     {
         // @todo Please modify the following code to remove attributes that
         // should not be searched.
-        $criteria = new CDbCriteria ();
+        $criteria = new CDbCriteria ($crit);
 
         $criteria->compare ( 'cid', $this->cid );
         $criteria->compare ( 'firstname', $this->firstname, true );
