@@ -12,6 +12,24 @@
  */
 class Logs extends CActiveRecord
 {
+
+	#genealogy
+	#20170823:vikas:between-hyd-bangalore-in-train
+	#:copied from original constants.php
+	#200508030744:vikas:some log now added
+	const LOG_NEWPERSON = 48; #200706291212
+	const LOG_RUSHHOUR = 49; #200706291212
+	const LOG_ADDSPOUSEMAN = 50;
+	const LOG_ADDSPOUSEWOMAN = 51;
+	const LOG_SETFATHER = 52;
+	const LOG_SETMOTHER = 53;
+	const LOG_ADDCHILD = 54;
+	const LOG_ADDPARENT = 55;
+	const LOG_SUMMARY = 56;
+	const LOG_EDITPERSON = 57;
+	const LOG_DELETEPERSON = 58; #200508260716
+	const LOG_SEARCH = 59; #200607081234
+
 	/**
 	 * @return string the associated database table name
 	 */
