@@ -100,6 +100,7 @@ class MarriageController extends Controller
                 'mage' => $m->age,
                 'hname' => $m->husband->name,
                 'wname' => $m->wife->name,
+                'dom' => $m->dom,
             ];
             if($m->husband->age)
             {
@@ -123,7 +124,7 @@ class MarriageController extends Controller
                 'keyField' => 'id',
                 'sort'=>array(
                     'attributes'=>array(
-                         'mage','wage','hage','hmage','wmage','hname','wname'
+                         'mage','wage','hage','hmage','wmage','hname','wname','dom'
                     ),
                 ),
                 'pagination' => array (

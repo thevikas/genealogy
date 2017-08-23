@@ -33,9 +33,10 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                         "header" => __('MAGE'),
                     ],
                     [
-                        'name' => 'Year',
+                        'header' => __('Year'),
+                        'name' => 'dom',
                         'value' => function($data) {
-                            return 2017 - $data['mage'];
+                            return date('Y',strtotime($data['dom']));
                         }
                     ],
                     [

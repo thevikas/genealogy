@@ -1,5 +1,5 @@
 <?php
-if (count ( $data->children ))
+if (count ( $data->grandchildren ))
 {
     ?>
 <div class="view">
