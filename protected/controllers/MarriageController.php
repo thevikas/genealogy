@@ -88,7 +88,7 @@ class MarriageController extends Controller
             'together' => true,
             'params' => ['hdob' => '1700-01-01','wdob' => '1700-01-01','dom' => '1700-1-1'],
         ]);
-        echo "mm=" . count($mm);
+
         $data = [];
         foreach($mm as $m)
         {
@@ -97,7 +97,9 @@ class MarriageController extends Controller
                 'marriage' => $m,
                 'husband' => $m->husband,
                 'wife' => $m->wife,
-                'mage' => $m->age
+                'mage' => $m->age,
+                'hname' => $m->husband->name,
+                'wname' => $m->wife->name,
             ];
             if($m->husband->age)
             {
@@ -119,6 +121,11 @@ class MarriageController extends Controller
         $dataProvider = new CArrayDataProvider ( $data, array (
                 //'id' => 'id',
                 'keyField' => 'id',
+                'sort'=>array(
+                    'attributes'=>array(
+                         'mage','wage','hage','hmage','wmage','hname','wname'
+                    ),
+                ),
                 'pagination' => array (
                         'pageSize' => 200
                 )

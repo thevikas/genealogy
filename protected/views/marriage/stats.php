@@ -13,6 +13,7 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                 // 'filter'=>$model,
                 'columns' => [
                     [
+                        'name' => 'hname',
                         "header" => __('Husband'),
                         'type' => 'raw',
                         'value' => function($data) {
@@ -20,6 +21,7 @@ $this->widget ( 'zii.widgets.grid.CGridView',
                         }
                     ],
                     [
+                        'name' => 'wname',
                         "header" => __('Wife'),
                         'type' => 'raw',
                         'value' => function($data) {

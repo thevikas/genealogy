@@ -88,11 +88,11 @@ class Person extends CActiveRecord
 
                                     $mlink = '';
                                     if(!empty($marriage))
-                                    $mlink = CHtml::link ( CHtml::image ( '/images/marriage.gif' ),
-                                            [
-                                                    '/marriage/view',
-                                                    'id' => $marriage->mid
-                                            ] );
+                                        $mlink = CHtml::link ( CHtml::image ( '/images/marriage.gif' ),
+                                                [
+                                                        '/marriage/view',
+                                                        'id' => $marriage->mid
+                                                ] );
 
                                     if (! empty ( $params ['flip'] ))
                                         $str = $spouses [0]->getnamelink (
