@@ -136,11 +136,17 @@ class PersonController extends Controller
                     $m->husband_cid = $model->gender ? $model->cid : $spouse_id;
                     $m->wife_cid = $model->gender ? $spouse_id : $model->cid;
                     if ($m->save ())
+                    {
+                        //add spouse woman is called from existing id
+                        $ltype = $model->gender ? Logs::LOG_ADDSPOUSEWOMAN : Logs::LOG_ADDSPOUSEMAN;
+                        Logs::l($ltype,$spouse_id,['spouse_id' => $model->cid]);
+
                         $this->redirect (
                                 array (
                                         'view',
                                         'id' => $spouse_id
                                 ) );
+                    }
                     else
                     {
                         print_r ( $m->getErrors () );
@@ -157,14 +163,21 @@ class PersonController extends Controller
                 {
                     $child = Person::model ()->findByPk ( $child_id );
                     if ($model->gender)
+                    {
+                        $ltype = Logs::LOG_SETFATHER;
                         $child->father_cid = $model->cid;
+                    }
                     else
+                    {
+                        $ltype = Logs::LOG_SETMOTHER;
                         $child->mother_cid = $model->cid;
+                    }
                     if (! $child->save ())
                     {
                         error_log ( print_r ( $child->errors, true ) );
                         throw new Exception ( "Saving child failed" );
                     }
+                    Logs::l($ltype,$child_id,['cid' => $model->cid]);
 
                     $this->redirect (
                             array (

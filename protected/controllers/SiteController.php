@@ -113,6 +113,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+		Logs::l(Logs::LOG_LOGOUT,Yii::app()->user->groupid);
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
