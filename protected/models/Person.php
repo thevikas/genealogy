@@ -51,8 +51,8 @@ class Person extends CActiveRecord
         return array (
                 'SimpleLogBehavior' => [
                     'class' => 'SimpleLogBehavior',
-                    'ltype_create' => Logs::LOG_NEWPERSON,
-                    'ltype_update' => Logs::LOG_EDITPERSON,
+                    'ltype_create' => Log::LOG_NEWPERSON,
+                    'ltype_update' => Log::LOG_EDITPERSON,
                 ],
                 'GroupCheckAccessBehavior' => [
                         'class' => 'GroupCheckAccessBehavior'

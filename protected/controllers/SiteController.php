@@ -109,11 +109,11 @@ class SiteController extends Controller
 	}
 
 	/**
-	 * Logs out the current user and redirect to homepage.
+	 * Log out the current user and redirect to homepage.
 	 */
 	public function actionLogout()
 	{
-		Logs::l(Logs::LOG_LOGOUT,Yii::app()->user->groupid);
+		Log::l(Log::LOG_LOGOUT,Yii::app()->user->groupid);
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}

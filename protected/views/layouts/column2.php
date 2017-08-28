@@ -2,7 +2,7 @@
 /* @var $this Controller */
 ?>
 <?php
-
+Yii::app()->clientScript->registerCoreScript('font-awesome');
 $this->beginContent ( '//layouts/main' );
 ?>
 <div class="span-19">
@@ -32,7 +32,7 @@ $this->widget ( 'zii.widgets.CMenu',
 $this->endWidget ();
 
 $this->beginWidget ( 'zii.widgets.CPortlet', array (
-        'title' => CHtml::link(__( 'Recent People' ) ,['person/index','mru' => 1]) 
+        'title' => CHtml::link(__( 'Recent People' ) ,['person/index','mru' => 1])
 ) );
 
 $this->widget ( 'zii.widgets.CMenu',

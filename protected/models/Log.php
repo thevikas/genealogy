@@ -10,7 +10,7 @@
  * @property string $param
  * @property integer $id
  */
-class Logs extends CActiveRecord
+class Log extends CActiveRecord
 {
 	static $last_log_time;
 
@@ -68,6 +68,11 @@ class Logs extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+		        'person' => array (
+		                self::BELONGS_TO,
+		                'Person',
+		                'uid'
+		        ),		        
 		);
 	}
 
@@ -118,7 +123,7 @@ class Logs extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Logs the static model class
+	 * @return Log the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -133,7 +138,7 @@ class Logs extends CActiveRecord
 		if(!isset(self::$last_log_time))
 			self::$last_log_time = time();
 
-		$l = new Logs();
+		$l = new Log();
 		$l->ltype = $ltype;
 		$l->uid = $pkval;
 		$l->dated = date('Y-m-d H:i:s',self::$last_log_time);

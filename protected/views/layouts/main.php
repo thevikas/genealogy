@@ -161,11 +161,11 @@ echo $content;
 		Copyright &copy; <?php
 
 echo date ( 'Y' );
-?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php
-
+?> by Vikas Yadav. <?=CHtml::link(__('Credits'),['site/page','view' => 'credits'])?><br/>
+		All Rights Reserved. <br/>
+<?php
 echo Yii::powered ();
+echo ' ' . CHtml::link(__('logs'),['/log']);
 ?>
 	</div><!-- footer -->
 

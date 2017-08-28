@@ -29,13 +29,15 @@ $this->menu = array (
                 )
         ),
         array (
-                'label' => __ ( 'Create Person' ),
+                'encodeLabel' => false,
+                'label' => '<i class="fa fa-plus"></i> ' . __ ( 'Create Person' ),
                 'url' => array (
                         'create'
                 )
         ),
         array (
-                'label' => __ ( 'Update Person' ),
+                'encodeLabel' => false,
+                'label' => '<i class="fa fa-edit"></i> ' .__ ( 'Update Person' ),
                 'url' => array (
                         'update',
                         'id' => $model->cid
@@ -117,7 +119,8 @@ $this->menu = array (
                 )
         ),
         array (
-                'label' => __ ( 'Delete Person' ),
+                'label' => '<i class="fa fa-trash-o"></i> ' . __ ( 'Delete Person' ),
+                'encodeLabel' => false,
                 'url' => '#',
                 'linkOptions' => array (
                         'submit' => array (
