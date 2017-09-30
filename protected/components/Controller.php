@@ -35,7 +35,8 @@ class Controller extends CController
 	    $rps = RecentPerson::model()->findAll(['order' =>'dated desc','limit' => '10','offset' => 1]);
 	    $menu=[];
 	    foreach($rps as $rp)
-	        $menu[] = ['label' => $rp->person->name,'url' => ['person/view','id'=> $rp->cid]];
+	        if(isset($rp->person->name))
+	           $menu[] = ['label' => $rp->person->name,'url' => ['person/view','id'=> $rp->cid]];
 	    return $menu;
 	}
 	

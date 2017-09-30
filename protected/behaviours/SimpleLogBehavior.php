@@ -21,6 +21,6 @@ class SimpleLogBehavior extends CActiveRecordBehavior
         $pk = $this->owner->tableSchema->primaryKey;
         $pkval = $this->owner->$pk;
 
-        Logs::l($this->owner->isNewRecord ? $this->ltype_create : $this->ltype_update,$pkval);
+        Log::l($this->owner->isNewRecord ? $this->ltype_create : $this->ltype_update,$pkval);
     }
 }
