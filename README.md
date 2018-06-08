@@ -34,3 +34,8 @@ Can generate genealogy tree using D3 in many ways.
 # Build Status
 
 [![CircleCI](https://circleci.com/gh/thevikas/genealogy/tree/master.svg?style=shield)](https://circleci.com/gh/thevikas/genealogy/tree/master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthevikas%2Fgenealogy.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthevikas%2Fgenealogy?ref=badge_shield)
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fthevikas%2Fgenealogy.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fthevikas%2Fgenealogy?ref=badge_large)
